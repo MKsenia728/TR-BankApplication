@@ -1,14 +1,14 @@
 package com.example.bank_application.entity;
 
+import com.example.bank_application.entity.enums.AccountProductStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.security.Timestamp;
-import java.util.UUID;
+import java.util.Objects;
 
 @Entity
 @Setter
@@ -18,15 +18,16 @@ import java.util.UUID;
 @Table(name = "agreements")
 public class Agreement {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID",
-            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GenericGenerator(name = "UUID",
+//            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
     @Column(name = "id")
-    private UUID id;
+    private int id;
     @Column(name = "interest_rate")
     private float interestRate;
     @Column(name = "status")
-    private boolean status;
+    @Enumerated(EnumType.STRING)
+    private AccountProductStatus status;
     @Column(name = "sum")
     private double sum;
     @Column(name = "created_at")
@@ -35,10 +36,22 @@ public class Agreement {
     private Timestamp updatedAt;
 
     @ManyToOne()
-    @JoinColumn(name = "accounts_id", referencedColumnName="id")
+    @JoinColumn(name = "account_id", referencedColumnName="id")
     private Account account;
     @ManyToOne()
-    @JoinColumn(name = "products_id", referencedColumnName="id")
+    @JoinColumn(name = "product_id", referencedColumnName="id")
     private Product product;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Agreement agreement = (Agreement) o;
+        return id == agreement.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

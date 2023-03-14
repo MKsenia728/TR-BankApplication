@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet author="o.molchanova" id="insert test data into clients table">
+        <insert tableName="clients">
+            <column name="id" value="3f06af63-a93c-11e4-9797-00505690773"/>
+            <column name="manager_id" value="1"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="tax_code" value="1234554321"/>
+            <column name="first_name" value="Alisa"/>
+            <column name="last_name" value="Ivanjuk"/>
+            <column name="email" value="alisa@ggg.com"/>
+            <column name="address" value="Berlin, Fridrichshagener Str., 55"/>
+            <column name="phone" value="+121212121233"/>
+            <column name="created_at" value="2021-12-01 09:00:00"/>
+        </insert>
+
+        <insert tableName="clients">
+            <column name="id" value="5ca6af99-a93c-21e5-8765-10505490883"/>
+            <column name="manager_id" value="1"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="tax_code" value="2233445566"/>
+            <column name="first_name" value="Anton"/>
+            <column name="last_name" value="Sedych"/>
+            <column name="email" value="a.sedych@ggg.com"/>
+            <column name="address" value="Potsdam, Jegerstrasse Str., 1"/>
+            <column name="phone" value="+9911293452"/>
+            <column name="created_at" value="2021-12-10 09:00:00"/>
+        </insert>
+
+        <insert tableName="clients">
+            <column name="id" value="50da1f22-f91a-51c4-a197-23515830431"/>
+            <column name="manager_id" value="1"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="tax_code" value="3234455466"/>
+            <column name="first_name" value="Bogdan"/>
+            <column name="last_name" value="Vetrov"/>
+            <column name="address" value="Berlin, Waldstrasse, 12"/>
+            <column name="created_at" value="2021-12-20 09:00:00"/>
+        </insert>
+
+        <insert tableName="clients">
+            <column name="id" value="4e023f88-195b-167e-b211-12507790551"/>
+            <column name="manager_id" value="2"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="tax_code" value="233223521"/>
+            <column name="first_name" value="Oleg"/>
+            <column name="last_name" value="Kolpakov"/>
+            <column name="email" value="kolpak@ggg.com"/>
+            <column name="address" value="Vienna, 55112"/>
+            <column name="created_at" value="2021-12-20 09:00:00"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

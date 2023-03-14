@@ -1,15 +1,16 @@
 package com.example.bank_application.entity;
 
+import com.example.bank_application.entity.enums.CurrencyType;
+import com.example.bank_application.entity.enums.ProductStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.security.Timestamp;
+import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Setter
@@ -19,19 +20,19 @@ import java.util.UUID;
 @Table(name = "products")
 public class Product {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID",
-            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GenericGenerator(name = "UUID",
+//            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
     @Column(name = "id")
-    private UUID id;
+    private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "type")
-    private boolean type;
     @Column(name = "status")
-    private boolean status;
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status;
     @Column(name = "currency_code")
-    private byte currencyCode;
+    @Enumerated(EnumType.STRING)
+    private CurrencyType currencyCode;
     @Column(name = "interest_rate")
     private float interestRate;
     @Column(name = "limit")
@@ -43,7 +44,22 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<Agreement> agreement;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="manager_id", referencedColumnName = "id")
-    private Set<Manager> manager;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "products_managers",
+            joinColumns = {@JoinColumn(name = "product_id")},
+            inverseJoinColumns = {@JoinColumn(name = "manager_id")})
+    private Set<Manager> managers;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(name, product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

@@ -1,10 +1,13 @@
 package com.example.bank_application.entity;
 
+import com.example.bank_application.entity.enums.AccountStatus;
+import com.example.bank_application.entity.enums.AccountType;
+import com.example.bank_application.entity.enums.CurrencyType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.security.Timestamp;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,13 +29,16 @@ public class Account {
     @Column(name = "name")
     private String name;
     @Column(name = "type")
-    private boolean type;
+    @Enumerated(EnumType.STRING)
+    private AccountType type;
     @Column(name = "status")
-    private boolean status;
+    @Enumerated(EnumType.STRING)
+    private AccountStatus status;
     @Column(name = "balance")
     private double balance;
     @Column(name = "currency_code")
-    private byte currencyCode;
+    @Enumerated(EnumType.STRING)
+    private CurrencyType currencyCode;
     @Column(name = "created_at")
     private Timestamp createdAt;
     @Column(name = "updated_at")
@@ -47,4 +53,17 @@ public class Account {
     private Set<Transaction> transactionCredits;
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private Set<Agreement> agreements;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Objects.equals(id, account.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

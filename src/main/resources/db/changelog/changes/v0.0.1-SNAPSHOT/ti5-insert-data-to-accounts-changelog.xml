@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet author="o.molchanova" id="insert test data into accounts table">
+        <insert tableName="accounts">
+            <column name="id" value="f308da22-c934-5414-8022-33509890188"/>
+            <column name="client_id" value="3f06af63-a93c-11e4-9797-00505690773"/>
+            <column name="name" value="Current account in usd"/>
+            <column name="type" value="CURRENT"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="balance" value="10000"/>
+            <column name="currency_code" value="USD"/>
+            <column name="created_at" value="2021-12-02 09:00:00"/>
+        </insert>
+
+        <insert tableName="accounts">
+            <column name="id" value="48a8ac92-c9dc-41ea-a785-62504190993"/>
+            <column name="client_id" value="5ca6af99-a93c-21e5-8765-10505490883"/>
+            <column name="name" value="Current account in usd"/>
+            <column name="type" value="CURRENT"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="balance" value="6522"/>
+            <column name="currency_code" value="USD"/>
+            <column name="created_at" value="2021-12-11 09:00:00"/>
+        </insert>
+
+        <insert tableName="accounts">
+            <column name="id" value="43ad1f12-b11a-31c4-b133-23552130511"/>
+            <column name="client_id" value="50da1f22-f91a-51c4-a197-23515830431"/>
+            <column name="name" value="Deposit account in euro"/>
+            <column name="type" value="DEPOSIT"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="balance" value="5000"/>
+            <column name="currency_code" value="EUR"/>
+            <column name="created_at" value="2021-12-23 09:00:00"/>
+        </insert>
+
+        <insert tableName="accounts">
+            <column name="id" value="0234ef82-163b-967e-b502-12505290128"/>
+            <column name="client_id" value="4e023f88-195b-167e-b211-12507790551"/>
+            <column name="name" value="Deposit account in dollars"/>
+            <column name="type" value="DEPOSIT"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="currency_code" value="USD"/>
+            <column name="created_at" value="2021-12-22 09:00:00"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

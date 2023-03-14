@@ -1,15 +1,15 @@
 package com.example.bank_application.entity;
 
+import com.example.bank_application.entity.enums.ClientStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.security.Timestamp;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import java.util.Objects;
 
 @Entity
 @Setter
@@ -18,13 +18,14 @@ import java.util.Objects;
 @Table(name = "clients")
 public class Client {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID",
-            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GenericGenerator(name = "UUID",
+//            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
     @Column(name = "id")
     private UUID id;
     @Column(name = "status")
-    private boolean status;
+    @Enumerated(EnumType.STRING)
+    private ClientStatus status;
     @Column(name = "tax_code")
     private String taxCode;
     @Column(name = "first_name")

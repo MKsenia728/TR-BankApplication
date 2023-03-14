@@ -1,8 +1,8 @@
 package com.example.bank_application.entity;
 
+import com.example.bank_application.entity.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.security.Timestamp;
 import java.util.Objects;
@@ -17,13 +17,14 @@ import java.util.UUID;
 @Table(name = "transactions")
 public class Transaction {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID",
-            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
+    @GeneratedValue(generator = "UUID", strategy = GenerationType.UUID)
+//    @GenericGenerator(name = "UUID",
+//            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
     @Column(name = "id")
     private UUID id;
     @Column(name = "type")
-    private boolean type;
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
     @Column(name = "amount")
     private double amount;
     @Column(name = "description")

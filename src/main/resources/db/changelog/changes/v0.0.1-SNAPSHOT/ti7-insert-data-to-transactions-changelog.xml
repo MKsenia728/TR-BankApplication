@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet author="o.molchanova" id="insert test data into transactions table">
+        <insert tableName="transactions">
+            <column name="id" value="a3c84a01-c18f-1022-9c01-42109893665"/>
+            <column name="debit_account_id" value="f308da22-c934-5414-8022-33509890188"/>
+            <column name="credit_account_id" value="48a8ac92-c9dc-41ea-a785-62504190993"/>
+            <column name="type" value="APPROVED"/>
+            <column name="amount" value="1050"/>
+            <column name="description" value="temporary financial assistance"/>
+            <column name="created_at" value="2021-12-20 09:00:00"/>
+        </insert>
+
+        <insert tableName="transactions">
+            <column name="id" value="41c84b23-c244-10aa-9882-00209834221"/>
+            <column name="debit_account_id" value="48a8ac92-c9dc-41ea-a785-62504190993"/>
+            <column name="credit_account_id" value="f308da22-c934-5414-8022-33509890188"/>
+            <column name="type" value="APPROVED"/>
+            <column name="amount" value="1050"/>
+            <column name="description" value="return temporary financial assistance"/>
+            <column name="created_at" value="2021-12-22 09:00:00"/>
+        </insert>
+
+        <insert tableName="transactions">
+            <column name="id" value="a3144a01-d12f-1041-ac41-42219893321"/>
+            <column name="debit_account_id" value="f308da22-c934-5414-8022-33509890188"/>
+            <column name="credit_account_id" value="48a8ac92-c9dc-41ea-a785-62504190993"/>
+            <column name="type" value="APPROVED"/>
+            <column name="amount" value="2000"/>
+            <column name="description" value="temporary financial assistance"/>
+            <column name="created_at" value="2021-12-25 09:00:00"/>
+        </insert>
+
+        <insert tableName="transactions">
+            <column name="id" value="41a34c221-d2a4-19f2-9321-00140933221"/>
+            <column name="debit_account_id" value="48a8ac92-c9dc-41ea-a785-62504190993"/>
+            <column name="credit_account_id" value="f308da22-c934-5414-8022-33509890188"/>
+            <column name="type" value="APPROVED"/>
+            <column name="amount" value="1500"/>
+            <column name="description" value="return part of temporary financial assistance"/>
+            <column name="created_at" value="2021-12-27 09:00:00"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
