@@ -7,5 +7,5 @@ import java.util.List;
 @Value
 
 public class AccountListDto {
-    List<AccountDto> accounDtoList;
+//    List<AccountDto> accountDtoList;
 }

@@ -10,20 +10,20 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigInteger;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/accounts")
-@RequiredArgsConstructor
+//@RestController
+//@RequestMapping("/accounts")
+//@RequiredArgsConstructor
 public class AccountController {
-    private final AccountService accountService;
-    @GetMapping("/account/{accountId}")
-    @ResponseStatus(HttpStatus.OK)
-    public AccountDto getInfoAboutAccount(@PathVariable UUID accountId) {
-        return accountService.getAccountById(accountId);
-    }
-
-    @GetMapping("/accounts")
-    @ResponseStatus(HttpStatus.OK)
-    public AccountListDto getAllAccounts() {
-        return accountService.getAllAccounts();
-    }
+//    private final AccountService accountService;
+//    @GetMapping("/account/{accountId}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public AccountDto getInfoAboutAccount(@PathVariable UUID accountId) {
+//        return accountService.getAccountById(accountId);
+//    }
+//
+//    @GetMapping("/accounts")
+//    @ResponseStatus(HttpStatus.OK)
+//    public AccountListDto getAllAccounts() {
+//        return accountService.getAllAccounts();
+//    }
 }

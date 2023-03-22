@@ -6,11 +6,11 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses= UuidMapper.class)
 public interface AccountMapper {
-    AccountDto toDto(Account account);
-
-    Account toEntity(AccountDto accountDto);
-
-    List<AccountDto> accountsToAccountsDto(List<Account> products);
+//    AccountDto toDto(Account account);
+//
+//    Account toEntity(AccountDto accountDto);
+//
+//    List<AccountDto> accountsToAccountsDto(List<Account> products);
 }

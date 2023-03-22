@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface AccountRepository extends JpaRepository<Account, UUID> {
-    Optional<Account> findAccountById(UUID id);
-
-    List<Account> getAccountsByStatus(AccountStatus accountStatus);
+//    Optional<Account> findAccountById(UUID id);
+//
+//    List<Account> getAccountsByStatus(AccountStatus accountStatus);
 }

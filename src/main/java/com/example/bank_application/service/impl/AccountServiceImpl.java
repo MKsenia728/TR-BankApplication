@@ -16,24 +16,26 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AccountServiceImpl implements AccountService {
-    private final AccountRepository accountRepository;
-    private final AccountMapper accountMapper;
-
-
-    @Override
-    @Transactional(readOnly = true)
-    public AccountDto getAccountById(UUID id) {
-//        log.info("Get account with id {}", id);
-        return accountMapper.toDto(accountRepository.findAccountById(id).orElseThrow(
-                () -> new AccountNotFoundException
-                        ((ErrorMessage.ACCOUNT_NOT_FOUND))));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public AccountListDto getAllAccounts() {
-//        log.info("Get all active accounts");
-        return new AccountListDto(accountMapper.accountsToAccountsDto(accountRepository.getAccountsByStatus(AccountStatus.valueOf("ACTIVE"))));
-    }
+public class AccountServiceImpl
+//        implements AccountService
+{
+//    private final AccountRepository accountRepository;
+//    private final AccountMapper accountMapper;
+//
+//
+//    @Override
+//    @Transactional(readOnly = true)
+//    public AccountDto getAccountById(UUID id) {
+////        log.info("Get account with id {}", id);
+//        return accountMapper.toDto(accountRepository.findAccountById(id).orElseThrow(
+//                () -> new AccountNotFoundException
+//                        ((ErrorMessage.ACCOUNT_NOT_FOUND))));
+//    }
+//
+//    @Override
+//    @Transactional(readOnly = true)
+//    public AccountListDto getAllAccounts() {
+////        log.info("Get all active accounts");
+//        return new AccountListDto(accountMapper.accountsToAccountsDto(accountRepository.getAccountsByStatus(AccountStatus.valueOf("ACTIVE"))));
+//    }
 }
