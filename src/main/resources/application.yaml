@@ -15,4 +15,8 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
 
- 
+#    app:
+#      server:
+#        url: ${app.server.url}
+
+
