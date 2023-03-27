@@ -6,7 +6,7 @@
 
     <changeSet author="o.molchanova" id="insert test data into clients table">
         <insert tableName="clients">
-            <column name="id" value="3f06af63-a93c-11e4-9797-00505690773"/>
+            <column name="id" valueComputed="UUID_TO_BIN('1162af81-7d0e-417d-9ae7-2b16456ded68')"/>
             <column name="manager_id" value="1"/>
             <column name="status" value="ACTIVE"/>
             <column name="tax_code" value="1234554321"/>
@@ -19,7 +19,7 @@
         </insert>
 
         <insert tableName="clients">
-            <column name="id" value="5ca6af99-a93c-21e5-8765-10505490883"/>
+            <column name="id" valueComputed="UUID_TO_BIN('121d98c1-6dfd-402d-984a-6b75e52a44e4')"/>
             <column name="manager_id" value="1"/>
             <column name="status" value="ACTIVE"/>
             <column name="tax_code" value="2233445566"/>
@@ -32,7 +32,7 @@
         </insert>
 
         <insert tableName="clients">
-            <column name="id" value="50da1f22-f91a-51c4-a197-23515830431"/>
+            <column name="id" valueComputed="UUID_TO_BIN('98965986-c7af-464d-aee2-e1dbac4c80ff')"/>
             <column name="manager_id" value="1"/>
             <column name="status" value="ACTIVE"/>
             <column name="tax_code" value="3234455466"/>
@@ -43,7 +43,7 @@
         </insert>
 
         <insert tableName="clients">
-            <column name="id" value="4e023f88-195b-167e-b211-12507790551"/>
+            <column name="id" valueComputed="UUID_TO_BIN('688e263f-a26f-4e16-833d-2763518a4997')"/>
             <column name="manager_id" value="2"/>
             <column name="status" value="ACTIVE"/>
             <column name="tax_code" value="233223521"/>

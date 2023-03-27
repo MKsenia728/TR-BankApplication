@@ -7,7 +7,7 @@
     <changeSet author="o.molchanova" id="insert test data into agreements table">
         <insert tableName="agreements">
             <column name="id"/>
-            <column name="account_id" value="f308da22-c934-5414-8022-33509890188"/>
+            <column name="account_id" valueComputed="UUID_TO_BIN('5aef1d7f-d14f-4655-9399-25bf27b16588')"/>
             <column name="product_id" value="1"/>
             <column name="interest_rate" value="1.5"/>
             <column name="status" value="ACTIVE"/>
@@ -16,7 +16,7 @@
 
         <insert tableName="agreements">
             <column name="id"/>
-            <column name="account_id" value="48a8ac92-c9dc-41ea-a785-62504190993"/>
+            <column name="account_id" valueComputed="UUID_TO_BIN('5da56ed6-2525-4b82-a376-6a7c085cd67d')"/>
             <column name="product_id" value="1"/>
             <column name="status" value="ACTIVE"/>
             <column name="created_at" value="2021-12-11 09:00:00"/>
@@ -24,7 +24,7 @@
 
         <insert tableName="agreements">
             <column name="id"/>
-            <column name="account_id" value="43ad1f12-b11a-31c4-b133-23552130511"/>
+            <column name="account_id" valueComputed="UUID_TO_BIN('ef15752e-8c95-4d29-91ab-2d5e3db95ecb')"/>
             <column name="product_id" value="3"/>
             <column name="interest_rate" value="5.0"/>
             <column name="status" value="ACTIVE"/>
@@ -34,7 +34,7 @@
 
         <insert tableName="agreements">
             <column name="id"/>
-            <column name="account_id" value="0234ef82-163b-967e-b502-12505290128"/>
+            <column name="account_id" valueComputed="UUID_TO_BIN('922f6cbf-902b-4a96-9d5d-9793bb3e5288')"/>
             <column name="product_id" value="4"/>
             <column name="interest_rate" value="6.5"/>
             <column name="status" value="ACTIVE"/>

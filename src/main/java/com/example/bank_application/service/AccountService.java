@@ -1,12 +1,11 @@
 package com.example.bank_application.service;
 
 import com.example.bank_application.dto.AccountDto;
-import com.example.bank_application.dto.AccountListDto;
-
-import java.util.UUID;
+import com.example.bank_application.dto.AccountsListDto;
 
 public interface AccountService {
-    AccountDto getAccountById(UUID id);
 
-    AccountListDto getAllAccounts();
+    AccountDto getAccountById(String id);
+
+//    AccountsListDto getAllAccounts();
 }

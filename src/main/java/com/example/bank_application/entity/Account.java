@@ -3,6 +3,7 @@ package com.example.bank_application.entity;
 import com.example.bank_application.entity.enums.AccountStatus;
 import com.example.bank_application.entity.enums.AccountType;
 import com.example.bank_application.entity.enums.CurrencyType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,6 +41,14 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private CurrencyType currencyCode;
     @Column(name = "created_at")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+//    yyyy-MM-dd@HH:mm:ss.SSSZ
+//    String createdAt;
+
+//    DtO: @JsonProperty("createdAt")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+//    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//    LocalDateTime createdAt;
     private Timestamp createdAt;
     @Column(name = "updated_at")
     private Timestamp updatedAt;

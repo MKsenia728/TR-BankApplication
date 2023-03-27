@@ -11,10 +11,10 @@
             </not>
         </preConditions>
         <createTable tableName="accounts">
-            <column name="id" type="uuid" >
+            <column name="id" type="binary(36)" >
                 <constraints primaryKey="true" primaryKeyName="pk_account" nullable="false"/>
             </column>
-            <column name="client_id" type="uuid">
+            <column name="client_id" type="binary(36)">
                 <constraints foreignKeyName="fk_ac_client" references="clients(id)" nullable="false"/>
             </column>
             <column name="name" type="varchar(100)">

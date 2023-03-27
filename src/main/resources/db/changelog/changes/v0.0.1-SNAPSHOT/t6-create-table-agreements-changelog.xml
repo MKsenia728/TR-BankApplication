@@ -14,8 +14,8 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="pk_agreement" nullable="false"/>
             </column>
-            <column name="account_id" type="uuid">
-                <constraints foreignKeyName="fk_ag_amount" references="accounts(id)" nullable="false"/>
+            <column name="account_id" type="binary(36)">
+                <constraints foreignKeyName="fc_addr_account_id" references="accounts(id)" nullable="false"/>
             </column>
             <column name="product_id" type="int">
                 <constraints foreignKeyName="fk_ag_product" references="products(id)" nullable="false"/>

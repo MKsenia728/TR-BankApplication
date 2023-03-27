@@ -6,8 +6,8 @@
 
     <changeSet author="o.molchanova" id="insert test data into accounts table">
         <insert tableName="accounts">
-            <column name="id" value="f308da22-c934-5414-8022-33509890188"/>
-            <column name="client_id" value="3f06af63-a93c-11e4-9797-00505690773"/>
+            <column name="id" valueComputed="UUID_TO_BIN('5aef1d7f-d14f-4655-9399-25bf27b16588')"/>
+            <column name="client_id" valueComputed="UUID_TO_BIN('1162af81-7d0e-417d-9ae7-2b16456ded68')"/>
             <column name="name" value="Current account in usd"/>
             <column name="type" value="CURRENT"/>
             <column name="status" value="ACTIVE"/>
@@ -17,8 +17,8 @@
         </insert>
 
         <insert tableName="accounts">
-            <column name="id" value="48a8ac92-c9dc-41ea-a785-62504190993"/>
-            <column name="client_id" value="5ca6af99-a93c-21e5-8765-10505490883"/>
+            <column name="id" valueComputed="UUID_TO_BIN('5da56ed6-2525-4b82-a376-6a7c085cd67d')"/>
+            <column name="client_id" valueComputed="UUID_TO_BIN('121d98c1-6dfd-402d-984a-6b75e52a44e4')"/>
             <column name="name" value="Current account in usd"/>
             <column name="type" value="CURRENT"/>
             <column name="status" value="ACTIVE"/>
@@ -28,8 +28,8 @@
         </insert>
 
         <insert tableName="accounts">
-            <column name="id" value="43ad1f12-b11a-31c4-b133-23552130511"/>
-            <column name="client_id" value="50da1f22-f91a-51c4-a197-23515830431"/>
+            <column name="id" valueComputed="UUID_TO_BIN('ef15752e-8c95-4d29-91ab-2d5e3db95ecb')"/>
+            <column name="client_id" valueComputed="UUID_TO_BIN('98965986-c7af-464d-aee2-e1dbac4c80ff')"/>
             <column name="name" value="Deposit account in euro"/>
             <column name="type" value="DEPOSIT"/>
             <column name="status" value="ACTIVE"/>
@@ -39,8 +39,8 @@
         </insert>
 
         <insert tableName="accounts">
-            <column name="id" value="0234ef82-163b-967e-b502-12505290128"/>
-            <column name="client_id" value="4e023f88-195b-167e-b211-12507790551"/>
+            <column name="id" valueComputed="UUID_TO_BIN('922f6cbf-902b-4a96-9d5d-9793bb3e5288')"/>
+            <column name="client_id" valueComputed="UUID_TO_BIN('688e263f-a26f-4e16-833d-2763518a4997')"/>
             <column name="name" value="Deposit account in dollars"/>
             <column name="type" value="DEPOSIT"/>
             <column name="status" value="ACTIVE"/>
