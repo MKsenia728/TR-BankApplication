@@ -15,7 +15,7 @@ import java.math.BigInteger;
 public class AccountController {
     public final AccountService accountService;
 
-    @GetMapping("s/{accountId}")
+    @GetMapping("/{accountId}")
     @ResponseStatus(HttpStatus.OK)
     public AccountDto getAccountById(@PathVariable("accountId") String accountId) {
         return accountService.getAccountById(accountId);

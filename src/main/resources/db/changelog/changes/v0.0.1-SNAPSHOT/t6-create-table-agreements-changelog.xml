@@ -14,7 +14,7 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="pk_agreement" nullable="false"/>
             </column>
-            <column name="account_id" type="binary(36)">
+            <column name="account_id" type="binary(16)">
                 <constraints foreignKeyName="fc_addr_account_id" references="accounts(id)" nullable="false"/>
             </column>
             <column name="product_id" type="int">

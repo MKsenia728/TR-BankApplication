@@ -44,6 +44,7 @@
             <column name="name" value="Deposit account in dollars"/>
             <column name="type" value="DEPOSIT"/>
             <column name="status" value="ACTIVE"/>
+            <column name="balance" value="50000"/>
             <column name="currency_code" value="USD"/>
             <column name="created_at" value="2021-12-22 09:00:00"/>
         </insert>
