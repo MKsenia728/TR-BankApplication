@@ -8,14 +8,14 @@ import java.security.Timestamp;
 @Value
 public class AccountDto {
 
-    String id;
+//    String id;
     String name;
     String type;
     String status;
     String balance;
     String currencyCode;
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
-    Timestamp createdAt;
+//    Timestamp createdAt;
 
     //    DtO: @JsonProperty("createdAt")
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
@@ -23,5 +23,5 @@ public class AccountDto {
 //    LocalDateTime createdAt;
 
 
-    Timestamp updatedAt;
+//    Timestamp updatedAt;
 }
