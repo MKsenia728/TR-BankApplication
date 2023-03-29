@@ -23,10 +23,10 @@
                 <column name="status" type="varchar(10)">
                     <constraints nullable="false"/>
                 </column>
-                <column name="created_at" type="timestamp">
+                <column name="created_at" type="date">
                     <constraints nullable="false"/>
                 </column>
-                <column name="updated_at" type="timestamp">
+                <column name="updated_at" type="date">
                 </column>
 
             </createTable>

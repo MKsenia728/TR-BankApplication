@@ -44,10 +44,10 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<Agreement> agreement;
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "products_managers",
-            joinColumns = {@JoinColumn(name = "product_id")},
-            inverseJoinColumns = {@JoinColumn(name = "manager_id")})
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.PERSIST)
+//    @JoinTable(name = "products_managers",
+//            joinColumns = {@JoinColumn(name = "product_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "manager_id")})
     private Set<Manager> managers;
 
     @Override

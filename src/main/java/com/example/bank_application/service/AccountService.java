@@ -7,5 +7,5 @@ public interface AccountService {
 
     AccountDto getAccountById(String id);
 
-//    AccountsListDto getAllAccounts();
+//   AccountsListDto getAllAccounts();
 }

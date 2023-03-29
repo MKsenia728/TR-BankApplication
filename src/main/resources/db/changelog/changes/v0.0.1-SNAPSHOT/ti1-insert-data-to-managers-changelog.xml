@@ -10,14 +10,14 @@
             <column name="first_name" value="Andrej"/>
             <column name="last_name" value="Grinev"/>
             <column name="status" value="ACTIVE"/>
-            <column name="created_at" value="2020-06-01 09:00:00"/>
+            <column name="created_at" value="2020.06.01"/>
         </insert>
         <insert tableName="managers">
             <column name="id"/>
             <column name="first_name" value="Luka"/>
             <column name="last_name" value="Nikitin"/>
             <column name="status" value="ACTIVE"/>
-            <column name="created_at" value="2020-12-15 09:00:00"/>
+            <column name="created_at" value="2020.12.15"/>
         </insert>
     </changeSet>
 
