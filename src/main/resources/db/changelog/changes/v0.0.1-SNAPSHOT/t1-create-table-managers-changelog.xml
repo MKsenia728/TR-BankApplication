@@ -4,32 +4,32 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-        <changeSet author="o.molchanova" id="create managers table">
-            <preConditions onFail="CONTINUE" onFailMessage="Table managers already exists">
-                <not>
-                    <tableExists tableName="managers"/>
-                </not>
-            </preConditions>
-            <createTable tableName="managers">
-                <column name="id" type="integer" autoIncrement="true">
-                    <constraints primaryKey="true" primaryKeyName="pk_manager" nullable="false" />
-                </column>
-                <column name="first_name" type="varchar(50)">
-                    <constraints nullable="false"/>
-                </column>
-                <column name="last_name" type="varchar(50)">
-                    <constraints nullable="false"/>
-                </column>
-                <column name="status" type="varchar(10)">
-                    <constraints nullable="false"/>
-                </column>
-                <column name="created_at" type="date">
-                    <constraints nullable="false"/>
-                </column>
-                <column name="updated_at" type="date">
-                </column>
+    <changeSet author="o.molchanova" id="create managers table">
+        <preConditions onFail="CONTINUE" onFailMessage="Table managers already exists">
+            <not>
+                <tableExists tableName="managers"/>
+            </not>
+        </preConditions>
+        <createTable tableName="managers">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_manager" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="date">
+            </column>
 
-            </createTable>
-        </changeSet>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

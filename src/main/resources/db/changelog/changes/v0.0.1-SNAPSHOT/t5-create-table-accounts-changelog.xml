@@ -11,7 +11,7 @@
             </not>
         </preConditions>
         <createTable tableName="accounts">
-            <column name="id" type="binary(16)" >
+            <column name="id" type="binary(16)">
                 <constraints primaryKey="true" primaryKeyName="pk_account" nullable="false"/>
             </column>
             <column name="client_id" type="binary(16)">
@@ -27,10 +27,10 @@
                 <constraints nullable="false"/>
             </column>
             <column name="balance" type="numeric(15,2)" defaultValueNumeric="0">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="currency_code" type="varchar(5)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="created_at" type="timestamp">
                 <constraints nullable="false"/>

@@ -6,9 +6,9 @@
 
     <changeSet id="create products_managers table" author="o.molchanova">
         <preConditions onFail="CONTINUE" onFailMessage="Table products_managers already exists">
-        <not>
-            <tableExists tableName="products_managers"/>
-        </not>
+            <not>
+                <tableExists tableName="products_managers"/>
+            </not>
         </preConditions>
         <createTable tableName="products_managers">
             <column name="id" type="integer" autoIncrement="true" generationType="AUTO">

@@ -1,9 +1,7 @@
 package com.example.bank_application.controller;
 
-import com.example.bank_application.dto.AccountDto;
-import com.example.bank_application.dto.AccountsListDto;
 import com.example.bank_application.dto.ManagerDto;
-import com.example.bank_application.service.AccountService;
+import com.example.bank_application.dto.ManagerListDto;
 import com.example.bank_application.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,5 +17,10 @@ public class ManagerController {
     @ResponseStatus(HttpStatus.OK)
     public ManagerDto getManagerById(@PathVariable("managerId") String managerId) {
         return managerService.getManagerById(managerId);
+    }
+    @GetMapping("/all/withClients")
+    @ResponseStatus(HttpStatus.OK)
+    public ManagerListDto getAllManagers() {
+        return managerService.getAllManagersWithClients();
     }
 }

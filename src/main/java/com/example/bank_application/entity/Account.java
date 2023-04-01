@@ -3,11 +3,10 @@ package com.example.bank_application.entity;
 import com.example.bank_application.entity.enums.AccountStatus;
 import com.example.bank_application.entity.enums.AccountType;
 import com.example.bank_application.entity.enums.CurrencyType;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -22,8 +21,6 @@ import java.util.UUID;
 public class Account {
     @Id
     @GeneratedValue(generator = "UUID", strategy = GenerationType.UUID)
-//    @GenericGenerator(name = "UUID",
-//            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
 
     @Column(name = "id")
     private UUID id;
@@ -41,18 +38,9 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private CurrencyType currencyCode;
     @Column(name = "created_at")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-//    yyyy-MM-dd@HH:mm:ss.SSSZ
-//    String createdAt;
-
-//    DtO: @JsonProperty("createdAt")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-//    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-//    LocalDateTime createdAt;
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
-
+    private LocalDateTime updatedAt;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id", referencedColumnName="id")
     private Client client;
@@ -68,11 +56,11 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return Objects.equals(id, account.id);
+        return Objects.equals(name, account.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name);
     }
 }

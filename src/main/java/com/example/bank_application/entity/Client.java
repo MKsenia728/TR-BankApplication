@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -19,8 +19,6 @@ import java.util.UUID;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @GenericGenerator(name = "UUID",
-//            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
     @Column(name = "id")
     private UUID id;
     @Column(name = "status")
@@ -39,16 +37,15 @@ public class Client {
     @Column(name = "phone")
     private String phone;
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private Set<Account> accounts;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "manager_id", referencedColumnName="id")
     private Manager manager;
-
 
     @Override
     public boolean equals(Object o) {

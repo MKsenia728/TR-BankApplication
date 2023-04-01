@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -19,8 +19,6 @@ import java.util.Objects;
 public class Agreement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GenericGenerator(name = "UUID",
-//            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
     @Column(name = "id")
     private int id;
     @Column(name = "interest_rate")
@@ -31,9 +29,9 @@ public class Agreement {
     @Column(name = "sum")
     private double sum;
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
     @ManyToOne()
     @JoinColumn(name = "account_id", referencedColumnName="id")
@@ -47,11 +45,11 @@ public class Agreement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Agreement agreement = (Agreement) o;
-        return id == agreement.id;
+        return Objects.equals(account, agreement.account) && Objects.equals(product, agreement.product);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(account, product);
     }
 }

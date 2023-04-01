@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,8 +21,6 @@ import java.util.Set;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GenericGenerator(name = "UUID",
-//            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
     @Column(name = "id")
     private int id;
     @Column(name = "name")
@@ -38,16 +36,13 @@ public class Product {
     @Column(name = "limit")
     private int limit;
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<Agreement> agreement;
     @ManyToMany(mappedBy = "products", cascade = CascadeType.PERSIST)
-//    @JoinTable(name = "products_managers",
-//            joinColumns = {@JoinColumn(name = "product_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "manager_id")})
     private Set<Manager> managers;
 
     @Override
@@ -55,11 +50,11 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(name, product.name);
+        return Float.compare(product.interestRate, interestRate) == 0 && Objects.equals(name, product.name) && status == product.status && currencyCode == product.currencyCode;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, status, currencyCode, interestRate);
     }
 }

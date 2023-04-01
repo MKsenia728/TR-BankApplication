@@ -1,18 +1,18 @@
 package com.example.bank_application.entity.enums;
 
 public enum CurrencyType {
-    EUR(1),
-    USD(2),
-    UAH(3),
-    RUB(4);
+    EUR("EUR"),
+    USD("USD"),
+    UAH("UAH"),
+    RUB("RUB");
 
-    private final int value;
+    private final String value;
 
-    CurrencyType(int value) {
+    CurrencyType(String  value) {
         this.value = value;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 }

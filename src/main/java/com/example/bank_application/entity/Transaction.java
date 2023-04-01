@@ -4,7 +4,7 @@ import com.example.bank_application.entity.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,8 +18,6 @@ import java.util.UUID;
 public class Transaction {
     @Id
     @GeneratedValue(generator = "UUID", strategy = GenerationType.UUID)
-//    @GenericGenerator(name = "UUID",
-//            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
     @Column(name = "id")
     private UUID id;
     @Column(name = "type")
@@ -30,7 +28,7 @@ public class Transaction {
     @Column(name = "description")
     private String description;
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "debit_account_id", referencedColumnName="id")
@@ -42,13 +40,13 @@ public class Transaction {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Transaction)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return Double.compare(that.amount, amount) == 0 && description.equals(that.description) && createdAt.equals(that.createdAt) && debitAccount.equals(that.debitAccount) && creditAccount.equals(that.creditAccount);
+        return Double.compare(that.amount, amount) == 0 && Objects.equals(createdAt, that.createdAt) && Objects.equals(debitAccount, that.debitAccount) && Objects.equals(creditAccount, that.creditAccount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(amount, description, createdAt, debitAccount, creditAccount);
+        return Objects.hash(amount, createdAt, debitAccount, creditAccount);
     }
 }

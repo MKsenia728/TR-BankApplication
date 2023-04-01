@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
-
 @RestController
 @RequestMapping("/accounts")
 @RequiredArgsConstructor
@@ -21,10 +19,9 @@ public class AccountController {
         return accountService.getAccountById(accountId);
     }
 
-//    @GetMapping("/all")
-//    @ResponseStatus(HttpStatus.OK)
-//    public AccountsListDto getAllAccounts() {
-//        return accountService.getAllAccounts();
-//    }
-
+    @GetMapping("/all/active")
+    @ResponseStatus(HttpStatus.OK)
+    public AccountsListDto getAllAccounts() {
+        return accountService.getAllAccountsByStatusActive();
+    }
 }

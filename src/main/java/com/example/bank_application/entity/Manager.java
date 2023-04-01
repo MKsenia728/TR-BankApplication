@@ -4,7 +4,6 @@ import com.example.bank_application.entity.enums.ManagerStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
@@ -19,9 +18,6 @@ import java.util.Set;
 public class Manager {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GeneratedValue
-//    @GenericGenerator(name = "UUID",
-//            strategy = "com.example.bank_application.generator.UuidTimeSequenceGenerator")
     @Column(name = "id")
     private long id;
     @Column(name = "first_name")
@@ -35,7 +31,6 @@ public class Manager {
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "products_managers",
