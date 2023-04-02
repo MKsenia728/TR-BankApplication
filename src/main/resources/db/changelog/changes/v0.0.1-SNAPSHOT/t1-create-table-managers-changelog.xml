@@ -20,13 +20,13 @@
             <column name="last_name" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="status" type="varchar(10)">
+            <column name="status" type="varchar(10)" defaultValue="PENDING" >
                 <constraints nullable="false"/>
             </column>
-            <column name="created_at" type="date">
+            <column name="created_at" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP" >
                 <constraints nullable="false"/>
             </column>
-            <column name="updated_at" type="date">
+            <column name="updated_at" type="timestamp">
             </column>
 
         </createTable>

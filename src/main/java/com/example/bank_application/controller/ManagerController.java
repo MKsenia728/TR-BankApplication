@@ -1,9 +1,11 @@
 package com.example.bank_application.controller;
 
+import com.example.bank_application.dto.ManagerCreateDto;
 import com.example.bank_application.dto.ManagerDto;
 import com.example.bank_application.dto.ManagerListDto;
 import com.example.bank_application.service.ManagerService;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.Mapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,4 +25,10 @@ public class ManagerController {
     public ManagerListDto getAllManagers() {
         return managerService.getAllManagersWithClients();
     }
+    @PostMapping("/new")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createNewManager(ManagerCreateDto managerCreateDto) {
+        managerService.managerNewCreate(managerCreateDto);
+    }
+
 }

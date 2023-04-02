@@ -19,6 +19,12 @@
             <column name="status" value="ACTIVE"/>
             <column name="created_at" value="2020-12-15 10:22:23"/>
         </insert>
+        <insert tableName="managers">
+            <column name="id"/>
+            <column name="first_name" value="Anatolij"/>
+            <column name="last_name" value="Petrov"/>
+<!--            <column name="created_at" value="2021-01-10 10:22:23"/>-->
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

@@ -1,5 +1,6 @@
 package com.example.bank_application.controller;
 
+import com.example.bank_application.dto.AccountCreateDto;
 import com.example.bank_application.dto.AccountDto;
 import com.example.bank_application.dto.AccountsListDto;
 import com.example.bank_application.service.AccountService;
@@ -23,5 +24,11 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     public AccountsListDto getAllAccounts() {
         return accountService.getAllAccountsByStatusActive();
+    }
+
+    @PostMapping("new/clientTax/{clientTaxCode}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createNewAccount(@RequestBody AccountCreateDto accountCreateDto, @PathVariable("clientTaxCode") String clientTaxCode) {
+        accountService.createNewAccount(accountCreateDto, clientTaxCode);
     }
 }

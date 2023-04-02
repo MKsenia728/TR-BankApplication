@@ -23,7 +23,7 @@
             <column name="type" type="varchar(10)">
                 <constraints nullable="false"/>
             </column>
-            <column name="status" type="varchar(10)">
+            <column name="status" type="varchar(10)" defaultValue="PENDING">
                 <constraints nullable="false"/>
             </column>
             <column name="balance" type="numeric(15,2)" defaultValueNumeric="0">
@@ -32,7 +32,7 @@
             <column name="currency_code" type="varchar(5)">
                 <constraints nullable="false"/>
             </column>
-            <column name="created_at" type="timestamp">
+            <column name="created_at" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP" >
                 <constraints nullable="false"/>
             </column>
             <column name="updated_at" type="timestamp">
