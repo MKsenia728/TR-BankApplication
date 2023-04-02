@@ -8,5 +8,6 @@ import java.time.LocalDateTime;
 @Value
 public class ManagerCreateDto {
     String firstName;
+
     String lastName;
 }

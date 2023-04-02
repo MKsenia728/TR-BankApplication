@@ -23,25 +23,33 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
+
     @Column(name = "currency_code")
     @Enumerated(EnumType.STRING)
     private CurrencyType currencyCode;
+
     @Column(name = "interest_rate")
     private float interestRate;
+
     @Column(name = "limit")
     private int limit;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<Agreement> agreement;
+
     @ManyToMany(mappedBy = "products", cascade = CascadeType.PERSIST)
     private Set<Manager> managers;
 

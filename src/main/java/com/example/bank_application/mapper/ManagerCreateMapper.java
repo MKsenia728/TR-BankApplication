@@ -7,5 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ManagerCreateMapper {
     ManagerCreateDto toDto(Manager manager);
+
     Manager toEntity(ManagerCreateDto managerDto);
 }

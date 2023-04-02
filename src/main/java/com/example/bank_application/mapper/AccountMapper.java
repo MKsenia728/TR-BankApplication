@@ -16,6 +16,7 @@ public interface AccountMapper {
     AccountDto toDto(Account account);
 
     Account toEntity(AccountDto accountDto);
+
     @Mapping(source = "client", target = "client")
     Account toEntity(AccountCreateDto accountCreateDto, Client client);
 

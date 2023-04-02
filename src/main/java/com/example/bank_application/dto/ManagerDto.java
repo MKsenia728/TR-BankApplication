@@ -8,8 +8,11 @@ import java.time.LocalDateTime;
 @Value
 public class ManagerDto {
     Long id;
+
     String firstName;
+
     String lastName;
+
     String status;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

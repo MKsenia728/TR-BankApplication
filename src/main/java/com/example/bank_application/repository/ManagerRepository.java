@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     Optional<Manager> findManagerById(Long id);
+
     List<Manager> getAllByClientsNotNull();
 
 }

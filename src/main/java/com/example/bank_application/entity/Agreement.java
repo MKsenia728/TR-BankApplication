@@ -21,21 +21,27 @@ public class Agreement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
     @Column(name = "interest_rate")
     private float interestRate;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private AccountProductStatus status;
+
     @Column(name = "sum")
     private double sum;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @ManyToOne()
     @JoinColumn(name = "account_id", referencedColumnName="id")
     private Account account;
+
     @ManyToOne()
     @JoinColumn(name = "product_id", referencedColumnName="id")
     private Product product;

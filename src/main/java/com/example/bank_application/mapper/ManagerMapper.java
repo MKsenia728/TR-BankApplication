@@ -9,6 +9,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ManagerMapper {
     ManagerDto toDto(Manager manager);
+
     Manager toEntity(ManagerDto managerDto);
+
     List<ManagerDto> toListDto(List<Manager> managers);
 }
