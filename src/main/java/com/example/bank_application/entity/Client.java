@@ -50,7 +50,7 @@ public class Client {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Account> accounts;
 
     @ManyToOne(cascade = CascadeType.ALL)

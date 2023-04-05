@@ -17,7 +17,7 @@ public class ClientDto {
 
     String lastName;
 
-    String type;
+//    String type;
 
     String email;
 

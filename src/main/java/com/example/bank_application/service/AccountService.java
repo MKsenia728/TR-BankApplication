@@ -8,7 +8,7 @@ public interface AccountService {
 
     AccountDto getAccountById(String id);
 
-   AccountsListDto getAllAccountsByStatusActive();
+    AccountsListDto getAllAccountsByStatusActive();
 
     void createNewAccount(AccountCreateDto accountCreateDto, String clientTaxCode);
 }

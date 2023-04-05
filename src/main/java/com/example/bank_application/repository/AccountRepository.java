@@ -16,4 +16,5 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
     Account findAccountByName(String name);
 
     List<Account> getAllByStatus(AccountStatus status);
+
 }

@@ -6,13 +6,20 @@ import lombok.Value;
 import java.time.LocalDateTime;
 
 @Value
-public class ManagerCreateDto {
-//    String id;
+public class ClientWithBalanceDto {
+    String status;
+
+    String taxCode;
 
     String firstName;
 
     String lastName;
 
-//    String status;
+     String email;
+
+    String phone;
+
+//    String balance;
+
 
 }

@@ -42,14 +42,16 @@ public class AccountServiceImp implements AccountService {
 
     @Override
     public void createNewAccount(AccountCreateDto accountCreateDto, String clientTaxCode) {
-        Optional<Client> clientOptional = clientRepository.findClientByTaxCode(clientTaxCode);
-        if (clientOptional.isEmpty()) {
+        Client client = clientRepository.findClientByTaxCode(clientTaxCode);
+        if (client == null) {
             throw new ClientNotFoundByTaxCodeException(ErrorMessage.CLIENT_NOT_FOUND_BY_TAX_CODE);
         } else if (accountRepository.findAccountByName(accountCreateDto.getName()) != null) {
             throw new AccountAlreadyExistException(ErrorMessage.ACCOUNT_ALREADY_EXISTS);
         } else {
-            Client client = clientOptional.get();
-            Account account = accountMapper.toEntity(accountCreateDto, client);
+            Account account = accountMapper.toEntity(accountCreateDto);
+            System.out.println(client);
+            account.setClient(client);
+            System.out.println(account);
             accountRepository.save(account);
         }
     }

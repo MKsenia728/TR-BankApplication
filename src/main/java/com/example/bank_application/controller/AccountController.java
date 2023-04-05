@@ -26,7 +26,7 @@ public class AccountController {
         return accountService.getAllAccountsByStatusActive();
     }
 
-    @PostMapping("new/clientTax/{clientTaxCode}")
+    @PostMapping("new/client_tax/{clientTaxCode}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createNewAccount(@RequestBody AccountCreateDto accountCreateDto, @PathVariable("clientTaxCode") String clientTaxCode) {
         accountService.createNewAccount(accountCreateDto, clientTaxCode);
