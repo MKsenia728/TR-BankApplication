@@ -1,4 +1,4 @@
-package com.example.bank_application.dto;
+package com.example.bank_application.dto.managerDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Value;
@@ -6,24 +6,14 @@ import lombok.Value;
 import java.time.LocalDateTime;
 
 @Value
-public class ClientDto {
+public class ManagerDto {
     String id;
-
-    String status;
-
-    String taxCode;
 
     String firstName;
 
     String lastName;
 
-//    String type;
-
-    String email;
-
-    String address;
-
-    String phone;
+    String status;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     LocalDateTime createdAt;

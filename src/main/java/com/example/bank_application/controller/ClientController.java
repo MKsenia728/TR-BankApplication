@@ -1,15 +1,10 @@
 package com.example.bank_application.controller;
 
-import com.example.bank_application.dto.AccountDto;
-import com.example.bank_application.dto.ClientWithBalanceDto;
-import com.example.bank_application.dto.ClientWithBalanceListDto;
-import com.example.bank_application.service.AccountService;
-import com.example.bank_application.service.ClientService;
+import com.example.bank_application.dto.clientDto.ClientWithBalanceListDto;
+import com.example.bank_application.service.util.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/clients")

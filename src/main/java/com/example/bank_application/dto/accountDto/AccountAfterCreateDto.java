@@ -1,4 +1,4 @@
-package com.example.bank_application.dto;
+package com.example.bank_application.dto.accountDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Value;
@@ -6,14 +6,8 @@ import lombok.Value;
 import java.time.LocalDateTime;
 
 @Value
-public class AccountDto {
-    String id;
-
+public class AccountAfterCreateDto {
     String name;
-
-    String clientFirstName;
-
-    String clientLastName;
 
     String type;
 

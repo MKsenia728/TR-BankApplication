@@ -22,7 +22,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
@@ -36,10 +36,10 @@ public class Product {
     private CurrencyType currencyCode;
 
     @Column(name = "interest_rate")
-    private float interestRate;
+    private Float interestRate;
 
     @Column(name = "limit")
-    private int limit;
+    private Integer limit;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

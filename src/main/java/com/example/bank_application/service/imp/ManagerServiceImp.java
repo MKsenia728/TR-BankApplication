@@ -1,13 +1,15 @@
 package com.example.bank_application.service.imp;
 
-import com.example.bank_application.dto.ManagerCreateDto;
-import com.example.bank_application.dto.ManagerDto;
-import com.example.bank_application.dto.ManagerListDto;
+import com.example.bank_application.dto.managerDto.ManagerAfterCreateDto;
+import com.example.bank_application.dto.managerDto.ManagerCreateDto;
+import com.example.bank_application.dto.managerDto.ManagerDto;
+import com.example.bank_application.dto.managerDto.ManagerListDto;
 import com.example.bank_application.entity.Manager;
 import com.example.bank_application.mapper.ManagerCreateMapper;
 import com.example.bank_application.mapper.ManagerMapper;
 import com.example.bank_application.repository.ManagerRepository;
-import com.example.bank_application.service.ManagerService;
+import com.example.bank_application.service.exceptions.ManagerAlreadyExists;
+import com.example.bank_application.service.util.ManagerService;
 import com.example.bank_application.service.exceptions.ErrorMessage;
 import com.example.bank_application.service.exceptions.ManagerNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -36,10 +38,14 @@ public class ManagerServiceImp implements ManagerService {
 
     @Override
     @Transactional
-    public void managerNewCreate(ManagerCreateDto managerCreateDto) {
+    public ManagerAfterCreateDto managerNewCreate(ManagerCreateDto managerCreateDto) {
         Manager manager = managerCreateMapper.toEntity(managerCreateDto);
-        managerRepository.save(manager);
+        managerRepository.findAll().forEach(m -> {
+            if (m.equals(manager)) {
+                throw new ManagerAlreadyExists(ErrorMessage.MANAGER_ALREADY_EXISTS);
+            }
+        });
+        return  managerMapper.toAfterCreateDto(managerRepository.save(manager));
     }
-
 }
 

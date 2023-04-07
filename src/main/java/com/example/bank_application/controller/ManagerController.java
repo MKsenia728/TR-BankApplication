@@ -1,11 +1,11 @@
 package com.example.bank_application.controller;
 
-import com.example.bank_application.dto.ManagerCreateDto;
-import com.example.bank_application.dto.ManagerDto;
-import com.example.bank_application.dto.ManagerListDto;
-import com.example.bank_application.service.ManagerService;
+import com.example.bank_application.dto.managerDto.ManagerAfterCreateDto;
+import com.example.bank_application.dto.managerDto.ManagerCreateDto;
+import com.example.bank_application.dto.managerDto.ManagerDto;
+import com.example.bank_application.dto.managerDto.ManagerListDto;
+import com.example.bank_application.service.util.ManagerService;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Mapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,16 +20,17 @@ public class ManagerController {
     public ManagerDto getManagerById(@PathVariable("managerId") String managerId) {
         return managerService.getManagerById(managerId);
     }
+
     @GetMapping(value="/all/withClients")
     @ResponseStatus(HttpStatus.OK)
     public ManagerListDto getAllManagers() {
         return managerService.getAllManagersWithClients();
     }
+
     @PostMapping( value = "/new")
-//    @PostMapping( value = "/new", consumes = {"application/json"})
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewManager(@RequestBody ManagerCreateDto managerCreateDto) {
-        managerService.managerNewCreate(managerCreateDto);
+    public ManagerAfterCreateDto createNewManager(@RequestBody ManagerCreateDto managerCreateDto) {
+        return managerService.managerNewCreate(managerCreateDto);
     }
 
 }

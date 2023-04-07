@@ -20,17 +20,17 @@ public class Agreement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "interest_rate")
-    private float interestRate;
+    private Float interestRate;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private AccountProductStatus status;
 
     @Column(name = "sum")
-    private double sum;
+    private Double sum;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -38,7 +38,7 @@ public class Agreement {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne()
+    @OneToOne()
     @JoinColumn(name = "account_id", referencedColumnName="id")
     private Account account;
 

@@ -21,7 +21,6 @@ import java.util.UUID;
 public class Account {
     @Id
     @GeneratedValue(generator = "UUID", strategy = GenerationType.UUID)
-//    @GeneratedValue(generator = "UUID", strategy = GenerationType.AUTO)
 
     @Column(name = "id")
     private UUID id;
@@ -38,7 +37,7 @@ public class Account {
     private AccountStatus status;
 
     @Column(name = "balance")
-    private double balance;
+    private Double balance;
 
     @Column(name = "currency_code")
     @Enumerated(EnumType.STRING)
@@ -60,8 +59,8 @@ public class Account {
     @OneToMany(mappedBy = "creditAccount", cascade = CascadeType.ALL)
     private Set<Transaction> transactionCredits;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private Set<Agreement> agreements;
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Agreement agreement;
 
 
     @Override

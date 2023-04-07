@@ -1,4 +1,4 @@
-package com.example.bank_application.dto;
+package com.example.bank_application.dto.clientDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Value;

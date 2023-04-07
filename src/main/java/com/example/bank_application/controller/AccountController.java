@@ -1,9 +1,7 @@
 package com.example.bank_application.controller;
 
-import com.example.bank_application.dto.AccountCreateDto;
-import com.example.bank_application.dto.AccountDto;
-import com.example.bank_application.dto.AccountsListDto;
-import com.example.bank_application.service.AccountService;
+import com.example.bank_application.dto.accountDto.*;
+import com.example.bank_application.service.util.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +18,31 @@ public class AccountController {
         return accountService.getAccountById(accountId);
     }
 
-    @GetMapping("/all/active")
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public AccountsListDto getAllAccounts() {
-        return accountService.getAllAccountsByStatusActive();
+        return accountService.getAllAccounts();
+    }
+
+    //    Account  getAllAccountWhereStatusIs Active/Remote/Pending/
+    @GetMapping("/all/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public AccountsListDto getAllAccounts(@PathVariable("status") String status) {
+        return accountService.getAllAccountsByStatus(status);
     }
 
     @PostMapping("new/client_tax/{clientTaxCode}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewAccount(@RequestBody AccountCreateDto accountCreateDto, @PathVariable("clientTaxCode") String clientTaxCode) {
-        accountService.createNewAccount(accountCreateDto, clientTaxCode);
+    public AccountAfterCreateDto createNewAccount(@RequestBody AccountCreateDto accountCreateDto, @PathVariable("clientTaxCode") String clientTaxCode) {
+        return accountService.createNewAccount(accountCreateDto, clientTaxCode);
+    }
+
+    //    Blocked  findAccountsWhereProductIdIs....AndStatusIs.....
+    @PutMapping("block_account/{productId}/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public AccountsListAfterCreateDto blockAccountByProductIdAndStatus(
+            @PathVariable("productId") String productId,
+            @PathVariable("status") String status) {
+        return accountService.blockAccountByProductIdAndStatus(productId, status);
     }
 }

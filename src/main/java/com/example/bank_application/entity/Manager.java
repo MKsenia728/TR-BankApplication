@@ -46,16 +46,17 @@ public class Manager {
     @OneToMany(mappedBy = "manager", cascade = CascadeType.PERSIST)
     private Set<Client> clients;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Manager)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Manager manager = (Manager) o;
-        return firstName.equals(manager.firstName) && lastName.equals(manager.lastName) && clients.equals(manager.clients);
+        return Objects.equals(firstName, manager.firstName) && Objects.equals(lastName, manager.lastName) && status == manager.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, clients);
+        return Objects.hash(firstName, lastName, status);
     }
 }

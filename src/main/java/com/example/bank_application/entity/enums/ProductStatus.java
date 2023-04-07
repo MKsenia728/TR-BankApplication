@@ -2,6 +2,7 @@ package com.example.bank_application.entity.enums;
 
 public enum ProductStatus {
     ACTIVE("ACTIVE"),
+
     PENDING("PENDING"),
     REMOVED("REMOVED");
     private final String value;

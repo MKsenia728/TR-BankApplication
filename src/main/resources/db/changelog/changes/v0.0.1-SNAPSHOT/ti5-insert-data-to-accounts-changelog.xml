@@ -32,7 +32,7 @@
             <column name="client_id" valueComputed="UUID_TO_BIN('98965986-c7af-464d-aee2-e1dbac4c80ff')"/>
             <column name="name" value="UA 22 311045 00234200242214"/>
             <column name="type" value="DEPOSIT"/>
-            <column name="status" value="ACTIVE"/>
+            <column name="status" value="PENDING"/>
             <column name="balance" value="5000"/>
             <column name="currency_code" value="EUR"/>
             <column name="created_at" value="2021-12-23 09:00:00"/>

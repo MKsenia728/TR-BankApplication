@@ -26,7 +26,7 @@ public class Transaction {
     private TransactionType type;
 
     @Column(name = "amount")
-    private double amount;
+    private Double amount;
 
     @Column(name = "description")
     private String description;
