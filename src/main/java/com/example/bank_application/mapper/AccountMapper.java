@@ -1,9 +1,9 @@
 package com.example.bank_application.mapper;
 
-import com.example.bank_application.dto.accountDto.*;
+import com.example.bank_application.dto.accountDto.AccountAfterCreateDto;
+import com.example.bank_application.dto.accountDto.AccountCreateDto;
+import com.example.bank_application.dto.accountDto.AccountDto;
 import com.example.bank_application.entity.Account;
-import com.example.bank_application.entity.enums.AccountStatus;
-import com.example.bank_application.entity.enums.AccountType;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

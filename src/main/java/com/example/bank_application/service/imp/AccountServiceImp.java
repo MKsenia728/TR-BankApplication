@@ -9,7 +9,7 @@ import com.example.bank_application.mapper.AccountMapper;
 import com.example.bank_application.repository.AccountRepository;
 import com.example.bank_application.repository.ClientRepository;
 import com.example.bank_application.service.exceptions.*;
-import com.example.bank_application.service.util.AccountService;
+import com.example.bank_application.service.interf.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,13 +37,21 @@ public class AccountServiceImp implements AccountService {
     @Override
     @Transactional(readOnly = true)
     public AccountsListDto getAllAccounts() {
-        return new AccountsListDto(accountMapper.ToListDto(accountRepository.getAllBy()));
+        AccountsListDto accountsListDto = new AccountsListDto(accountMapper.ToListDto(accountRepository.getAllBy()));
+        if (accountsListDto == null) {
+            throw new AccountNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND);
+        }
+        return accountsListDto;
     }
 
     @Override
     @Transactional
     public AccountsListDto getAllAccountsByStatus(String status) {
-        return new AccountsListDto(accountMapper.ToListDto(getAllEntityAccountsByStatus(status)));
+        List<Account> accountList = accountRepository.getAllByStatus(AccountStatus.valueOf(status));
+        if (accountList == null) {
+            throw new AccountNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS);
+        }
+        return new AccountsListDto(accountMapper.ToListDto(accountList));
     }
 
     @Override
@@ -88,8 +96,7 @@ public class AccountServiceImp implements AccountService {
                 accountsByStatusAndProductId.add(account);
             }
         });
-        accountRepository.saveAll(accountsByStatusAndProductId);
-        return new AccountsListAfterCreateDto(accountMapper.toListAfterCreateDto(accountsByStatusAndProductId));
+        return new AccountsListAfterCreateDto(accountMapper.toListAfterCreateDto(accountRepository.saveAll(accountsByStatusAndProductId)));
     }
 
     private List<Account> getAllEntityAccountsByStatus(String status) {

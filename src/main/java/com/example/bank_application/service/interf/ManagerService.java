@@ -1,4 +1,4 @@
-package com.example.bank_application.service.util;
+package com.example.bank_application.service.interf;
 
 import com.example.bank_application.dto.managerDto.ManagerAfterCreateDto;
 import com.example.bank_application.dto.managerDto.ManagerCreateDto;

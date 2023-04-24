@@ -2,6 +2,7 @@ package com.example.bank_application.entity;
 
 import com.example.bank_application.entity.enums.ClientStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "clients")
 public class Client {
     @Id

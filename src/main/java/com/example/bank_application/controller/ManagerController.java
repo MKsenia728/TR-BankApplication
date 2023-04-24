@@ -4,7 +4,7 @@ import com.example.bank_application.dto.managerDto.ManagerAfterCreateDto;
 import com.example.bank_application.dto.managerDto.ManagerCreateDto;
 import com.example.bank_application.dto.managerDto.ManagerDto;
 import com.example.bank_application.dto.managerDto.ManagerListDto;
-import com.example.bank_application.service.util.ManagerService;
+import com.example.bank_application.service.interf.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

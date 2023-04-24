@@ -5,11 +5,11 @@ import com.example.bank_application.dto.managerDto.ManagerCreateDto;
 import com.example.bank_application.dto.managerDto.ManagerDto;
 import com.example.bank_application.dto.managerDto.ManagerListDto;
 import com.example.bank_application.entity.Manager;
-import com.example.bank_application.mapper.ManagerCreateMapper;
+
 import com.example.bank_application.mapper.ManagerMapper;
 import com.example.bank_application.repository.ManagerRepository;
 import com.example.bank_application.service.exceptions.ManagerAlreadyExists;
-import com.example.bank_application.service.util.ManagerService;
+import com.example.bank_application.service.interf.ManagerService;
 import com.example.bank_application.service.exceptions.ErrorMessage;
 import com.example.bank_application.service.exceptions.ManagerNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ManagerServiceImp implements ManagerService {
     private final ManagerMapper managerMapper;
-    private final ManagerCreateMapper managerCreateMapper;
     private final ManagerRepository managerRepository;
 
     @Override
@@ -39,7 +38,7 @@ public class ManagerServiceImp implements ManagerService {
     @Override
     @Transactional
     public ManagerAfterCreateDto managerNewCreate(ManagerCreateDto managerCreateDto) {
-        Manager manager = managerCreateMapper.toEntity(managerCreateDto);
+        Manager manager = managerMapper.toEntity(managerCreateDto);
         managerRepository.findAll().forEach(m -> {
             if (m.equals(manager)) {
                 throw new ManagerAlreadyExists(ErrorMessage.MANAGER_ALREADY_EXISTS);

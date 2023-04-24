@@ -1,7 +1,7 @@
 package com.example.bank_application.controller;
 
 import com.example.bank_application.dto.accountDto.*;
-import com.example.bank_application.service.util.AccountService;
+import com.example.bank_application.service.interf.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
