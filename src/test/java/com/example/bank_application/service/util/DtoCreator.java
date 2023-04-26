@@ -27,11 +27,11 @@ public class DtoCreator {
         );
     }
 
-    public static AccountAfterCreateDto getAccountAfterCreateDto() {
+    public static AccountAfterCreateDto getAccountAfterCreateDto(String status) {
         return new AccountAfterCreateDto(
                 "TT 89 311045 00234355921201",
                 "CURRENT",
-                "ACTIVE",
+                status,
                 "10000",
                 "EUR",
                 LocalDateTime.of(2021,12,2,9,0,0),

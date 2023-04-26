@@ -37,17 +37,17 @@ public class AccountServiceImp implements AccountService {
     @Override
     @Transactional(readOnly = true)
     public AccountsListDto getAllAccounts() {
-        AccountsListDto accountsListDto = new AccountsListDto(accountMapper.ToListDto(accountRepository.getAllBy()));
-        if (accountsListDto == null) {
+        List<Account> accountList = accountRepository.getAllBy();
+        if (accountList == null) {
             throw new AccountNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND);
         }
-        return accountsListDto;
+        return new AccountsListDto(accountMapper.ToListDto(accountList));
     }
 
     @Override
     @Transactional
     public AccountsListDto getAllAccountsByStatus(String status) {
-        List<Account> accountList = accountRepository.getAllByStatus(AccountStatus.valueOf(status));
+        List<Account> accountList = getAllEntityAccountsByStatus(status);
         if (accountList == null) {
             throw new AccountNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS);
         }
@@ -58,27 +58,28 @@ public class AccountServiceImp implements AccountService {
     @Transactional
     public AccountAfterCreateDto createNewAccount(AccountCreateDto accountCreateDto, String clientTaxCode) {
         Client client = clientRepository.findClientByTaxCode(clientTaxCode);
-        AccountAfterCreateDto accountAfterCreateDto = null;
+        AccountAfterCreateDto accountAfterCreateDto;
+        Account account;
         if (client == null) {
             throw new ClientNotFoundByTaxCodeException(ErrorMessage.CLIENT_NOT_FOUND_BY_TAX_CODE);
         } else if (accountRepository.findAccountByName(accountCreateDto.getName()) != null) {
             throw new AccountAlreadyExistException(ErrorMessage.ACCOUNT_ALREADY_EXISTS);
         } else {
             try {
-                Account account = accountMapper.toEntity(accountCreateDto);
-                if (account.getBalance() == null) account.setBalance((double) 0);
-                if (account.getStatus() == null) account.setStatus(AccountStatus.PENDING);
-                if (account.getType() == null) account.setType(AccountType.CURRENT);
-                if (account.getName() == null || account.getCurrencyCode() == null) {
-                    throw new NotEnoughDataToCreateEntity(ErrorMessage.NOT_ENOUGH_INPUT_DATA);
-                }
-                account.setClient(client);
-                accountAfterCreateDto = accountMapper.toDtoAfterCreate(account);
-                accountRepository.save(account);
+                account = accountMapper.toEntity(accountCreateDto);
             } catch (IllegalArgumentException e) {
-                throw new InvalidSearchArgument(ErrorMessage.ARGUMENT_IS_WRONG);
+                throw new InvalidSearchArgument(ErrorMessage.ARGUMENT_IS_WRONG_IMPOSSIBLE);
             }
         }
+        if (account.getBalance() == null) account.setBalance((double) 0);
+        if (account.getStatus() == null) account.setStatus(AccountStatus.PENDING);
+        if (account.getType() == null) account.setType(AccountType.CURRENT);
+        if (account.getName() == null || account.getCurrencyCode() == null) {
+            throw new NotEnoughDataToCreateEntity(ErrorMessage.NOT_ENOUGH_INPUT_DATA);
+        }
+        account.setClient(client);
+        accountAfterCreateDto = accountMapper.toDtoAfterCreate(account);
+        accountRepository.save(account);
         return accountAfterCreateDto;
     }
 
@@ -87,15 +88,21 @@ public class AccountServiceImp implements AccountService {
     public AccountsListAfterCreateDto blockAccountByProductIdAndStatus(String productId, String status) {
         List<Account> accountsByStatus = getAllEntityAccountsByStatus(status);
         List<Account> accountsByStatusAndProductId = new ArrayList<>();
-        Integer prodId = Integer.valueOf(productId);
-
-        accountsByStatus.forEach(account -> {
-            if (Objects.equals(account.getAgreement().getProduct().getId(), prodId)) {
-                account.setStatus(AccountStatus.BLOCKED);
-                account.setUpdatedAt(LocalDateTime.now());
-                accountsByStatusAndProductId.add(account);
-            }
-        });
+        try {
+            Integer prodId = Integer.valueOf(productId);
+            accountsByStatus.forEach(account -> {
+                if (Objects.equals(account.getAgreement().getProduct().getId(), prodId)) {
+                    account.setStatus(AccountStatus.BLOCKED);
+                    account.setUpdatedAt(LocalDateTime.now());
+                    accountsByStatusAndProductId.add(account);
+                }
+            });
+        } catch (RuntimeException e) {
+            throw new InvalidSearchArgument(ErrorMessage.ARGUMENT_IS_WRONG_TYPE_INCORRECT);
+        }
+        if (accountsByStatusAndProductId.size() == 0) {
+            throw new AccountNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS_AND_PRODUCT_ID);
+        }
         return new AccountsListAfterCreateDto(accountMapper.toListAfterCreateDto(accountRepository.saveAll(accountsByStatusAndProductId)));
     }
 
@@ -104,7 +111,7 @@ public class AccountServiceImp implements AccountService {
         try {
             statusEnum = AccountStatus.valueOf(status.toUpperCase());
         } catch (RuntimeException e) {
-            throw new InvalidSearchArgument(ErrorMessage.ARGUMENT_IS_WRONG);
+            throw new InvalidSearchArgument(ErrorMessage.ARGUMENT_IS_WRONG_IMPOSSIBLE);
         }
         return accountRepository.getAllByStatus(statusEnum);
     }
