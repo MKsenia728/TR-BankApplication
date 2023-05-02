@@ -17,16 +17,12 @@ import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 public interface ManagerMapper {
     ManagerDto toDto(Manager manager);
 
-    Manager toEntity(ManagerDto managerDto);
-
     List<ManagerDto> toListDto(List<Manager> managers);
-
-    ManagerCreateDto toCreateDto(Manager manager);
 
     @Mapping(target = "createdAt", expression = "java(LocalDateTime.now())")
     @Mapping(target = "updatedAt", expression = "java(LocalDateTime.now())")
     @Mapping(target = "status", expression = "java(ManagerStatus.PENDING)")
-    Manager toEntity(ManagerCreateDto managerDto);
+    Manager toCreateEntity(ManagerCreateDto managerDto);
 
     ManagerAfterCreateDto toAfterCreateDto(Manager manager);
 }

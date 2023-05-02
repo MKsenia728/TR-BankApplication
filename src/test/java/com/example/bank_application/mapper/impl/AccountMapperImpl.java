@@ -9,64 +9,57 @@ import com.example.bank_application.entity.enums.AccountStatus;
 import com.example.bank_application.entity.enums.AccountType;
 import com.example.bank_application.entity.enums.CurrencyType;
 import com.example.bank_application.mapper.AccountMapper;
-import com.example.bank_application.mapper.UuidMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 @Component
 public class AccountMapperImpl implements AccountMapper {
-//    private final UuidMapper uuidMapper;
 
-//    @Autowired
-//    public AccountMapperImpl(UuidMapper uuidMapper) {
-//        this.uuidMapper = uuidMapper;
-//    }
-@Override
     public AccountDto toDto(Account account) {
-    return null;
-//        if (account == null) {
-//            return null;
-//        } else {
-//            String clientFirstName = null;
-//            String clientLastName = null;
-//            String id = null;
-//            String name = null;
-//            String type = null;
-//            String status = null;
-//            String balance = null;
-//            String currencyCode = null;
-//            LocalDateTime createdAt = null;
-//            LocalDateTime updatedAt = null;
-//            clientFirstName = this.accountClientFirstName(account);
-//            clientLastName = this.accountClientLastName(account);
-//            id = this.UUID.fromString((account.getId());
-//            name = account.getName();
-//            if (account.getType() != null) {
-//                type = account.getType().name();
-//            }
-//
-//            if (account.getStatus() != null) {
-//                status = account.getStatus().name();
-//            }
-//
-//            if (account.getBalance() != null) {
-//                balance = String.valueOf(account.getBalance());
-//            }
-//
-//            if (account.getCurrencyCode() != null) {
-//                currencyCode = account.getCurrencyCode().name();
-//            }
-//
-//            createdAt = account.getCreatedAt();
-//            updatedAt = account.getUpdatedAt();
-//            AccountDto accountDto = new AccountDto(id, name, clientFirstName, clientLastName, type, status, balance, currencyCode, createdAt, updatedAt);
-//            return accountDto;
-//        }
+        if (account == null) {
+            return null;
+        } else {
+            String clientFirstName = null;
+            String clientLastName = null;
+            String id = null;
+            String name = null;
+            String type = null;
+            String status = null;
+            String balance = null;
+            String currencyCode = null;
+            LocalDateTime createdAt = null;
+            LocalDateTime updatedAt = null;
+            clientFirstName = this.accountClientFirstName(account);
+            clientLastName = this.accountClientLastName(account);
+            id = (account.getId()).toString();
+            name = account.getName();
+            if (account.getType() != null) {
+                type = account.getType().name();
+            }
+
+            if (account.getStatus() != null) {
+                status = account.getStatus().name();
+            }
+
+            if (account.getBalance() != null) {
+                balance = String.valueOf(account.getBalance());
+            }
+
+            if (account.getCurrencyCode() != null) {
+                currencyCode = account.getCurrencyCode().name();
+            }
+
+            createdAt = account.getCreatedAt();
+            updatedAt = account.getUpdatedAt();
+            AccountDto accountDto = new AccountDto(id, name, clientFirstName, clientLastName, type, status, balance, currencyCode, createdAt, updatedAt);
+            return accountDto;
+        }
     }
+
 @Override
     public AccountAfterCreateDto toDtoAfterCreate(Account account) {
         if (account == null) {
@@ -131,7 +124,7 @@ public class AccountMapperImpl implements AccountMapper {
         }
     }
 @Override
-    public List<AccountDto> ToListDto(List<Account> accounts) {
+    public List<AccountDto> toListDto(List<Account> accounts) {
         if (accounts == null) {
             return null;
         } else {

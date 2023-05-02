@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/accounts")
 @RequiredArgsConstructor
@@ -20,14 +22,14 @@ public class AccountController {
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public AccountsListDto getAllAccounts() {
+    public List<AccountDto> getAllAccounts() {
         return accountService.getAllAccounts();
     }
 
     //    Account  getAllAccountWhereStatusIs Active/Remote/Pending/
     @GetMapping("/all/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public AccountsListDto getAllAccounts(@PathVariable("status") String status) {
+    public List<AccountDto> getAllAccounts(@PathVariable("status") String status) {
         return accountService.getAllAccountsByStatus(status);
     }
 

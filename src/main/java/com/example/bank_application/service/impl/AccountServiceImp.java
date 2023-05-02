@@ -1,4 +1,4 @@
-package com.example.bank_application.service.imp;
+package com.example.bank_application.service.impl;
 
 import com.example.bank_application.dto.accountDto.*;
 import com.example.bank_application.entity.Account;
@@ -30,28 +30,37 @@ public class AccountServiceImp implements AccountService {
     @Override
     @Transactional(readOnly = true)
     public AccountDto getAccountById(String id) {
-        return accountMapper.toDto(accountRepository.findAccountById(UUID.fromString(id)).orElseThrow(
-                () -> new AccountNotFoundException((ErrorMessage.ACCOUNT_NOT_FOUND))));
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(id);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidSearchArgumentException(ErrorMessage.ARGUMENT_IS_WRONG_IMPOSSIBLE);
+        }
+        return accountMapper.toDto(accountRepository.findAccountById(uuid).orElseThrow(
+                () -> new DataNotFoundException((ErrorMessage.ACCOUNT_NOT_FOUND))));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public AccountsListDto getAllAccounts() {
+    public List<AccountDto> getAllAccounts() {
         List<Account> accountList = accountRepository.getAllBy();
         if (accountList == null) {
-            throw new AccountNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND);
+            throw new DataNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND);
         }
-        return new AccountsListDto(accountMapper.ToListDto(accountList));
+        List<AccountDto> resList = new ArrayList<>(accountMapper.toListDto(accountList));
+
+        return resList;
     }
 
     @Override
     @Transactional
-    public AccountsListDto getAllAccountsByStatus(String status) {
+    public List<AccountDto> getAllAccountsByStatus(String status) {
         List<Account> accountList = getAllEntityAccountsByStatus(status);
         if (accountList == null) {
-            throw new AccountNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS);
+            throw new DataNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS);
         }
-        return new AccountsListDto(accountMapper.ToListDto(accountList));
+
+        return new ArrayList<>(accountMapper.toListDto(accountList));
     }
 
     @Override
@@ -68,7 +77,7 @@ public class AccountServiceImp implements AccountService {
             try {
                 account = accountMapper.toEntity(accountCreateDto);
             } catch (IllegalArgumentException e) {
-                throw new InvalidSearchArgument(ErrorMessage.ARGUMENT_IS_WRONG_IMPOSSIBLE);
+                throw new InvalidSearchArgumentException(ErrorMessage.ARGUMENT_IS_WRONG_IMPOSSIBLE);
             }
         }
         if (account.getBalance() == null) account.setBalance((double) 0);
@@ -97,11 +106,11 @@ public class AccountServiceImp implements AccountService {
                     accountsByStatusAndProductId.add(account);
                 }
             });
-        } catch (RuntimeException e) {
-            throw new InvalidSearchArgument(ErrorMessage.ARGUMENT_IS_WRONG_TYPE_INCORRECT);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidSearchArgumentException(ErrorMessage.ARGUMENT_IS_WRONG_TYPE_INCORRECT);
         }
         if (accountsByStatusAndProductId.size() == 0) {
-            throw new AccountNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS_AND_PRODUCT_ID);
+            throw new DataNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS_AND_PRODUCT_ID);
         }
         return new AccountsListAfterCreateDto(accountMapper.toListAfterCreateDto(accountRepository.saveAll(accountsByStatusAndProductId)));
     }
@@ -111,7 +120,7 @@ public class AccountServiceImp implements AccountService {
         try {
             statusEnum = AccountStatus.valueOf(status.toUpperCase());
         } catch (RuntimeException e) {
-            throw new InvalidSearchArgument(ErrorMessage.ARGUMENT_IS_WRONG_IMPOSSIBLE);
+            throw new InvalidSearchArgumentException(ErrorMessage.ARGUMENT_IS_WRONG_IMPOSSIBLE);
         }
         return accountRepository.getAllByStatus(statusEnum);
     }

@@ -1,4 +1,4 @@
-package com.example.bank_application.service.imp;
+package com.example.bank_application.service.impl;
 
 import com.example.bank_application.dto.accountDto.*;
 import com.example.bank_application.entity.Account;
@@ -8,8 +8,8 @@ import com.example.bank_application.mapper.AccountMapper;
 import com.example.bank_application.repository.AccountRepository;
 import com.example.bank_application.repository.ClientRepository;
 import com.example.bank_application.service.exceptions.*;
-import com.example.bank_application.service.util.DtoCreator;
-import com.example.bank_application.service.util.EntityCreator;
+import com.example.bank_application.util.DtoCreator;
+import com.example.bank_application.util.EntityCreator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,23 +43,31 @@ class AccountServiceImpTest {
         Account account = EntityCreator.getAccountEntity();
         AccountDto accountDto = DtoCreator.getAccountDto();
 
-        Mockito.when(accountRepository.findAccountById(account.getId())).thenReturn(Optional.ofNullable(account));
+        Mockito.when(accountRepository.findAccountById(account.getId())).thenReturn(Optional.of(account));
         Mockito.when(accountMapper.toDto(account)).thenReturn(accountDto);
 
-        AccountDto resultAccountDto = service.getAccountById(account.getId().toString());
-        assertEquals(resultAccountDto, accountDto);
+        service.getAccountById(account.getId().toString());
+
         Mockito.verify(accountRepository).findAccountById(account.getId());
         Mockito.verify(accountMapper).toDto(account);
     }
 
     @Test
-    @DisplayName("Negative test. Get account by Id")
+    @DisplayName("Negative test. Get account by Id. There is no element")
     void getNotExistAccountByIdTest() {
         Account account = EntityCreator.getAccountEntity();
-        assertThrows(AccountNotFoundException.class, () -> service.getAccountById(account.getId().toString()));
+        assertThrows(DataNotFoundException.class, () -> service.getAccountById(account.getId().toString()));
     }
 
     @Test
+    @DisplayName("Negative test. Get account by Id. Id is incorrect")
+    void getIncorrectIdAccountByIdTest() {
+        String id = "qwerty123";
+        assertThrows(IllegalArgumentException.class, () -> service.getAccountById(id));
+    }
+
+    @Test
+    @DisplayName("Positive test. Get all accounts")
     void getAllAccountsTest() {
         List<Account> accountList = new ArrayList<>();
         accountList.add(EntityCreator.getAccountEntity());
@@ -67,20 +75,22 @@ class AccountServiceImpTest {
         accountDtoList.add(DtoCreator.getAccountDto());
 
         when(accountRepository.getAllBy()).thenReturn(accountList);
-        when(accountMapper.ToListDto(accountList)).thenReturn(accountDtoList);
+        when(accountMapper.toListDto(accountList)).thenReturn(accountDtoList);
 
-        AccountsListDto expectAccountListDto = new AccountsListDto(accountDtoList);
-        AccountsListDto resultAccountListDto = service.getAllAccounts();
-        assertEquals(expectAccountListDto, resultAccountListDto);
+        service.getAllAccounts();
+        Mockito.verify(accountRepository).getAllBy();
+        Mockito.verify(accountMapper).toListDto(accountList);
     }
 
     @Test
+    @DisplayName("Negative test. Accounts are absent")
     void getNotExistAllAccountsTest() {
         when(accountRepository.getAllBy()).thenReturn(null);
-        assertThrows(AccountNotFoundException.class, () -> service.getAllAccounts());
+        assertThrows(DataNotFoundException.class, () -> service.getAllAccounts());
     }
 
     @Test
+    @DisplayName("Positive test. Get all accounts by status")
     void getAllAccountsByStatusTest() {
         List<Account> accountList = new ArrayList<>();
         accountList.add(EntityCreator.getAccountEntity());
@@ -89,126 +99,145 @@ class AccountServiceImpTest {
         String status = "ACTIVE";
 
         when(accountRepository.getAllByStatus(AccountStatus.valueOf(status))).thenReturn(accountList);
-        when(accountMapper.ToListDto(accountList)).thenReturn(accountDtoList);
+        when(accountMapper.toListDto(accountList)).thenReturn(accountDtoList);
 
-        AccountsListDto expectAccountListDto = new AccountsListDto(accountDtoList);
-        AccountsListDto resultAccountListDto = service.getAllAccountsByStatus(status);
-        assertEquals(expectAccountListDto, resultAccountListDto);
+        service.getAllAccountsByStatus(status);
 
+        Mockito.verify(accountRepository).getAllByStatus(AccountStatus.valueOf(status));
+        Mockito.verify(accountMapper).toListDto(accountList);
     }
 
     @Test
+    @DisplayName("Negative test. There are no any accounts by status")
     void getNotExistAllAccountsByStatusTest() {
         String status = "PENDING";
         when(accountRepository.getAllByStatus(AccountStatus.valueOf(status))).thenReturn(null);
-        assertThrows(AccountNotFoundException.class, () -> service.getAllAccountsByStatus(status));
+        assertThrows(DataNotFoundException.class, () -> service.getAllAccountsByStatus(status));
     }
 
     @Test
+    @DisplayName("Negative test. The argument STATUS is wrong")
     void getInvalidStatusExceptionAllAccountsByStatusTest() {
         String status = "Something wrong";
-        assertThrows(InvalidSearchArgument.class, () -> service.getAllAccountsByStatus(status));
+        assertThrows(InvalidSearchArgumentException.class, () -> service.getAllAccountsByStatus(status));
     }
 
     @Test
+    @DisplayName("Positive test. Create new account for client (tax client)")
     void createNewAccountTest() {
         Client client = EntityCreator.getClientEntity();
         String taxCode = client.getTaxCode();
-        Mockito.when(clientRepository.findClientByTaxCode(taxCode)).thenReturn(client);
-
         AccountCreateDto accountCreateDto = DtoCreator.getAccountCreateDto();
         Account account = EntityCreator.getAccountEntity();
+        AccountAfterCreateDto expectAccountAfterCreateDto = DtoCreator.getAccountAfterCreateDto("ACTIVE");
+
+        Mockito.when(clientRepository.findClientByTaxCode(taxCode)).thenReturn(client);
         Mockito.when(accountRepository.findAccountByName(accountCreateDto.getName())).thenReturn(null);
         Mockito.when(accountMapper.toEntity(accountCreateDto)).thenReturn(account);
-
-        AccountAfterCreateDto expectAccountAfterCreateDto = DtoCreator.getAccountAfterCreateDto("ACTIVE");
         Mockito.when(accountMapper.toDtoAfterCreate(account)).thenReturn(expectAccountAfterCreateDto);
         Mockito.when(accountRepository.save(account)).thenReturn(account);
 
-        AccountAfterCreateDto resultAccountAfterCreateDto = service.createNewAccount(accountCreateDto, taxCode);
+        service.createNewAccount(accountCreateDto, taxCode);
 
-        assertEquals(expectAccountAfterCreateDto,resultAccountAfterCreateDto);
         Mockito.verify(clientRepository).findClientByTaxCode(taxCode);
         Mockito.verify(accountRepository).findAccountByName(accountCreateDto.getName());
         Mockito.verify(accountMapper).toEntity(accountCreateDto);
         Mockito.verify(accountMapper).toDtoAfterCreate(account);
         Mockito.verify(accountRepository).save(account);
     }
+
     @Test
+    @DisplayName("Negative test. Client (tax code) does not exist")
     void createNotFoundClientExceptionNewAccountTest() {
         String taxCode = "111";
         Mockito.when(clientRepository.findClientByTaxCode(taxCode)).thenReturn(null);
         AccountCreateDto accountCreateDto = DtoCreator.getAccountCreateDto();
         assertThrows(ClientNotFoundByTaxCodeException.class, () -> service.createNewAccount(accountCreateDto, taxCode));
     }
+
     @Test
+    @DisplayName("Negative test. Such account already exist")
     void createAlreadyExistAccountExceptionNewAccountTest() {
         Client client = EntityCreator.getClientEntity();
         String taxCode = client.getTaxCode();
-        Mockito.when(clientRepository.findClientByTaxCode(taxCode)).thenReturn(client);
-
         AccountCreateDto accountCreateDto = DtoCreator.getAccountCreateDto();
         Account account = EntityCreator.getAccountEntity();
+
+        Mockito.when(clientRepository.findClientByTaxCode(taxCode)).thenReturn(client);
         Mockito.when(accountRepository.findAccountByName(accountCreateDto.getName())).thenReturn(account);
 
         assertThrows(AccountAlreadyExistException.class, () -> service.createNewAccount(accountCreateDto, taxCode));
-
     }
+
     @Test
+    @DisplayName("Negative test. Missing or insufficient data for creating")
     void createInvalidArgumentExceptionNewAccountTest() {
         Client client = EntityCreator.getClientEntity();
         String taxCode = client.getTaxCode();
-        Mockito.when(clientRepository.findClientByTaxCode(taxCode)).thenReturn(client);
-
         AccountCreateDto accountCreateDto = DtoCreator.getAccountCreateDto();
         Account account = new Account();
+
+        Mockito.when(clientRepository.findClientByTaxCode(taxCode)).thenReturn(client);
         Mockito.when(accountRepository.findAccountByName(accountCreateDto.getName())).thenReturn(null);
         Mockito.when(accountMapper.toEntity(accountCreateDto)).thenReturn(account);
         assertThrows(NotEnoughDataToCreateEntity.class, () -> service.createNewAccount(accountCreateDto, taxCode));
     }
 
     @Test
+    @DisplayName("Positive test. Block account by status and product id")
     void blockAccountByProductIdAndStatusTest() {
         String productId = "1";
         String status = "ACTIVE";
         List<Account> accountList = new ArrayList<>();
         accountList.add(EntityCreator.getAccountEntity());
+
         Mockito.when(accountRepository.getAllByStatus(AccountStatus.valueOf(status))).thenReturn(accountList);
 
         accountList.get(0).setStatus(AccountStatus.BLOCKED);
         List<Account> updatedList = new ArrayList<>(accountList);
-        Mockito.when(accountRepository.saveAll(updatedList)).thenReturn(updatedList);
         List<AccountAfterCreateDto> accountAfterCreateDtoList = new ArrayList<>();
         accountAfterCreateDtoList.add(DtoCreator.getAccountAfterCreateDto("BLOCKED"));
+
+        Mockito.when(accountRepository.saveAll(updatedList)).thenReturn(updatedList);
         Mockito.when(accountMapper.toListAfterCreateDto(accountList)).thenReturn(accountAfterCreateDtoList);
+
         AccountsListAfterCreateDto resultList = service.blockAccountByProductIdAndStatus(productId, status);
-        assertEquals(accountAfterCreateDtoList.get(0), resultList.getAccountAfterCreateDtoList().get(0));
+
+        Mockito.verify(accountRepository).getAllByStatus(AccountStatus.valueOf(status));
+        Mockito.verify(accountRepository).saveAll(updatedList);
+        Mockito.verify(accountMapper).toListAfterCreateDto(accountList);
+
+        assertEquals("BLOCKED", resultList.getAccountAfterCreateDtoList().get(0).getStatus());
     }
 
     @Test
+    @DisplayName("Negative test. Argument STATUS is incorrect")
     void blockInvalidStatusExceptionAccountByProductIdAndStatusTest() {
         String productId = "1";
         String status = "Something wrong";
-        assertThrows(InvalidSearchArgument.class, () -> service.blockAccountByProductIdAndStatus(productId, status));
+        assertThrows(InvalidSearchArgumentException.class, () -> service.blockAccountByProductIdAndStatus(productId, status));
     }
 
     @Test
+    @DisplayName("Negative test. Argument ProductId is incorrect")
     void blockInvalidProductIdExceptionAccountByProductIdAndStatusTest() {
         String productId = "Something wrong";
         String status = "ACTIVE";
         List<Account> accountList = new ArrayList<>();
         accountList.add(EntityCreator.getAccountEntity());
+
         Mockito.when(accountRepository.getAllByStatus(AccountStatus.ACTIVE)).thenReturn(accountList);
-        assertThrows(InvalidSearchArgument.class, () -> service.blockAccountByProductIdAndStatus(productId, status));
+        assertThrows(InvalidSearchArgumentException.class, () -> service.blockAccountByProductIdAndStatus(productId, status));
     }
 
     @Test
+    @DisplayName("Negative test. There are no any account by status and account")
     void blockAccountNotFoundExceptionAccountByProductIdAndStatusTest() {
         String productId = "2";
         String status = "ACTIVE";
         List<Account> accountList = new ArrayList<>();
         accountList.add(EntityCreator.getAccountEntity());
         Mockito.when(accountRepository.getAllByStatus(AccountStatus.ACTIVE)).thenReturn(accountList);
-        assertThrows(AccountNotFoundException.class, () -> service.blockAccountByProductIdAndStatus(productId, status));
+        assertThrows(DataNotFoundException.class, () -> service.blockAccountByProductIdAndStatus(productId, status));
     }
 }

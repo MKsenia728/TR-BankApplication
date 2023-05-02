@@ -1,4 +1,4 @@
-package com.example.bank_application.service.imp;
+package com.example.bank_application.service.impl;
 
 import com.example.bank_application.dto.managerDto.ManagerAfterCreateDto;
 import com.example.bank_application.dto.managerDto.ManagerCreateDto;
@@ -38,7 +38,7 @@ public class ManagerServiceImp implements ManagerService {
     @Override
     @Transactional
     public ManagerAfterCreateDto managerNewCreate(ManagerCreateDto managerCreateDto) {
-        Manager manager = managerMapper.toEntity(managerCreateDto);
+        Manager manager = managerMapper.toCreateEntity(managerCreateDto);
         managerRepository.findAll().forEach(m -> {
             if (m.equals(manager)) {
                 throw new ManagerAlreadyExists(ErrorMessage.MANAGER_ALREADY_EXISTS);
