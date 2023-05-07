@@ -201,13 +201,13 @@ class AccountServiceImpTest {
         Mockito.when(accountRepository.saveAll(updatedList)).thenReturn(updatedList);
         Mockito.when(accountMapper.toListAfterCreateDto(accountList)).thenReturn(accountAfterCreateDtoList);
 
-        AccountsListAfterCreateDto resultList = service.blockAccountByProductIdAndStatus(productId, status);
+        List<AccountAfterCreateDto> resultList = service.blockAccountByProductIdAndStatus(productId, status);
 
         Mockito.verify(accountRepository).getAllByStatus(AccountStatus.valueOf(status));
         Mockito.verify(accountRepository).saveAll(updatedList);
         Mockito.verify(accountMapper).toListAfterCreateDto(accountList);
 
-        assertEquals("BLOCKED", resultList.getAccountAfterCreateDtoList().get(0).getStatus());
+        assertEquals("BLOCKED", resultList.get(0).getStatus());
     }
 
     @Test

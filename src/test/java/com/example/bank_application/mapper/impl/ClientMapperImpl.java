@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,14 +20,14 @@ public class ClientMapperImpl implements ClientMapper {
         } else {
             String id = null;
             String status = null;
-            String taxCode = null;
-            String firstName = null;
-            String lastName = null;
-            String email = null;
-            String address = null;
-            String phone = null;
-            LocalDateTime createdAt = null;
-            LocalDateTime updatedAt = null;
+            String taxCode;
+            String firstName;
+            String lastName;
+            String email;
+            String address;
+            String phone;
+            LocalDateTime createdAt;
+            LocalDateTime updatedAt;
             if (client.getId() != null) {
                 id = client.getId().toString();
             }
@@ -45,8 +44,7 @@ public class ClientMapperImpl implements ClientMapper {
             phone = client.getPhone();
             createdAt = client.getCreatedAt();
             updatedAt = client.getUpdatedAt();
-            ClientDto clientDto = new ClientDto(id, status, taxCode, firstName, lastName, email, address, phone, createdAt, updatedAt);
-            return clientDto;
+            return new ClientDto(id, status, taxCode, firstName, lastName, email, address, phone, createdAt, updatedAt);
         }
     }
 
@@ -55,11 +53,11 @@ public class ClientMapperImpl implements ClientMapper {
             return null;
         } else {
             String status = null;
-            String taxCode = null;
-            String firstName = null;
-            String lastName = null;
-            String email = null;
-            String phone = null;
+            String taxCode;
+            String firstName;
+            String lastName;
+            String email;
+            String phone;
             if (client.getStatus() != null) {
                 status = client.getStatus().name();
             }
@@ -69,8 +67,7 @@ public class ClientMapperImpl implements ClientMapper {
             lastName = client.getLastName();
             email = client.getEmail();
             phone = client.getPhone();
-            ClientWithBalanceDto clientWithBalanceDto = new ClientWithBalanceDto(status, taxCode, firstName, lastName, email, phone);
-            return clientWithBalanceDto;
+            return new ClientWithBalanceDto(status, taxCode, firstName, lastName, email, phone);
         }
     }
 
@@ -84,7 +81,7 @@ public class ClientMapperImpl implements ClientMapper {
             }
 
             if (clientDto.getStatus() != null) {
-                client.setStatus((ClientStatus)Enum.valueOf(ClientStatus.class, clientDto.getStatus()));
+                client.setStatus(Enum.valueOf(ClientStatus.class, clientDto.getStatus()));
             }
 
             client.setTaxCode(clientDto.getTaxCode());
@@ -103,11 +100,9 @@ public class ClientMapperImpl implements ClientMapper {
         if (clients == null) {
             return null;
         } else {
-            List<ClientWithBalanceDto> list = new ArrayList(clients.size());
-            Iterator var3 = clients.iterator();
+            List<ClientWithBalanceDto> list = new ArrayList<>(clients.size());
 
-            while(var3.hasNext()) {
-                Client client = (Client)var3.next();
+            for (Client client : clients) {
                 list.add(this.toDtoWithBalance(client));
             }
 

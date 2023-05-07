@@ -3,24 +3,14 @@ package com.example.bank_application.util;
 import com.example.bank_application.dto.accountDto.AccountAfterCreateDto;
 import com.example.bank_application.dto.accountDto.AccountCreateDto;
 import com.example.bank_application.dto.accountDto.AccountDto;
-import com.example.bank_application.dto.accountDto.AccountsListDto;
 import com.example.bank_application.dto.clientDto.ClientDto;
 import com.example.bank_application.dto.clientDto.ClientWithBalanceDto;
 import com.example.bank_application.dto.managerDto.ManagerAfterCreateDto;
 import com.example.bank_application.dto.managerDto.ManagerCreateDto;
 import com.example.bank_application.dto.managerDto.ManagerDto;
-import com.example.bank_application.entity.Client;
-import com.example.bank_application.entity.Manager;
-import com.example.bank_application.entity.Product;
-import com.example.bank_application.entity.enums.ClientStatus;
-import com.example.bank_application.entity.enums.ManagerStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 @UtilityClass
 public class DtoCreator {
@@ -57,6 +47,26 @@ public class DtoCreator {
                 "TT 89 311045 00234355921201",
                 null,
                 null,
+                "10000.0",
+                "EUR"
+        );
+    }
+
+    public static AccountCreateDto getAccountCreateDtoWithoutNecessaryData() {
+        return new AccountCreateDto(
+                null,
+                null,
+                null,
+                "10000.0",
+                "EUR"
+        );
+    }
+
+    public static AccountCreateDto getAccountCreateDtoWithInvalidStatus() {
+        return new AccountCreateDto(
+                "TT 89 311045 00234355921201",
+                null,
+                "sdfsdfs",
                 "10000.0",
                 "EUR"
         );

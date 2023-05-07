@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Component
@@ -23,16 +22,16 @@ public class AccountMapperImpl implements AccountMapper {
         if (account == null) {
             return null;
         } else {
-            String clientFirstName = null;
-            String clientLastName = null;
-            String id = null;
-            String name = null;
+            String clientFirstName;
+            String clientLastName;
+            String id;
+            String name;
             String type = null;
             String status = null;
             String balance = null;
             String currencyCode = null;
-            LocalDateTime createdAt = null;
-            LocalDateTime updatedAt = null;
+            LocalDateTime createdAt;
+            LocalDateTime updatedAt;
             clientFirstName = this.accountClientFirstName(account);
             clientLastName = this.accountClientLastName(account);
             id = (account.getId()).toString();
@@ -55,8 +54,7 @@ public class AccountMapperImpl implements AccountMapper {
 
             createdAt = account.getCreatedAt();
             updatedAt = account.getUpdatedAt();
-            AccountDto accountDto = new AccountDto(id, name, clientFirstName, clientLastName, type, status, balance, currencyCode, createdAt, updatedAt);
-            return accountDto;
+            return new AccountDto(id, name, clientFirstName, clientLastName, type, status, balance, currencyCode, createdAt, updatedAt);
         }
     }
 
@@ -65,13 +63,13 @@ public class AccountMapperImpl implements AccountMapper {
         if (account == null) {
             return null;
         } else {
-            String name = null;
+            String name;
             String type = null;
             String status = null;
             String balance = null;
             String currencyCode = null;
-            LocalDateTime createdAt = null;
-            LocalDateTime updatedAt = null;
+            LocalDateTime createdAt;
+            LocalDateTime updatedAt;
             name = account.getName();
             if (account.getType() != null) {
                 type = account.getType().name();
@@ -91,8 +89,7 @@ public class AccountMapperImpl implements AccountMapper {
 
             createdAt = account.getCreatedAt();
             updatedAt = account.getUpdatedAt();
-            AccountAfterCreateDto accountAfterCreateDto = new AccountAfterCreateDto(name, type, status, balance, currencyCode, createdAt, updatedAt);
-            return accountAfterCreateDto;
+            return new AccountAfterCreateDto(name, type, status, balance, currencyCode, createdAt, updatedAt);
         }
     }
 @Override
@@ -103,20 +100,18 @@ public class AccountMapperImpl implements AccountMapper {
             Account account = new Account();
             account.setName(accountCreateDto.getName());
             if (accountCreateDto.getType() != null) {
-                account.setType((AccountType)Enum.valueOf(AccountType.class, accountCreateDto.getType()));
+                account.setType(Enum.valueOf(AccountType.class, accountCreateDto.getType()));
             }
 
             if (accountCreateDto.getStatus() != null) {
-                account.setStatus((AccountStatus)Enum.valueOf(AccountStatus.class, accountCreateDto.getStatus()));
+                account.setStatus(Enum.valueOf(AccountStatus.class, accountCreateDto.getStatus()));
             }
 
             if (accountCreateDto.getBalance() != null) {
                 account.setBalance(Double.parseDouble(accountCreateDto.getBalance()));
             }
 
-            if (accountCreateDto.getCurrencyCode() != null) {
-                account.setCurrencyCode((CurrencyType)Enum.valueOf(CurrencyType.class, accountCreateDto.getCurrencyCode()));
-            }
+            account.setCurrencyCode(Enum.valueOf(CurrencyType.class, accountCreateDto.getCurrencyCode()));
 
             account.setCreatedAt(LocalDateTime.now());
             account.setUpdatedAt(LocalDateTime.now());
@@ -128,11 +123,9 @@ public class AccountMapperImpl implements AccountMapper {
         if (accounts == null) {
             return null;
         } else {
-            List<AccountDto> list = new ArrayList(accounts.size());
-            Iterator var3 = accounts.iterator();
+            List<AccountDto> list = new ArrayList<>(accounts.size());
 
-            while(var3.hasNext()) {
-                Account account = (Account)var3.next();
+            for (Account account : accounts) {
                 list.add(this.toDto(account));
             }
 
@@ -144,11 +137,9 @@ public class AccountMapperImpl implements AccountMapper {
         if (accounts == null) {
             return null;
         } else {
-            List<AccountAfterCreateDto> list = new ArrayList(accounts.size());
-            Iterator var3 = accounts.iterator();
+            List<AccountAfterCreateDto> list = new ArrayList<>(accounts.size());
 
-            while(var3.hasNext()) {
-                Account account = (Account)var3.next();
+            for (Account account : accounts) {
                 list.add(this.toDtoAfterCreate(account));
             }
 
@@ -164,8 +155,7 @@ public class AccountMapperImpl implements AccountMapper {
             if (client == null) {
                 return null;
             } else {
-                String firstName = client.getFirstName();
-                return firstName == null ? null : firstName;
+                return client.getFirstName();
             }
         }
     }
@@ -178,8 +168,7 @@ public class AccountMapperImpl implements AccountMapper {
             if (client == null) {
                 return null;
             } else {
-                String lastName = client.getLastName();
-                return lastName == null ? null : lastName;
+                return client.getLastName();
             }
         }
     }

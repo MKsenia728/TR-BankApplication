@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Component
@@ -20,11 +19,11 @@ public class ManagerMapperImpl implements ManagerMapper {
             return null;
         } else {
             String id = null;
-            String firstName = null;
-            String lastName = null;
+            String firstName;
+            String lastName;
             String status = null;
-            LocalDateTime createdAt = null;
-            LocalDateTime updatedAt = null;
+            LocalDateTime createdAt;
+            LocalDateTime updatedAt;
             if (manager.getId() != null) {
                 id = String.valueOf(manager.getId());
             }
@@ -37,29 +36,7 @@ public class ManagerMapperImpl implements ManagerMapper {
 
             createdAt = manager.getCreatedAt();
             updatedAt = manager.getUpdatedAt();
-            ManagerDto managerDto = new ManagerDto(id, firstName, lastName, status, createdAt, updatedAt);
-            return managerDto;
-        }
-    }
-
-    public Manager toCreateEntity(ManagerDto managerDto) {
-        if (managerDto == null) {
-            return null;
-        } else {
-            Manager manager = new Manager();
-            if (managerDto.getId() != null) {
-                manager.setId(Long.parseLong(managerDto.getId()));
-            }
-
-            manager.setFirstName(managerDto.getFirstName());
-            manager.setLastName(managerDto.getLastName());
-            if (managerDto.getStatus() != null) {
-                manager.setStatus((ManagerStatus)Enum.valueOf(ManagerStatus.class, managerDto.getStatus()));
-            }
-
-            manager.setCreatedAt(managerDto.getCreatedAt());
-            manager.setUpdatedAt(managerDto.getUpdatedAt());
-            return manager;
+            return new ManagerDto(id, firstName, lastName, status, createdAt, updatedAt);
         }
     }
 
@@ -67,28 +44,13 @@ public class ManagerMapperImpl implements ManagerMapper {
         if (managers == null) {
             return null;
         } else {
-            List<ManagerDto> list = new ArrayList(managers.size());
-            Iterator var3 = managers.iterator();
+            List<ManagerDto> list = new ArrayList<>(managers.size());
 
-            while(var3.hasNext()) {
-                Manager manager = (Manager)var3.next();
+            for (Manager manager : managers) {
                 list.add(this.toDto(manager));
             }
 
             return list;
-        }
-    }
-
-    public ManagerCreateDto toCreateDto(Manager manager) {
-        if (manager == null) {
-            return null;
-        } else {
-            String firstName = null;
-            String lastName = null;
-            firstName = manager.getFirstName();
-            lastName = manager.getLastName();
-            ManagerCreateDto managerCreateDto = new ManagerCreateDto(firstName, lastName);
-            return managerCreateDto;
         }
     }
 
@@ -111,11 +73,11 @@ public class ManagerMapperImpl implements ManagerMapper {
             return null;
         } else {
             String id = null;
-            String firstName = null;
-            String lastName = null;
+            String firstName;
+            String lastName;
             String status = null;
-            LocalDateTime createdAt = null;
-            LocalDateTime updatedAt = null;
+            LocalDateTime createdAt;
+            LocalDateTime updatedAt;
             if (manager.getId() != null) {
                 id = String.valueOf(manager.getId());
             }
@@ -128,8 +90,7 @@ public class ManagerMapperImpl implements ManagerMapper {
 
             createdAt = manager.getCreatedAt();
             updatedAt = manager.getUpdatedAt();
-            ManagerAfterCreateDto managerAfterCreateDto = new ManagerAfterCreateDto(id, firstName, lastName, status, createdAt, updatedAt);
-            return managerAfterCreateDto;
+            return new ManagerAfterCreateDto(id, firstName, lastName, status, createdAt, updatedAt);
         }
     }
 }

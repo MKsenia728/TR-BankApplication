@@ -10,6 +10,7 @@ import com.example.bank_application.repository.AccountRepository;
 import com.example.bank_application.repository.ClientRepository;
 import com.example.bank_application.service.exceptions.*;
 import com.example.bank_application.service.interf.AccountService;
+import com.example.bank_application.validation.annotation.EnumAccountStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,7 +95,7 @@ public class AccountServiceImp implements AccountService {
 
     @Override
     @Transactional
-    public AccountsListAfterCreateDto blockAccountByProductIdAndStatus(String productId, String status) {
+    public List<AccountAfterCreateDto> blockAccountByProductIdAndStatus(String productId, String status) {
         List<Account> accountsByStatus = getAllEntityAccountsByStatus(status);
         List<Account> accountsByStatusAndProductId = new ArrayList<>();
         try {
@@ -112,10 +113,10 @@ public class AccountServiceImp implements AccountService {
         if (accountsByStatusAndProductId.size() == 0) {
             throw new DataNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS_AND_PRODUCT_ID);
         }
-        return new AccountsListAfterCreateDto(accountMapper.toListAfterCreateDto(accountRepository.saveAll(accountsByStatusAndProductId)));
+        return new ArrayList<>(accountMapper.toListAfterCreateDto(accountRepository.saveAll(accountsByStatusAndProductId)));
     }
 
-    private List<Account> getAllEntityAccountsByStatus(String status) {
+    private List<Account> getAllEntityAccountsByStatus(@EnumAccountStatus String status) {
         AccountStatus statusEnum;
         try {
             statusEnum = AccountStatus.valueOf(status.toUpperCase());

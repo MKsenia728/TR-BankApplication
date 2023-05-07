@@ -2,12 +2,15 @@ package com.example.bank_application.controller;
 
 import com.example.bank_application.dto.accountDto.*;
 import com.example.bank_application.service.interf.AccountService;
+import com.example.bank_application.validation.annotation.EnumAccountStatus;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Validated
 @RestController
 @RequestMapping("/accounts")
 @RequiredArgsConstructor
@@ -29,22 +32,22 @@ public class AccountController {
     //    Account  getAllAccountWhereStatusIs Active/Remote/Pending/
     @GetMapping("/all/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public List<AccountDto> getAllAccounts(@PathVariable("status") String status) {
+    public List<AccountDto> getAllAccounts( @PathVariable("status") String status) {
         return accountService.getAllAccountsByStatus(status);
     }
 
     @PostMapping("new/client_tax/{clientTaxCode}")
     @ResponseStatus(HttpStatus.CREATED)
-    public AccountAfterCreateDto createNewAccount(@RequestBody AccountCreateDto accountCreateDto, @PathVariable("clientTaxCode") String clientTaxCode) {
+    public AccountAfterCreateDto createNewAccount(@EnumAccountStatus @Valid @RequestBody AccountCreateDto accountCreateDto, @PathVariable("clientTaxCode") String clientTaxCode) {
         return accountService.createNewAccount(accountCreateDto, clientTaxCode);
     }
 
     //    Blocked  findAccountsWhereProductIdIs....AndStatusIs.....
     @PutMapping("block_account/{productId}/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public AccountsListAfterCreateDto blockAccountByProductIdAndStatus(
+    public List<AccountAfterCreateDto> blockAccountByProductIdAndStatus(
             @PathVariable("productId") String productId,
-            @PathVariable("status") String status) {
+            @EnumAccountStatus @PathVariable("status") String status) {
         return accountService.blockAccountByProductIdAndStatus(productId, status);
     }
 }

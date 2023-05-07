@@ -13,5 +13,5 @@ public interface AccountService {
 
     AccountAfterCreateDto createNewAccount(AccountCreateDto accountCreateDto, String clientTaxCode);
 
-    AccountsListAfterCreateDto blockAccountByProductIdAndStatus(String productId, String status);
+    List<AccountAfterCreateDto> blockAccountByProductIdAndStatus(String productId, String status);
 }
