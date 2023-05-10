@@ -62,13 +62,13 @@ public class DtoCreator {
         );
     }
 
-    public static AccountCreateDto getAccountCreateDtoWithInvalidStatus() {
+    public static AccountCreateDto getAccountCreateDtoWithInvalidData() {
         return new AccountCreateDto(
-                "TT 89 311045 00234355921201",
-                null,
-                "sdfsdfs",
-                "10000.0",
-                "EUR"
+                "TT 89 311045 0023435592120",
+                "CREDI",
+                "",
+                "1a",
+                "EURo"
         );
     }
 

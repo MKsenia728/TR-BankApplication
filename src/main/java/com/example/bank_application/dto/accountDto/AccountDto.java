@@ -2,6 +2,7 @@ package com.example.bank_application.dto.accountDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Value;
+import org.springframework.http.HttpStatusCode;
 
 import java.time.LocalDateTime;
 

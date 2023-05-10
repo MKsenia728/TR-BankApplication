@@ -1,21 +1,19 @@
 package com.example.bank_application.dto.accountDto;
 
-import com.example.bank_application.validation.annotation.EnumAccountStatus;
-import com.example.bank_application.validation.annotation.EnumAccountType;
-import com.example.bank_application.validation.annotation.EnumCurrencyType;
+import com.example.bank_application.validation.annotation.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Value;
-import org.springframework.lang.NonNull;
 
 @Value
 public class AccountCreateDto {
     @NotNull
+    @Iban
     String name;
-    @EnumAccountType
+    @EnumAccountTypeOrNull
     String type;
-    @EnumAccountStatus
+    @EnumAccountStatusOrNull
     String status;
-
+    @PositiveDecimalOrNull
     String balance;
     @NotNull
     @EnumCurrencyType

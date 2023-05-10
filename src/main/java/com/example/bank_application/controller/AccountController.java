@@ -2,10 +2,13 @@ package com.example.bank_application.controller;
 
 import com.example.bank_application.dto.accountDto.*;
 import com.example.bank_application.service.interf.AccountService;
-import com.example.bank_application.validation.annotation.EnumAccountStatus;
+import com.example.bank_application.validation.annotation.EnumAccountStatusOrNull;
+import com.example.bank_application.validation.annotation.PositiveInteger;
+import com.example.bank_application.validation.annotation.Uuid;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +18,12 @@ import java.util.List;
 @RequestMapping("/accounts")
 @RequiredArgsConstructor
 public class AccountController {
+
     public final AccountService accountService;
 
     @GetMapping("/id/{accountId}")
     @ResponseStatus(HttpStatus.OK)
-    public AccountDto getAccountById(@PathVariable("accountId") String accountId) {
+    public AccountDto getAccountById(@Uuid @PathVariable("accountId") String accountId) {
         return accountService.getAccountById(accountId);
     }
 
@@ -32,13 +36,16 @@ public class AccountController {
     //    Account  getAllAccountWhereStatusIs Active/Remote/Pending/
     @GetMapping("/all/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public List<AccountDto> getAllAccounts( @PathVariable("status") String status) {
+    public List<AccountDto> getAllAccounts(@EnumAccountStatusOrNull @PathVariable("status") String status) {
         return accountService.getAllAccountsByStatus(status);
     }
 
     @PostMapping("new/client_tax/{clientTaxCode}")
     @ResponseStatus(HttpStatus.CREATED)
-    public AccountAfterCreateDto createNewAccount(@EnumAccountStatus @Valid @RequestBody AccountCreateDto accountCreateDto, @PathVariable("clientTaxCode") String clientTaxCode) {
+    public AccountAfterCreateDto createNewAccount(
+            @Valid
+            @RequestBody AccountCreateDto accountCreateDto,
+            @PathVariable("clientTaxCode") String clientTaxCode) {
         return accountService.createNewAccount(accountCreateDto, clientTaxCode);
     }
 
@@ -46,8 +53,8 @@ public class AccountController {
     @PutMapping("block_account/{productId}/{status}")
     @ResponseStatus(HttpStatus.OK)
     public List<AccountAfterCreateDto> blockAccountByProductIdAndStatus(
-            @PathVariable("productId") String productId,
-            @EnumAccountStatus @PathVariable("status") String status) {
+            @PositiveInteger @PathVariable("productId") String productId,
+            @EnumAccountStatusOrNull @PathVariable("status") String status) {
         return accountService.blockAccountByProductIdAndStatus(productId, status);
     }
 }

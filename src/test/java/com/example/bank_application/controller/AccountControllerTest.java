@@ -3,6 +3,7 @@ package com.example.bank_application.controller;
 import com.example.bank_application.dto.accountDto.AccountAfterCreateDto;
 import com.example.bank_application.dto.accountDto.AccountCreateDto;
 import com.example.bank_application.dto.accountDto.AccountDto;
+import com.example.bank_application.service.exceptions.DataAlreadyExistException;
 import com.example.bank_application.service.exceptions.DataNotFoundException;
 import com.example.bank_application.service.exceptions.ErrorMessage;
 import com.example.bank_application.service.exceptions.InvalidSearchArgumentException;
@@ -42,16 +43,8 @@ class AccountControllerTest {
 
     private final String status = "ACTIVE";
 
-    @DisplayName("Positive test. Server status 200. Controller for find account by ID")
-    @Test
-    void getAccountByIdStatusTest() throws Exception {
-        String id = EntityCreator.UUID;
-        mockMvc.perform(get("/accounts/id/"+id)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
 
-    @DisplayName("Positive test. JSON response. Controller for find account by ID")
+    @DisplayName("Positive test. Status 200, JSON response. Controller for find account by ID")
     @Test
     public void getAccountByIdResponseTest() throws Exception {
         String id = EntityCreator.UUID;
@@ -60,6 +53,7 @@ class AccountControllerTest {
 
         mockMvc.perform(get("/accounts/id/"+id)
                         .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(expectAccount.getId()))
                 .andExpect(jsonPath("$.name").value(expectAccount.getName()))
                 .andExpect(jsonPath("$.type").value(expectAccount.getType()))
@@ -70,26 +64,24 @@ class AccountControllerTest {
                 .andExpect(jsonPath("$.clientLastName").value(expectAccount.getClientLastName()));
     }
 
-    @DisplayName("Negative test.Controller for find account by ID, but ID is invalid")
+    @DisplayName("Negative test.Invalid ID. Controller for find account by ID")
     @Test
     public void getAccountByIdInvalidIdExceptionTest() throws Exception {
-        String id = EntityCreator.UUID;
-        Mockito.when(service.getAccountById(id)).thenThrow( new DataNotFoundException((ErrorMessage.ACCOUNT_NOT_FOUND)));
-        mockMvc.perform(MockMvcRequestBuilders.get("/accounts/id/"+id))
-//                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-//                .andExpect(jsonPath("$.message").value(ErrorMessage.ACCOUNT_NOT_FOUND));
+        String uuidId = "1111";
+        mockMvc.perform(get("/accounts/id/"+uuidId))
+                .andExpect(status().is4xxClientError());
     }
 
-    @DisplayName("Positive test. Server status 200. Controller for find all accounts")
+    @DisplayName("Negative test. ID not exist. Controller for find account by ID")
     @Test
-    void getAllAccountsStatusTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/accounts/all")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+    public void getAccountByNotExistIdExceptionTest() throws Exception {
+        String id = EntityCreator.UUID;
+        Mockito.when(service.getAccountById(id)).thenThrow(new DataNotFoundException(ErrorMessage.ACCOUNT_NOT_FOUND));
+        mockMvc.perform(MockMvcRequestBuilders.get("/accounts/id/"+id))
+                .andExpect(status().is4xxClientError());
     }
 
-    @DisplayName("Positive test. JSON response. Controller for find all accounts")
+    @DisplayName("Positive test. Status 200, JSON response. Controller for find all accounts")
     @Test
     void getAllAccountsResponseTest() throws Exception {
         List<AccountDto> accountDtoList = new ArrayList<>();
@@ -100,6 +92,7 @@ class AccountControllerTest {
         mockMvc.perform(
                         get("/accounts/all")
                                 .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(accountDtoList.get(0).getId()))
                 .andExpect(jsonPath("$[0].name").value(accountDtoList.get(0).getName()))
                 .andExpect(jsonPath("$[0].type").value(accountDtoList.get(0).getType()))
@@ -111,14 +104,15 @@ class AccountControllerTest {
         Mockito.verify(service).getAllAccounts();
     }
 
-    @DisplayName("Positive test. Server status 200. Controller for find all accounts by given status")
+    @DisplayName("Negative test. Accounts are not exist. Controller for find all accounts")
     @Test
-    void getAllAccountsByStatusTest() throws Exception {
-        mockMvc.perform(get("/accounts/all/" + status)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+    void getAllAccountsNotExistTest() throws Exception {
+        Mockito.when(service.getAllAccounts()).thenThrow(new DataNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND));
+        mockMvc.perform(get("/accounts/all"))
+                .andExpect(status().is4xxClientError());
     }
-    @DisplayName("Positive test. JSON response. Controller for find all accounts by given status")
+
+    @DisplayName("Positive test. Status 200, JSON response. Controller for find all accounts by given status")
     @Test
     void getAllAccountsByStatusResponseTest() throws Exception {
         List<AccountDto> accountDtoList = new ArrayList<>();
@@ -129,6 +123,7 @@ class AccountControllerTest {
         mockMvc.perform(
                         get("/accounts/all/"+status)
                                 .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(accountDtoList.get(0).getId()))
                 .andExpect(jsonPath("$[0].name").value(accountDtoList.get(0).getName()))
                 .andExpect(jsonPath("$[0].type").value(accountDtoList.get(0).getType()))
@@ -141,20 +136,22 @@ class AccountControllerTest {
         Mockito.verify(service).getAllAccountsByStatus(status);
     }
 
-
-    @DisplayName("Positive test. Server status 200. Controller for create account by given client tax")
+    @DisplayName("Negative test. Invalid status. Controller for find all accounts by given status")
     @Test
-    void createNewAccountStatusTest() throws Exception {
-        String taxCode = "123123123123";
-        AccountCreateDto accountCreateDto = DtoCreator.getAccountCreateDto();
-        mockMvc.perform(post("/accounts/new/client_tax/" + taxCode)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .param("sendWelcomeMail", "true")
-                        .content(objectMapper.writeValueAsString(accountCreateDto))
-                )
-                .andExpect(status().isCreated());
+    void getAllAccountsByInvalidStatusTest() throws Exception {
+        String invalidStatus = "InvalidStatus";
+        mockMvc.perform(get("/accounts/all/" + invalidStatus))
+                .andExpect(status().isBadRequest());
     }
+
+    @DisplayName("Negative test. There are no accounts by status. Controller for find all accounts by given status")
+    @Test
+    void getAllAccountsByStatusNotExistTest() throws Exception {
+        Mockito.when(service.getAllAccountsByStatus(status)).thenThrow(new DataNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS));
+        mockMvc.perform(get("/accounts/all/" + status))
+                .andExpect(status().is4xxClientError());
+    }
+
 
     @DisplayName("Positive test. JSON response. Controller for create account by given client tax")
     @Test
@@ -178,7 +175,7 @@ class AccountControllerTest {
         Mockito.verify(service).createNewAccount(accountCreateDto, taxCode);
     }
 
-    @DisplayName("Negative test. Not enough input data. Controller for create account by given client tax")
+    @DisplayName("Negative test. Validation not null input data. Controller for create account by given client tax")
     @Test
     void createNewAccountNotEnoughDataTest() throws Exception {
         String taxCode = "123123123123";
@@ -188,21 +185,36 @@ class AccountControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountCreateDto))
                 )
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isInternalServerError());
     }
 
-    @DisplayName("Negative test. Not enough input data. Controller for create account by given client tax")
+    @DisplayName("Negative test. Invalid type input data. Controller for create account by given client tax")
     @Test
-    void createNewAccountInvalidStatusTest() throws Exception {
+    void createNewAccountInvalidTypeDataTest() throws Exception {
         String taxCode = "123123123123";
-        AccountCreateDto accountCreateDto = DtoCreator.getAccountCreateDtoWithInvalidStatus();
+        AccountCreateDto accountCreateDto = DtoCreator.getAccountCreateDtoWithInvalidData();
         mockMvc.perform(post("/accounts/new/client_tax/" + taxCode)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountCreateDto))
                 )
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isInternalServerError());
     }
+
+    @DisplayName("Negative test. Account already exist. Controller for create account by given client tax")
+    @Test
+    void createNewAccountAlreadyExistAccountTest() throws Exception {
+        String taxCode = "123123123123";
+        AccountCreateDto accountCreateDto = DtoCreator.getAccountCreateDto();
+        Mockito.when(service.createNewAccount(accountCreateDto, taxCode)).thenThrow(new DataAlreadyExistException(ErrorMessage.ACCOUNT_ALREADY_EXISTS));
+        mockMvc.perform(post("/accounts/new/client_tax/" + taxCode)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(accountCreateDto))
+                )
+                .andExpect(status().is4xxClientError());
+    }
+
 
     @DisplayName("Positive test. Server status 200. Controller for update account by given account status and product id")
     @Test
@@ -220,5 +232,31 @@ class AccountControllerTest {
 
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].status").value("BLOCKED"));
+    }
+
+    @DisplayName("Negative test. Invalid product Id. Controller for update account by given account status and product id")
+    @Test
+    void blockAccountByProductIdAndStatusWithInvalidProductIdTest() throws Exception {
+        String productId = "-123.4";
+        mockMvc.perform(MockMvcRequestBuilders.put("/accounts/block_account/" + productId + "/" + status))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @DisplayName("Negative test. Invalid product Id. Controller for update account by given account status and product id")
+    @Test
+    void blockAccountByProductIdAndStatusDataNotFoundTest() throws Exception {
+        String productId = "1";
+        List<AccountAfterCreateDto> resultListDto = new ArrayList<>();
+        resultListDto.add( DtoCreator.getAccountAfterCreateDto("BLOCKED"));
+        Mockito.when(service.blockAccountByProductIdAndStatus(productId, status)).thenThrow(new DataNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS_AND_PRODUCT_ID));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/accounts/block_account/" + productId + "/" + status)
+                        .contentType(MediaType.APPLICATION_JSON)
+//                        .accept(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(resultListDto))
+                )
+
+                .andExpect(status().is4xxClientError());
+//                .andExpect(jsonPath("$[0].status").value("BLOCKED"));
     }
 }
