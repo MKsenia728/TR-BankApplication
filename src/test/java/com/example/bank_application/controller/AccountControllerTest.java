@@ -1,12 +1,11 @@
 package com.example.bank_application.controller;
 
-import com.example.bank_application.dto.accountDto.AccountAfterCreateDto;
-import com.example.bank_application.dto.accountDto.AccountCreateDto;
-import com.example.bank_application.dto.accountDto.AccountDto;
+import com.example.bank_application.dto.AccountAfterCreateDto;
+import com.example.bank_application.dto.AccountCreateDto;
+import com.example.bank_application.dto.AccountDto;
 import com.example.bank_application.service.exceptions.DataAlreadyExistException;
 import com.example.bank_application.service.exceptions.DataNotFoundException;
 import com.example.bank_application.service.exceptions.ErrorMessage;
-import com.example.bank_application.service.exceptions.InvalidSearchArgumentException;
 import com.example.bank_application.service.interf.AccountService;
 import com.example.bank_application.util.DtoCreator;
 import com.example.bank_application.util.EntityCreator;
@@ -16,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -31,15 +29,41 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = AccountController.class)
 @DisplayName("AccountController test class")
+//@Testcontainers
 class AccountControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    @MockBean
+//    @Autowired
+//    AccountController controller;
+//
+//    @Autowired
+//    ClientRepository clientRepository;
+
+    @Autowired
     AccountService service;
+
+//    @Autowired
+//    AccountMapper mapper;
+//
+//    @Autowired
+//    AccountRepository repository;
 
     @Autowired
     MockMvc mockMvc;
+
+//@Container
+//    private static MySQLContainer container = new MySQLContainer("mysql")
+//            .withDatabaseName("bank")
+//            .withUsername("oksana")
+//            .withPassword("oksana");
+//    @DynamicPropertySource
+//    private static void properties(DynamicPropertyRegistry registry) {
+//                registry.add("spring.datasource.url", container::getJdbcUrl);
+//        registry.add("spring.datasource.password", container::getPassword);
+//        registry.add("spring.datasource.username", container::getUsername);
+//    }
+
 
     private final String status = "ACTIVE";
 
@@ -246,17 +270,11 @@ class AccountControllerTest {
     @Test
     void blockAccountByProductIdAndStatusDataNotFoundTest() throws Exception {
         String productId = "1";
-        List<AccountAfterCreateDto> resultListDto = new ArrayList<>();
-        resultListDto.add( DtoCreator.getAccountAfterCreateDto("BLOCKED"));
         Mockito.when(service.blockAccountByProductIdAndStatus(productId, status)).thenThrow(new DataNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS_AND_PRODUCT_ID));
 
         mockMvc.perform(MockMvcRequestBuilders.put("/accounts/block_account/" + productId + "/" + status)
                         .contentType(MediaType.APPLICATION_JSON)
-//                        .accept(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(resultListDto))
                 )
-
                 .andExpect(status().is4xxClientError());
-//                .andExpect(jsonPath("$[0].status").value("BLOCKED"));
     }
 }

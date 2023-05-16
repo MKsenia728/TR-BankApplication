@@ -1,6 +1,6 @@
-package com.example.bank_application.dto.clientDto;
+package com.example.bank_application.dto;
 
-import com.example.bank_application.dto.clientDto.ClientWithBalanceDto;
+import com.example.bank_application.dto.ClientWithBalanceDto;
 import lombok.Value;
 
 import java.util.List;

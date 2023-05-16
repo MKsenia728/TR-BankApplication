@@ -1,20 +1,13 @@
-package com.example.bank_application.dto.accountDto;
+package com.example.bank_application.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Value;
-import org.springframework.http.HttpStatusCode;
 
 import java.time.LocalDateTime;
 
 @Value
-public class AccountDto {
-    String id;
-
+public class AccountAfterCreateDto {
     String name;
-
-    String clientFirstName;
-
-    String clientLastName;
 
     String type;
 

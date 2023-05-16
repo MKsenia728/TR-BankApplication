@@ -1,4 +1,4 @@
-package com.example.bank_application.dto.clientDto;
+package com.example.bank_application.dto;
 
 import lombok.Value;
 

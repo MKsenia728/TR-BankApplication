@@ -1,13 +1,13 @@
 package com.example.bank_application.util;
 
-import com.example.bank_application.dto.accountDto.AccountAfterCreateDto;
-import com.example.bank_application.dto.accountDto.AccountCreateDto;
-import com.example.bank_application.dto.accountDto.AccountDto;
-import com.example.bank_application.dto.clientDto.ClientDto;
-import com.example.bank_application.dto.clientDto.ClientWithBalanceDto;
-import com.example.bank_application.dto.managerDto.ManagerAfterCreateDto;
-import com.example.bank_application.dto.managerDto.ManagerCreateDto;
-import com.example.bank_application.dto.managerDto.ManagerDto;
+import com.example.bank_application.dto.AccountAfterCreateDto;
+import com.example.bank_application.dto.AccountCreateDto;
+import com.example.bank_application.dto.AccountDto;
+import com.example.bank_application.dto.ClientDto;
+import com.example.bank_application.dto.ClientWithBalanceDto;
+import com.example.bank_application.dto.ManagerAfterCreateDto;
+import com.example.bank_application.dto.ManagerCreateDto;
+import com.example.bank_application.dto.ManagerDto;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;

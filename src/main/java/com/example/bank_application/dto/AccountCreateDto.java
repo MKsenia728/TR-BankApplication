@@ -1,4 +1,4 @@
-package com.example.bank_application.dto.accountDto;
+package com.example.bank_application.dto;
 
 import com.example.bank_application.validation.annotation.*;
 import jakarta.validation.constraints.NotNull;

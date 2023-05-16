@@ -1,6 +1,8 @@
 package com.example.bank_application.service.interf;
 
-import com.example.bank_application.dto.accountDto.*;
+import com.example.bank_application.dto.AccountAfterCreateDto;
+import com.example.bank_application.dto.AccountCreateDto;
+import com.example.bank_application.dto.AccountDto;
 
 import java.util.List;
 

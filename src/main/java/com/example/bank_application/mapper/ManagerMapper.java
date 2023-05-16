@@ -1,8 +1,8 @@
 package com.example.bank_application.mapper;
 
-import com.example.bank_application.dto.managerDto.ManagerAfterCreateDto;
-import com.example.bank_application.dto.managerDto.ManagerCreateDto;
-import com.example.bank_application.dto.managerDto.ManagerDto;
+import com.example.bank_application.dto.ManagerAfterCreateDto;
+import com.example.bank_application.dto.ManagerCreateDto;
+import com.example.bank_application.dto.ManagerDto;
 import com.example.bank_application.entity.Manager;
 import com.example.bank_application.entity.enums.ManagerStatus;
 import org.mapstruct.Mapper;

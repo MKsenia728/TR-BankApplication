@@ -1,6 +1,6 @@
 package com.example.bank_application.controller;
 
-import com.example.bank_application.dto.clientDto.ClientWithBalanceListDto;
+import com.example.bank_application.dto.ClientWithBalanceListDto;
 import com.example.bank_application.service.interf.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

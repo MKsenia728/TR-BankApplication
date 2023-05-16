@@ -1,7 +1,7 @@
 package com.example.bank_application.mapper;
 
-import com.example.bank_application.dto.clientDto.ClientDto;
-import com.example.bank_application.dto.clientDto.ClientWithBalanceDto;
+import com.example.bank_application.dto.ClientDto;
+import com.example.bank_application.dto.ClientWithBalanceDto;
 import com.example.bank_application.entity.Client;
 import org.mapstruct.Mapper;
 

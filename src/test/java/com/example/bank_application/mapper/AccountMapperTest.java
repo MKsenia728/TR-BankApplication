@@ -1,8 +1,8 @@
 package com.example.bank_application.mapper;
 
-import com.example.bank_application.dto.accountDto.AccountAfterCreateDto;
-import com.example.bank_application.dto.accountDto.AccountCreateDto;
-import com.example.bank_application.dto.accountDto.AccountDto;
+import com.example.bank_application.dto.AccountAfterCreateDto;
+import com.example.bank_application.dto.AccountCreateDto;
+import com.example.bank_application.dto.AccountDto;
 import com.example.bank_application.entity.Account;
 import com.example.bank_application.mapper.impl.AccountMapperImpl;
 import com.example.bank_application.util.DtoCreator;

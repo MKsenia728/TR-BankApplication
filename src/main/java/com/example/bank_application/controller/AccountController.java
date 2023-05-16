@@ -1,6 +1,8 @@
 package com.example.bank_application.controller;
 
-import com.example.bank_application.dto.accountDto.*;
+import com.example.bank_application.dto.AccountAfterCreateDto;
+import com.example.bank_application.dto.AccountCreateDto;
+import com.example.bank_application.dto.AccountDto;
 import com.example.bank_application.service.interf.AccountService;
 import com.example.bank_application.validation.annotation.EnumAccountStatusOrNull;
 import com.example.bank_application.validation.annotation.PositiveInteger;
@@ -8,7 +10,6 @@ import com.example.bank_application.validation.annotation.Uuid;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +40,8 @@ public class AccountController {
     public List<AccountDto> getAllAccounts(@EnumAccountStatusOrNull @PathVariable("status") String status) {
         return accountService.getAllAccountsByStatus(status);
     }
+
+//    Create new account by given client tax code.
 
     @PostMapping("new/client_tax/{clientTaxCode}")
     @ResponseStatus(HttpStatus.CREATED)

@@ -5,13 +5,10 @@ import com.example.bank_application.dto.ErrorExtensionDto;
 import com.example.bank_application.dto.ErrorResponseDto;
 import com.example.bank_application.service.exceptions.DataAlreadyExistException;
 import com.example.bank_application.service.exceptions.DataNotFoundException;
-
 import com.example.bank_application.service.exceptions.ErrorMessage;
-import com.example.bank_application.service.exceptions.InvalidSearchArgumentException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

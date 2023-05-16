@@ -1,13 +1,15 @@
 package com.example.bank_application.controller;
 
-import com.example.bank_application.dto.managerDto.ManagerAfterCreateDto;
-import com.example.bank_application.dto.managerDto.ManagerCreateDto;
-import com.example.bank_application.dto.managerDto.ManagerDto;
-import com.example.bank_application.dto.managerDto.ManagerListDto;
+import com.example.bank_application.dto.ManagerAfterCreateDto;
+import com.example.bank_application.dto.ManagerCreateDto;
+import com.example.bank_application.dto.ManagerDto;
+import com.example.bank_application.dto.ManagerListDto;
 import com.example.bank_application.service.interf.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/managers")
@@ -23,7 +25,7 @@ public class ManagerController {
 
     @GetMapping(value="/all/withClients")
     @ResponseStatus(HttpStatus.OK)
-    public ManagerListDto getAllManagers() {
+    public List<ManagerDto> getAllManagers() {
         return managerService.getAllManagersWithClients();
     }
 

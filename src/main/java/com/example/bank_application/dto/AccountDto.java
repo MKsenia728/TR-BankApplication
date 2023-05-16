@@ -1,31 +1,33 @@
-package com.example.bank_application.dto.clientDto;
+package com.example.bank_application.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Value;
+import org.springframework.http.HttpStatusCode;
 
 import java.time.LocalDateTime;
 
 @Value
-public class ClientDto {
+public class AccountDto {
     String id;
+
+    String name;
+
+    String clientFirstName;
+
+    String clientLastName;
+
+    String type;
 
     String status;
 
-    String taxCode;
+    String balance;
 
-    String firstName;
-
-    String lastName;
-
-    String email;
-
-    String address;
-
-    String phone;
+    String currencyCode;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     LocalDateTime createdAt;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     LocalDateTime updatedAt;
+
 }
