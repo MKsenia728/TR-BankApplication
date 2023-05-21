@@ -4,7 +4,6 @@ import com.example.bank_application.dto.ManagerAfterCreateDto;
 import com.example.bank_application.dto.ManagerCreateDto;
 import com.example.bank_application.dto.ManagerDto;
 import com.example.bank_application.entity.Manager;
-import com.example.bank_application.mapper.impl.ManagerMapperImpl;
 import com.example.bank_application.util.DtoCreator;
 import com.example.bank_application.util.EntityCreator;
 import org.junit.jupiter.api.Assertions;

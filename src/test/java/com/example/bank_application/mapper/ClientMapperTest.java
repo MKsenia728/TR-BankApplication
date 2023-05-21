@@ -3,7 +3,7 @@ package com.example.bank_application.mapper;
 import com.example.bank_application.dto.ClientDto;
 import com.example.bank_application.dto.ClientWithBalanceDto;
 import com.example.bank_application.entity.Client;
-import com.example.bank_application.mapper.impl.ClientMapperImpl;
+
 import com.example.bank_application.util.DtoCreator;
 import com.example.bank_application.util.EntityCreator;
 import org.junit.jupiter.api.Assertions;

@@ -3,8 +3,10 @@ package com.example.bank_application.controller;
 import com.example.bank_application.dto.AccountAfterCreateDto;
 import com.example.bank_application.dto.AccountCreateDto;
 import com.example.bank_application.dto.AccountDto;
+import com.example.bank_application.dto.AccountNameDto;
 import com.example.bank_application.service.interf.AccountService;
 import com.example.bank_application.validation.annotation.EnumAccountStatusOrNull;
+import com.example.bank_application.validation.annotation.Iban;
 import com.example.bank_application.validation.annotation.PositiveInteger;
 import com.example.bank_application.validation.annotation.Uuid;
 import jakarta.validation.Valid;
@@ -28,16 +30,22 @@ public class AccountController {
         return accountService.getAccountById(accountId);
     }
 
+    @GetMapping("/name/{accountName}")
+    @ResponseStatus(HttpStatus.OK)
+    public AccountDto getAccountByName(@Iban @PathVariable("accountName") String accountName) {
+        return accountService.getAccountByName(accountName);
+    }
+
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<AccountDto> getAllAccounts() {
+    public List<AccountNameDto> getAllNameAccounts() {
         return accountService.getAllAccounts();
     }
 
     //    Account  getAllAccountWhereStatusIs Active/Remote/Pending/
     @GetMapping("/all/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public List<AccountDto> getAllAccounts(@EnumAccountStatusOrNull @PathVariable("status") String status) {
+    public List<AccountDto> getAllAccountsByStatus(@EnumAccountStatusOrNull @PathVariable("status") String status) {
         return accountService.getAllAccountsByStatus(status);
     }
 

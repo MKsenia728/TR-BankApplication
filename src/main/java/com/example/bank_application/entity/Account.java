@@ -1,5 +1,6 @@
 package com.example.bank_application.entity;
 
+import com.example.bank_application.controller.AccountController;
 import com.example.bank_application.entity.enums.AccountStatus;
 import com.example.bank_application.entity.enums.AccountType;
 import com.example.bank_application.entity.enums.CurrencyType;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "accounts")
-public class Account {
+public class Account  {
     @Id
     @GeneratedValue(generator = "UUID", strategy = GenerationType.UUID)
 

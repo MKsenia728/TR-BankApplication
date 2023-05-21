@@ -3,6 +3,7 @@ package com.example.bank_application.service.impl;
 import com.example.bank_application.dto.AccountAfterCreateDto;
 import com.example.bank_application.dto.AccountCreateDto;
 import com.example.bank_application.dto.AccountDto;
+import com.example.bank_application.dto.AccountNameDto;
 import com.example.bank_application.entity.Account;
 import com.example.bank_application.entity.Client;
 import com.example.bank_application.entity.enums.AccountStatus;
@@ -27,7 +28,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 
 @DisplayName("Account service test class")
 @ExtendWith(MockitoExtension.class)
@@ -72,15 +72,15 @@ class AccountServiceImpTest {
     void getAllAccountsTest() {
         List<Account> accountList = new ArrayList<>();
         accountList.add(EntityCreator.getAccountEntity());
-        List<AccountDto> accountDtoList = new ArrayList<>();
-        accountDtoList.add(DtoCreator.getAccountDto());
+        List<AccountNameDto> accountDtoList = new ArrayList<>();
+        accountDtoList.add(DtoCreator.getAccountNameDto());
 
         Mockito.when(accountRepository.getAllBy()).thenReturn(accountList);
-        Mockito.when(accountMapper.toListDto(accountList)).thenReturn(accountDtoList);
+        Mockito.when(accountMapper.toListDtoName(accountList)).thenReturn(accountDtoList);
 
         service.getAllAccounts();
         Mockito.verify(accountRepository).getAllBy();
-        Mockito.verify(accountMapper).toListDto(accountList);
+        Mockito.verify(accountMapper).toListDtoName(accountList);
     }
 
     @Test
@@ -156,7 +156,7 @@ class AccountServiceImpTest {
         Account account = EntityCreator.getAccountEntity();
 
         Mockito.when(clientRepository.findClientByTaxCode(taxCode)).thenReturn(client);
-        Mockito.when(accountRepository.findAccountByName(accountCreateDto.getName())).thenReturn(account);
+        Mockito.when(accountRepository.findAccountByName(accountCreateDto.getName())).thenReturn(Optional.of(account));
 
         assertThrows(DataAlreadyExistException.class, () -> service.createNewAccount(accountCreateDto, taxCode));
     }

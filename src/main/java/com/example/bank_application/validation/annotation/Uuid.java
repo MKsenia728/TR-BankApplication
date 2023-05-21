@@ -1,6 +1,5 @@
 package com.example.bank_application.validation.annotation;
 
-import com.example.bank_application.validation.annotation.impl.IbanConstraint;
 import com.example.bank_application.validation.annotation.impl.UuidConstraint;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

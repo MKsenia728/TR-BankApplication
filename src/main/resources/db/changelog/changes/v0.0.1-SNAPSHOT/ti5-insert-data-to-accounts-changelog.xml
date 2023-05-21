@@ -17,6 +17,17 @@
         </insert>
 
         <insert tableName="accounts">
+            <column name="id" valueComputed="UUID_TO_BIN('5aef1d7f-d14f-4655-9399-25bf27b16522')"/>
+            <column name="client_id" valueComputed="UUID_TO_BIN('1162af81-7d0e-417d-9ae7-2b16456ded68')"/>
+            <column name="name" value="UA 89 311045 00234355921211"/>
+            <column name="type" value="CURRENT"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="balance" value="100"/>
+            <column name="currency_code" value="USD"/>
+            <column name="created_at" value="2021-12-02 09:00:00"/>
+        </insert>
+
+        <insert tableName="accounts">
             <column name="id" valueComputed="UUID_TO_BIN('5da56ed6-2525-4b82-a376-6a7c085cd67d')"/>
             <column name="client_id" valueComputed="UUID_TO_BIN('121d98c1-6dfd-402d-984a-6b75e52a44e4')"/>
             <column name="name" value="UA 67 311045 00234322353501"/>

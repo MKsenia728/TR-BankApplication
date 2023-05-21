@@ -1,6 +1,7 @@
 package com.example.bank_application.repository;
 
 import com.example.bank_application.entity.Client;
+import com.example.bank_application.entity.enums.CurrencyType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,16 @@ import java.util.UUID;
 public interface ClientRepository extends JpaRepository<Client, UUID> {
     Client findClientByTaxCode(String taxCode);
 
-    @Query("SELECT distinct c from Client c JOIN c.accounts a where a.balance >=:balance ")
-    List<Client> findClientsBy(Double balance);
+    @Query("SELECT distinct c from Client c JOIN c.accounts a where a.balance >=:balance AND a.currencyCode =:currency")
+    List<Client> findClientsBy(Double balance, CurrencyType currency);
+
+    List<Client> findByAccounts_BalanceGreaterThanEqualAndAccounts_CurrencyCode(Double balance, CurrencyType currency);
 }
+//@Repository
+//public interface ClientRepository extends JpaRepository<Client, UUID> {
+//    Client findClientByTaxCode(String taxCode);
+//
+//
+//    List<Client> findClientsBy(Double balance, CurrencyType currency);
+////    List<Client> findByAccounts_BalanceGreaterThanEqualAndAccounts_CurrencyCode(Double balance, CurrencyType currency);
+//}

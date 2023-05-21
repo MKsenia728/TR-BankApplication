@@ -2,6 +2,8 @@ package com.example.bank_application.dto;
 
 import lombok.Value;
 
+import java.util.List;
+
 @Value
 public class ClientWithBalanceDto {
     String status;
@@ -15,5 +17,7 @@ public class ClientWithBalanceDto {
     String email;
 
     String phone;
+
+    List<AccountBalanceDto> balanceAndCurrency;
 
 }

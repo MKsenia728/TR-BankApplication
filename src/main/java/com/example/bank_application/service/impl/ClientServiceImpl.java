@@ -1,7 +1,8 @@
 package com.example.bank_application.service.impl;
 
-import com.example.bank_application.dto.ClientWithBalanceListDto;
+import com.example.bank_application.dto.ClientWithBalanceDto;
 import com.example.bank_application.entity.Client;
+import com.example.bank_application.entity.enums.CurrencyType;
 import com.example.bank_application.mapper.ClientMapper;
 import com.example.bank_application.repository.ClientRepository;
 import com.example.bank_application.service.exceptions.DataNotFoundException;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,16 +25,17 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public ClientWithBalanceListDto getListClientsWithBalanceMoreThan(String balance) {
+    public List<ClientWithBalanceDto> getListClientsWithBalanceMoreThan(String balance, String currency) {
         log.info("Get list of client with balance more than {}", balance);
-        double balanceD;
-        balanceD = Double.parseDouble(balance);
-        List<Client> clientList = clientRepository.findClientsBy(balanceD);
+        double balanceD = Double.parseDouble(balance);
+        CurrencyType currencyE = CurrencyType.valueOf(currency);
+        List<Client> clientList = clientRepository.findByAccounts_BalanceGreaterThanEqualAndAccounts_CurrencyCode(balanceD, currencyE);
         if (clientList.size() == 0) {
             log.warn(ErrorMessage.CLIENTS_NOT_FOUND);
             throw new DataNotFoundException(ErrorMessage.CLIENTS_NOT_FOUND);
         }
-        return new ClientWithBalanceListDto(clientMapper.toListDtoWithBalance(clientList));
+        return new ArrayList<>(clientMapper.toListDtoWithBalance(clientList)) {
+        };
 
     }
 }

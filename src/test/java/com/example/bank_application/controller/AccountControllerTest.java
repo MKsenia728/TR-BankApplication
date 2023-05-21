@@ -3,6 +3,7 @@ package com.example.bank_application.controller;
 import com.example.bank_application.dto.AccountAfterCreateDto;
 import com.example.bank_application.dto.AccountCreateDto;
 import com.example.bank_application.dto.AccountDto;
+import com.example.bank_application.dto.AccountNameDto;
 import com.example.bank_application.service.exceptions.DataAlreadyExistException;
 import com.example.bank_application.service.exceptions.DataNotFoundException;
 import com.example.bank_application.service.exceptions.ErrorMessage;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -34,13 +36,13 @@ class AccountControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-//    @Autowired
+//    @MockBean
 //    AccountController controller;
 //
 //    @Autowired
 //    ClientRepository clientRepository;
 
-    @Autowired
+    @MockBean
     AccountService service;
 
 //    @Autowired
@@ -108,8 +110,8 @@ class AccountControllerTest {
     @DisplayName("Positive test. Status 200, JSON response. Controller for find all accounts")
     @Test
     void getAllAccountsResponseTest() throws Exception {
-        List<AccountDto> accountDtoList = new ArrayList<>();
-        accountDtoList.add(DtoCreator.getAccountDto());
+        List<AccountNameDto> accountDtoList = new ArrayList<>();
+        accountDtoList.add(DtoCreator.getAccountNameDto());
 
         Mockito.when(service.getAllAccounts()).thenReturn(accountDtoList);
 
@@ -117,14 +119,7 @@ class AccountControllerTest {
                         get("/accounts/all")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(accountDtoList.get(0).getId()))
-                .andExpect(jsonPath("$[0].name").value(accountDtoList.get(0).getName()))
-                .andExpect(jsonPath("$[0].type").value(accountDtoList.get(0).getType()))
-                .andExpect(jsonPath("$[0].status").value(accountDtoList.get(0).getStatus()))
-                .andExpect(jsonPath("$[0].balance").value(accountDtoList.get(0).getBalance()))
-                .andExpect(jsonPath("$[0].currencyCode").value(accountDtoList.get(0).getCurrencyCode()))
-                .andExpect(jsonPath("$[0].clientFirstName").value(accountDtoList.get(0).getClientFirstName()))
-                .andExpect(jsonPath("$[0].clientLastName").value(accountDtoList.get(0).getClientLastName()));
+                .andExpect(jsonPath("$[0].name").value(accountDtoList.get(0).name()));
         Mockito.verify(service).getAllAccounts();
     }
 

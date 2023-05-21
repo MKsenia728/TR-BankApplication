@@ -1,16 +1,11 @@
 package com.example.bank_application.util;
 
-import com.example.bank_application.dto.AccountAfterCreateDto;
-import com.example.bank_application.dto.AccountCreateDto;
-import com.example.bank_application.dto.AccountDto;
-import com.example.bank_application.dto.ClientDto;
-import com.example.bank_application.dto.ClientWithBalanceDto;
-import com.example.bank_application.dto.ManagerAfterCreateDto;
-import com.example.bank_application.dto.ManagerCreateDto;
-import com.example.bank_application.dto.ManagerDto;
+import com.example.bank_application.dto.*;
 import lombok.experimental.UtilityClass;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @UtilityClass
 public class DtoCreator {
@@ -26,6 +21,12 @@ public class DtoCreator {
                 "EUR",
                 LocalDateTime.of(2021, 12, 2, 9, 0, 0),
                 LocalDateTime.of(2021, 12, 2, 9, 0, 0)
+        );
+    }
+
+    public static AccountNameDto getAccountNameDto() {
+        return new AccountNameDto(
+                "TT 89 311045 00234355921201"
         );
     }
 
@@ -72,6 +73,12 @@ public class DtoCreator {
         );
     }
 
+    public static List<AccountBalanceDto> getAccountsBalanceDto() {
+        List<AccountBalanceDto> list = new ArrayList<>();
+        list.add(new AccountBalanceDto("10000.0", "EUR"));
+        return list;
+    }
+
     public static ClientWithBalanceDto getClientWithBalanceDto() {
         return new ClientWithBalanceDto(
                 "ACTIVE",
@@ -79,7 +86,8 @@ public class DtoCreator {
                 "Ivan",
                 "Tester",
                 "ivan@gmail.com",
-                "+111111111111111"
+                "+111111111111111",
+                getAccountsBalanceDto()
         );
     }
 
@@ -104,8 +112,8 @@ public class DtoCreator {
                 "Afanasij",
                 "Popov",
                 "ACTIVE",
-                LocalDateTime.of(2021,12,2,9,0,0),
-                LocalDateTime.of(2021,12,2,9,0,0)
+                LocalDateTime.of(2021, 12, 2, 9, 0, 0),
+                LocalDateTime.of(2021, 12, 2, 9, 0, 0)
         );
     }
 
@@ -122,8 +130,8 @@ public class DtoCreator {
                 "Afanasij",
                 "Popov",
                 "PENDING",
-                LocalDateTime.of(2021,12,2,9,0,0),
-                LocalDateTime.of(2021,12,2,9,0,0)
+                LocalDateTime.of(2021, 12, 2, 9, 0, 0),
+                LocalDateTime.of(2021, 12, 2, 9, 0, 0)
         );
     }
 }

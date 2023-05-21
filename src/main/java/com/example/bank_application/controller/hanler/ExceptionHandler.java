@@ -9,7 +9,6 @@ import com.example.bank_application.service.exceptions.ErrorMessage;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.net.HttpURLConnection;
@@ -20,8 +19,8 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestControllerAdvice
 @Slf4j
-public class ErrorHandler {
-        @ExceptionHandler(ConstraintViolationException.class)
+public class ExceptionHandler {
+        @org.springframework.web.bind.annotation.ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponseDto> handleConstraintViolationException(ConstraintViolationException exception) {
         List<ErrorExtensionDto> extensions = exception.getConstraintViolations()
                 .stream()
@@ -29,14 +28,14 @@ public class ErrorHandler {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(new ErrorResponseDto(ErrorMessage.VALIDATION_FAILED, extensions), BAD_REQUEST);
     }
-    @ExceptionHandler(DataNotFoundException.class)
+    @org.springframework.web.bind.annotation.ExceptionHandler(DataNotFoundException.class)
     public ResponseEntity<ErrorExtensionDto> handleNotFoundException(DataNotFoundException e) {
         log.error("", e);
         ErrorExtensionDto error = new ErrorExtensionDto(Integer.toString(HttpURLConnection.HTTP_NOT_FOUND), e.getMessage());
         return ResponseEntity.status(HttpURLConnection.HTTP_NOT_FOUND).body(error);
     }
 
-    @ExceptionHandler()
+    @org.springframework.web.bind.annotation.ExceptionHandler()
     public ResponseEntity<ErrorExtensionDto> handleDataAlreadyExistException(DataAlreadyExistException e) {
         log.error("", e);
         ErrorExtensionDto error = new ErrorExtensionDto(Integer.toString(HttpURLConnection.HTTP_NOT_ACCEPTABLE), e.getMessage());
@@ -44,7 +43,7 @@ public class ErrorHandler {
     }
 
 
-    @ExceptionHandler
+    @org.springframework.web.bind.annotation.ExceptionHandler
     public ResponseEntity<ErrorExtensionDto> handleUncaughtException(Throwable e) {
         String message = "This error is not provided";
         log.error(message, e);

@@ -3,12 +3,14 @@ package com.example.bank_application.service.impl;
 import com.example.bank_application.dto.AccountAfterCreateDto;
 import com.example.bank_application.dto.AccountCreateDto;
 import com.example.bank_application.dto.AccountDto;
+import com.example.bank_application.dto.AccountNameDto;
 import com.example.bank_application.entity.Account;
 import com.example.bank_application.entity.Client;
 import com.example.bank_application.entity.enums.AccountStatus;
 import com.example.bank_application.entity.enums.AccountType;
 import com.example.bank_application.mapper.AccountMapper;
 import com.example.bank_application.repository.AccountRepository;
+
 import com.example.bank_application.repository.ClientRepository;
 import com.example.bank_application.service.exceptions.*;
 import com.example.bank_application.service.interf.AccountService;
@@ -26,7 +28,6 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-//@AllArgsConstructor
 public class AccountServiceImpl implements AccountService {
     private final AccountMapper accountMapper;
     private final AccountRepository accountRepository;
@@ -45,14 +46,25 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AccountDto> getAllAccounts() {
+    public AccountDto getAccountByName(String name) {
+        log.info("Get account by name {}", name);
+        return accountMapper.toDto(accountRepository.findAccountByName(name).orElseThrow(
+                () -> {
+                    log.warn(ErrorMessage.ACCOUNT_NOT_FOUND);
+                    throw new DataNotFoundException(ErrorMessage.ACCOUNT_NOT_FOUND);
+                }));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AccountNameDto> getAllAccounts() {
         List<Account> accountList = accountRepository.getAllBy();
-        log.info("Get all accounts");
+        log.info("Get name all accounts");
         if (accountList == null) {
             log.warn(ErrorMessage.ACCOUNTS_NOT_FOUND);
             throw new DataNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND);
         }
-        return new ArrayList<>(accountMapper.toListDto(accountList));
+        return new ArrayList<>(accountMapper.toListDtoName(accountList));
     }
 
     @Override

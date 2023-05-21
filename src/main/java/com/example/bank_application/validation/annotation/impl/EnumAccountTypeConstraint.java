@@ -1,6 +1,5 @@
 package com.example.bank_application.validation.annotation.impl;
 
-import com.example.bank_application.entity.enums.AccountStatus;
 import com.example.bank_application.entity.enums.AccountType;
 import com.example.bank_application.validation.annotation.EnumAccountTypeOrNull;
 import jakarta.validation.ConstraintValidator;

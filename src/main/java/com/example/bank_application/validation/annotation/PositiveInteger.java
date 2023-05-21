@@ -1,6 +1,5 @@
 package com.example.bank_application.validation.annotation;
 
-import com.example.bank_application.validation.annotation.impl.PositiveDecimalConstraint;
 import com.example.bank_application.validation.annotation.impl.PositiveIntegerConstraint;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -15,7 +14,7 @@ import static java.lang.annotation.ElementType.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {PositiveIntegerConstraint.class})
 public @interface PositiveInteger {
-    String message() default "Balance must be positive";
+    String message() default "Value must be integer and positive";
 
     Class<?>[] groups() default {};
 

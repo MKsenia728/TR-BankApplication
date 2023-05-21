@@ -1,6 +1,6 @@
 package com.example.bank_application.validation.annotation;
 
-import com.example.bank_application.validation.annotation.impl.PositiveDecimalOrNullConstraint;
+import com.example.bank_application.validation.annotation.impl.PositiveDecimalConstraint;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -12,9 +12,9 @@ import static java.lang.annotation.ElementType.*;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {PositiveDecimalOrNullConstraint.class})
-public @interface PositiveDecimalOrNull {
-    String message() default "Value must be positive or null";
+@Constraint(validatedBy = {PositiveDecimalConstraint.class})
+public @interface PositiveDecimal {
+    String message() default "Value must be positive";
 
     Class<?>[] groups() default {};
 
