@@ -3,16 +3,20 @@ package com.example.bank_application.util;
 import com.example.bank_application.dto.*;
 import lombok.experimental.UtilityClass;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @UtilityClass
 public class DtoCreator {
+
+    public static final String NAME = "TT 89 311045 00234355921201";
+
     public static AccountDto getAccountDto() {
         return new AccountDto(
                 "00001d7f-d14f-4655-9399-25bf27b16588",
-                "TT 89 311045 00234355921201",
+                NAME,
                 "Ivan",
                 "Tester",
                 "CURRENT",
@@ -26,13 +30,13 @@ public class DtoCreator {
 
     public static AccountNameDto getAccountNameDto() {
         return new AccountNameDto(
-                "TT 89 311045 00234355921201"
+                NAME
         );
     }
 
     public static AccountAfterCreateDto getAccountAfterCreateDto(String status) {
         return new AccountAfterCreateDto(
-                "TT 89 311045 00234355921201",
+                NAME,
                 "CURRENT",
                 status,
                 "10000.0",
@@ -45,7 +49,7 @@ public class DtoCreator {
 
     public static AccountCreateDto getAccountCreateDto() {
         return new AccountCreateDto(
-                "TT 89 311045 00234355921201",
+                NAME,
                 null,
                 null,
                 "10000.0",
@@ -79,6 +83,8 @@ public class DtoCreator {
         return list;
     }
 
+
+
     public static ClientWithBalanceDto getClientWithBalanceDto() {
         return new ClientWithBalanceDto(
                 "ACTIVE",
@@ -109,7 +115,7 @@ public class DtoCreator {
     public static ManagerDto getManagerDto() {
         return new ManagerDto(
                 "1",
-                "Afanasij",
+                "Petr",
                 "Popov",
                 "ACTIVE",
                 LocalDateTime.of(2021, 12, 2, 9, 0, 0),
@@ -119,7 +125,7 @@ public class DtoCreator {
 
     public static ManagerCreateDto getManagerCreateDto() {
         return new ManagerCreateDto(
-                "Afanasij",
+                "Petr",
                 "Popov"
         );
     }
@@ -127,10 +133,10 @@ public class DtoCreator {
     public static ManagerAfterCreateDto getManagerAfterCreateDto() {
         return new ManagerAfterCreateDto(
                 "1",
-                "Afanasij",
+                "Petr",
                 "Popov",
                 "PENDING",
-                LocalDateTime.of(2021, 12, 2, 9, 0, 0),
+                LocalDateTime.of(2021, 12, 2,9,0,0),
                 LocalDateTime.of(2021, 12, 2, 9, 0, 0)
         );
     }

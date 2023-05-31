@@ -37,6 +37,13 @@
             <artifactId>liquibase-core</artifactId>
             <version>4.20.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>2.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -51,6 +58,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--            <version>3.0.6</version>-->
+<!--            <type>pom</type>-->
+<!--        </dependency>-->
+
+
 
 
         <!--        <dependency>-->
@@ -205,6 +221,7 @@
                 </configuration>
             </plugin>
 
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -219,9 +236,9 @@
                         <exclude>com/**/repository/*</exclude>
                         <exclude>com/**/validation/*</exclude>
                         <exclude>com/**/exceptions/*</exclude>
+                        <exclude>com/**/handler/*</exclude>
                         <exclude>com/**/BankApplication.class</exclude>
                     </excludes>
-                    <outputDirectory>bank_application/target/site/jacoco</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -231,12 +248,19 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>jacoco-site</id>
-                        <phase>package</phase>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
                     </execution>
+<!--                    <execution>-->
+<!--                        <id>jacoco-site</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>report</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
                 </executions>
             </plugin>
 

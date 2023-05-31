@@ -1,6 +1,6 @@
 package com.example.bank_application.validation.annotation;
 
-import com.example.bank_application.validation.annotation.impl.IbanConstraint;
+import com.example.bank_application.validation.impl.IbanConstraint;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

@@ -1,4 +1,4 @@
-package com.example.bank_application.validation.annotation.impl;
+package com.example.bank_application.validation.impl;
 
 import com.example.bank_application.validation.annotation.Iban;
 import jakarta.validation.ConstraintValidator;
@@ -17,9 +17,11 @@ public class IbanConstraint implements ConstraintValidator<Iban, String> {
 
     @Override
     public boolean isValid(String accountName, ConstraintValidatorContext constraintValidatorContext) {
-        return Optional.of(accountName)
-                .filter(s -> !s.isBlank())
-                .map(s -> s.matches(IBAN))
-                .orElse(false);
+        if (accountName != null) {
+            return Optional.of(accountName)
+                    .filter(s -> !s.isBlank())
+                    .map(s -> s.matches(IBAN))
+                    .orElse(false);
+        } else return false;
     }
 }

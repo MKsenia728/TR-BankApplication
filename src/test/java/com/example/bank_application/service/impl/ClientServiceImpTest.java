@@ -21,12 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertThrows;
-import static org.mockito.ArgumentMatchers.anyDouble;
-import static org.mockito.ArgumentMatchers.anyString;
 
 @DisplayName("Client service test class")
 @ExtendWith(MockitoExtension.class)
 class ClientServiceImpTest {
+
     @Mock
     ClientRepository clientRepository;
 

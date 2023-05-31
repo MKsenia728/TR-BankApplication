@@ -1,5 +1,7 @@
 package com.example.bank_application.dto;
 
+import com.example.bank_application.validation.annotation.EnumCurrencyType;
+import com.example.bank_application.validation.annotation.PositiveInteger;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Value;
 
@@ -7,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Value
 public class ManagerDto {
+    @PositiveInteger
     String id;
 
     String firstName;

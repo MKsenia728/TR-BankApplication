@@ -35,10 +35,13 @@ class AccountServiceImpTest {
 
     @InjectMocks
     AccountServiceImpl service;
+
     @Mock
     AccountMapper accountMapper;
+
     @Mock
     AccountRepository accountRepository;
+
     @Mock
     ClientRepository clientRepository;
 
@@ -65,6 +68,28 @@ class AccountServiceImpTest {
     void getNotExistAccountByIdTest() {
         String id = EntityCreator.UUID;
         assertThrows(DataNotFoundException.class, () -> service.getAccountById(id));
+    }
+
+    @Test
+    @DisplayName("Positive test. Get account by Name")
+    void getAccountByNameTest() {
+        Account account = EntityCreator.getAccountEntity();
+        AccountDto accountDto = DtoCreator.getAccountDto();
+
+        Mockito.when(accountRepository.findAccountByName(account.getName())).thenReturn(Optional.of(account));
+        Mockito.when(accountMapper.toDto(account)).thenReturn(accountDto);
+
+        service.getAccountByName(account.getName());
+
+        Mockito.verify(accountRepository).findAccountByName(account.getName());
+        Mockito.verify(accountMapper).toDto(account);
+    }
+
+    @Test
+    @DisplayName("Negative test. There is no element. Get account by name.")
+    void getNotExistAccountByNameTest() {
+        String name = EntityCreator.NAME;
+        assertThrows(DataNotFoundException.class, () -> service.getAccountByName(name));
     }
 
     @Test
@@ -110,7 +135,7 @@ class AccountServiceImpTest {
     @Test
     @DisplayName("Negative test. There are no any accounts by status")
     void getNotExistAllAccountsByStatusTest() {
-        Mockito.when(accountRepository.getAllByStatus(AccountStatus.valueOf(status))).thenReturn(null);
+        Mockito.when(accountRepository.getAllByStatus(AccountStatus.valueOf(status))).thenReturn(new ArrayList<>());
         assertThrows(DataNotFoundException.class, () -> service.getAllAccountsByStatus(status));
     }
 
@@ -124,7 +149,7 @@ class AccountServiceImpTest {
         AccountAfterCreateDto expectAccountAfterCreateDto = DtoCreator.getAccountAfterCreateDto(status);
 
         Mockito.when(clientRepository.findClientByTaxCode(taxCode)).thenReturn(client);
-        Mockito.when(accountRepository.findAccountByName(accountCreateDto.getName())).thenReturn(null);
+        Mockito.when(accountRepository.findAccountByName(accountCreateDto.getName())).thenReturn(Optional.empty());
         Mockito.when(accountMapper.toEntity(accountCreateDto)).thenReturn(account);
         Mockito.when(accountMapper.toDtoAfterCreate(account)).thenReturn(expectAccountAfterCreateDto);
         Mockito.when(accountRepository.save(account)).thenReturn(account);

@@ -1,4 +1,4 @@
-package com.example.bank_application.validation.annotation.impl;
+package com.example.bank_application.validation.impl;
 
 import com.example.bank_application.validation.annotation.PositiveDecimal;
 import jakarta.validation.ConstraintValidator;

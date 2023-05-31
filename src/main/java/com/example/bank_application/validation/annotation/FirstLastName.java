@@ -1,6 +1,7 @@
 package com.example.bank_application.validation.annotation;
 
-import com.example.bank_application.validation.impl.EnumAccountTypeConstraint;
+import com.example.bank_application.validation.impl.IbanConstraint;
+import com.example.bank_application.validation.impl.NameConstraint;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -12,11 +13,12 @@ import static java.lang.annotation.ElementType.*;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {EnumAccountTypeConstraint.class})
-public @interface EnumAccountTypeOrNull {
-    String message() default "Invalid account type entered";
+@Constraint(validatedBy = {NameConstraint.class})
+public @interface FirstLastName {
+    String message() default "Data must be firstName or lastName";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 }
+

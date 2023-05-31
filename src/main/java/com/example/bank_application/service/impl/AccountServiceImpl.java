@@ -39,8 +39,8 @@ public class AccountServiceImpl implements AccountService {
         log.info("Get account by id {}", id);
         return accountMapper.toDto(accountRepository.findAccountById(UUID.fromString(id)).orElseThrow(
                 () -> {
-                    log.warn(ErrorMessage.ACCOUNT_NOT_FOUND);
-                    throw new DataNotFoundException(ErrorMessage.ACCOUNT_NOT_FOUND);
+                    log.warn(ErrorMessage.ACCOUNT_NOT_FOUND_BY_ID);
+                    throw new DataNotFoundException(ErrorMessage.ACCOUNT_NOT_FOUND_BY_ID);
                 }));
     }
 
@@ -50,8 +50,8 @@ public class AccountServiceImpl implements AccountService {
         log.info("Get account by name {}", name);
         return accountMapper.toDto(accountRepository.findAccountByName(name).orElseThrow(
                 () -> {
-                    log.warn(ErrorMessage.ACCOUNT_NOT_FOUND);
-                    throw new DataNotFoundException(ErrorMessage.ACCOUNT_NOT_FOUND);
+                    log.warn(ErrorMessage.ACCOUNT_NOT_FOUND_BY_NAME);
+                    throw new DataNotFoundException(ErrorMessage.ACCOUNT_NOT_FOUND_BY_NAME);
                 }));
     }
 
@@ -72,7 +72,7 @@ public class AccountServiceImpl implements AccountService {
     public List<AccountDto> getAllAccountsByStatus(String status) {
         List<Account> accountList = accountRepository.getAllByStatus(AccountStatus.valueOf(status));
         log.info("Get all accounts by status {}", status);
-        if (accountList == null) {
+        if (accountList.size() == 0) {
             log.warn(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS);
             throw new DataNotFoundException(ErrorMessage.ACCOUNTS_NOT_FOUND_BY_STATUS);
         }
@@ -90,7 +90,7 @@ public class AccountServiceImpl implements AccountService {
         if (client == null) {
             log.error(ErrorMessage.CLIENT_NOT_FOUND_BY_TAX_CODE);
             throw new DataNotFoundException(ErrorMessage.CLIENT_NOT_FOUND_BY_TAX_CODE);
-        } else if (accountRepository.findAccountByName(accountCreateDto.getName()) != null) {
+        } else if (accountRepository.findAccountByName(accountCreateDto.getName()).isPresent()) {
             log.error(ErrorMessage.ACCOUNT_ALREADY_EXISTS);
             throw new DataAlreadyExistException(ErrorMessage.ACCOUNT_ALREADY_EXISTS);
         }

@@ -42,8 +42,8 @@ public class ManagerServiceImpl implements ManagerService {
         log.info("Get all managers with clients");
         List<ManagerDto> resultList = new ArrayList<>(managerMapper.toListDto(managerRepository.getAllByClientsNotNull()));
         if (resultList.size() == 0) {
-            log.warn(ErrorMessage.MANAGER_NOT_FOUND);
-            throw new DataNotFoundException(ErrorMessage.MANAGER_NOT_FOUND);
+            log.warn(ErrorMessage.MANAGERS_NOT_FOUND);
+            throw new DataNotFoundException(ErrorMessage.MANAGERS_NOT_FOUND);
         }
         return resultList;
     }

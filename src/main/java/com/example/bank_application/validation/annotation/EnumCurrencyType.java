@@ -1,6 +1,6 @@
 package com.example.bank_application.validation.annotation;
 
-import com.example.bank_application.validation.annotation.impl.EnumCurrencyTypeConstraint;
+import com.example.bank_application.validation.impl.EnumCurrencyTypeConstraint;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -14,7 +14,7 @@ import static java.lang.annotation.ElementType.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {EnumCurrencyTypeConstraint.class})
 public @interface EnumCurrencyType {
-    String message() default "Invalid account type entered";
+    String message() default "Invalid currency type entered";
 
     Class<?>[] groups() default {};
 

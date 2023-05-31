@@ -1,6 +1,6 @@
 package com.example.bank_application.validation.annotation;
 
-import com.example.bank_application.validation.annotation.impl.EnumAccountStatusConstraint;
+import com.example.bank_application.validation.impl.EnumAccountStatusConstraint;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

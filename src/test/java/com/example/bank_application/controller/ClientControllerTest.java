@@ -1,6 +1,8 @@
 package com.example.bank_application.controller;
 
 import com.example.bank_application.dto.ClientWithBalanceDto;
+import com.example.bank_application.service.exceptions.DataNotFoundException;
+import com.example.bank_application.service.exceptions.ErrorMessage;
 import com.example.bank_application.service.interf.ClientService;
 import com.example.bank_application.util.DtoCreator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,11 +35,15 @@ class ClientControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @DisplayName("Positive test. Status 200, JSON response. Controller for find account by balance")
+    private String balance;
+
+    private String currency;
+
+    @DisplayName("Positive test. Status 200, JSON response. Controller for find clients by balance more than and currency")
     @Test
     void getListClientsWithBalanceMoreThanTest() throws Exception {
-        String balance = "11000";
-        String currency = "EUR";
+        balance = "11000";
+        currency = "EUR";
         List<ClientWithBalanceDto> clientsDto = new ArrayList<>();
         clientsDto.add(DtoCreator.getClientWithBalanceDto());
 
@@ -49,7 +55,51 @@ class ClientControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].lastName").value(clientsDto.get(0).getLastName()));
         Mockito.verify(service).getListClientsWithBalanceMoreThan(balance, currency);
+    }
 
+    @DisplayName("Negative test. Clients are not exist. Controller for find clients by balance more than and currency")
+    @Test
+    void getListClientsWithBalanceMoreThanNotExistTest() throws Exception {
+        balance = "110000";
+        currency = "EUR";
+        Mockito.when(service.getListClientsWithBalanceMoreThan(balance, currency)).thenThrow(new DataNotFoundException(ErrorMessage.CLIENTS_NOT_FOUND));
 
+        mockMvc.perform(
+                        get("/clients/balance_more/" + balance + "/" + currency)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.code").value("404"))
+                .andExpect(jsonPath("$.message").value(ErrorMessage.CLIENTS_NOT_FOUND));
+        Mockito.verify(service).getListClientsWithBalanceMoreThan(balance, currency);
+    }
+
+    @DisplayName("Negative test. Invalid balance. Controller for find clients by balance more than and currency")
+    @Test
+    void getListClientsWithBalanceMoreThanInvalidBalanceTest() throws Exception {
+        balance = "balance";
+        currency = "EUR";
+
+        mockMvc.perform(
+                        get("/clients/balance_more/" + balance + "/" + currency)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.errorCode").value("Validation failed"))
+                .andExpect(jsonPath("$.errorExtensions[0].code").value("Value must be positive"))
+                .andExpect(jsonPath("$.errorExtensions[0].message").value("Variable for path is invalid"));
+    }
+
+    @DisplayName("Negative test. Invalid currency type. Controller for find clients by balance more than and currency")
+    @Test
+    void getListClientsWithBalanceMoreThanInvalidCurrencyTest() throws Exception {
+        String balance = "5000";
+        String currency = "dollar";
+
+        mockMvc.perform(
+                        get("/clients/balance_more/" + balance + "/" + currency)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.errorCode").value("Validation failed"))
+                .andExpect(jsonPath("$.errorExtensions[0].code").value("Invalid currency type entered"))
+                .andExpect(jsonPath("$.errorExtensions[0].message").value("Variable for path is invalid"));
     }
 }
