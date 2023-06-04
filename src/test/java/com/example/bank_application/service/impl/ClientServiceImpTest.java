@@ -36,6 +36,7 @@ class ClientServiceImpTest {
     ClientServiceImpl service;
 
     private String balance;
+
     private String currency;
 
     private Client client;

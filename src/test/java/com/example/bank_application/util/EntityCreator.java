@@ -4,7 +4,9 @@ import com.example.bank_application.entity.*;
 import com.example.bank_application.entity.enums.*;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 public class EntityCreator {
     public static final String UUID = "00001d7f-d14f-4655-9399-25bf27b16588";
@@ -13,6 +15,7 @@ public class EntityCreator {
 
     public static Account getAccountEntity() {
         Agreement agreement = getAgreementEntity();
+        Client client = getClientEntity();
         return new Account(
                 java.util.UUID.fromString(UUID),
                 NAME,
@@ -22,7 +25,7 @@ public class EntityCreator {
                 CurrencyType.EUR,
                 LocalDateTime.of(2021,12,2,9,0,0),
                 LocalDateTime.of(2021,12,2,9,0,0),
-                getClientEntity(),
+                client,
                 null,
                 null,
                 agreement

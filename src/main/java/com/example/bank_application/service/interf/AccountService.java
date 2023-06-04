@@ -1,6 +1,6 @@
 package com.example.bank_application.service.interf;
 
-import com.example.bank_application.dto.AccountAfterCreateDto;
+import com.example.bank_application.dto.AccountAfterCreateUpdateDto;
 import com.example.bank_application.dto.AccountCreateDto;
 import com.example.bank_application.dto.AccountDto;
 import com.example.bank_application.dto.AccountNameDto;
@@ -15,7 +15,7 @@ public interface AccountService {
     List<AccountNameDto> getAllAccounts();
     List<AccountDto> getAllAccountsByStatus(String Status);
 
-    AccountAfterCreateDto createNewAccount(AccountCreateDto accountCreateDto, String clientTaxCode);
+    AccountAfterCreateUpdateDto createNewAccount(AccountCreateDto accountCreateDto, String clientTaxCode);
 
-    List<AccountAfterCreateDto> blockAccountByProductIdAndStatus(String productId, String status);
+    List<AccountAfterCreateUpdateDto> blockAccountByProductIdAndStatus(String productId, String status);
 }

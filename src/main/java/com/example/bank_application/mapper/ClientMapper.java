@@ -8,7 +8,9 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {AccountMapper.class})
+import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
+
+@Mapper(componentModel = "spring", injectionStrategy = CONSTRUCTOR, uses = {AccountMapper.class})
 public interface ClientMapper {
     ClientDto toDto(Client client);
 

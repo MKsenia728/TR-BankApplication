@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class UuidConstraint implements ConstraintValidator<Uuid, String > {
 
-    private static final String UUID = "^[\\da-fA-F]{8}-[\\da-fA-F]{4}-[\\da-fA-F]{4}-[\\da-fA-F]{4}-[\\da-fA-F]{12}$";
+    private static final String UUID = "^[\\da-fA-F]{8}-[\\da-fA-F]{4}-[\\da-fA-F]{4}-[8,9][\\da-fA-F]{3}-[\\da-fA-F]{12}$";
 
     @Override
     public void initialize(Uuid constraintAnnotation) {

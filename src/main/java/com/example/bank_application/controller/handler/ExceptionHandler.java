@@ -1,4 +1,4 @@
-package com.example.bank_application.controller.hanler;
+package com.example.bank_application.controller.handler;
 
 
 import com.example.bank_application.dto.ErrorExtensionDto;
@@ -6,13 +6,16 @@ import com.example.bank_application.dto.ErrorResponseDto;
 import com.example.bank_application.service.exceptions.DataAlreadyExistException;
 import com.example.bank_application.service.exceptions.DataNotFoundException;
 import com.example.bank_application.service.exceptions.ErrorMessage;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -27,6 +30,10 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 @Slf4j
 public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(ConstraintViolationException.class)
+    @ApiResponse(responseCode = "400", description = "Bad request", content = {
+            @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponseDto.class))
+    })
     public ResponseEntity<ErrorResponseDto> handleConstraintViolationException(ConstraintViolationException exception) {
         List<ErrorExtensionDto> extensions = exception.getConstraintViolations()
                 .stream()
@@ -36,6 +43,10 @@ public class ExceptionHandler {
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(DataNotFoundException.class)
+    @ApiResponse(responseCode = "404", description = "Data not found", content = {
+            @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorExtensionDto.class))
+    })
     public ResponseEntity<ErrorExtensionDto> handleNotFoundException(DataNotFoundException e) {
         log.error("", e);
         ErrorExtensionDto error = new ErrorExtensionDto(Integer.toString(HttpURLConnection.HTTP_NOT_FOUND), e.getMessage());
@@ -43,6 +54,10 @@ public class ExceptionHandler {
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(DataAlreadyExistException.class)
+    @ApiResponse(responseCode = "406", description = "Data already exists", content = {
+            @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorExtensionDto.class))
+    })
     public ResponseEntity<ErrorExtensionDto> handleDataAlreadyExistException(DataAlreadyExistException e) {
         log.error("", e);
         ErrorExtensionDto error = new ErrorExtensionDto(Integer.toString(HttpURLConnection.HTTP_NOT_ACCEPTABLE), e.getMessage());
@@ -50,6 +65,10 @@ public class ExceptionHandler {
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
+    @ApiResponse(responseCode = "400", description = "It is bed request", content = {
+            @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorMessage.class))
+    })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         BindingResult result = ex.getBindingResult();

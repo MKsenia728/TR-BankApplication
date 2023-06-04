@@ -17,7 +17,6 @@ import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 public interface ManagerMapper {
     ManagerDto toDto(Manager manager);
 
-
     List<ManagerDto> toListDto(List<Manager> managers);
 
     @Mapping(target = "createdAt", expression = "java(LocalDateTime.now())")

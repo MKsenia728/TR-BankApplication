@@ -3,7 +3,6 @@ package com.example.bank_application.util;
 import com.example.bank_application.dto.*;
 import lombok.experimental.UtilityClass;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +33,15 @@ public class DtoCreator {
         );
     }
 
-    public static AccountAfterCreateDto getAccountAfterCreateDto(String status) {
-        return new AccountAfterCreateDto(
+    public static AccountBalanceDto getBalanceAndCurrencyDto() {
+        return new AccountBalanceDto(
+                "10000.0",
+                "EUR"
+        );
+    }
+
+    public static AccountAfterCreateUpdateDto getAccountAfterCreateDto(String status) {
+        return new AccountAfterCreateUpdateDto(
                 NAME,
                 "CURRENT",
                 status,
@@ -52,6 +58,26 @@ public class DtoCreator {
                 NAME,
                 null,
                 null,
+                "10000.0",
+                "EUR"
+        );
+    }
+
+    public static AccountCreateDto getAccountCreateDtoWithType() {
+        return new AccountCreateDto(
+                NAME,
+                "CURRENT",
+                null,
+                "10000.0",
+                "EUR"
+        );
+    }
+
+    public static AccountCreateDto getAccountCreateDtoWithStatus() {
+        return new AccountCreateDto(
+                NAME,
+                null,
+                "ACTIVE",
                 "10000.0",
                 "EUR"
         );
@@ -77,7 +103,7 @@ public class DtoCreator {
         );
     }
 
-    public static List<AccountBalanceDto> getAccountsBalanceDto() {
+    public static List<AccountBalanceDto> getAccountsBalanceDtoList() {
         List<AccountBalanceDto> list = new ArrayList<>();
         list.add(new AccountBalanceDto("10000.0", "EUR"));
         return list;
@@ -93,7 +119,7 @@ public class DtoCreator {
                 "Tester",
                 "ivan@gmail.com",
                 "+111111111111111",
-                getAccountsBalanceDto()
+                getAccountsBalanceDtoList()
         );
     }
 

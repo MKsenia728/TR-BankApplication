@@ -8,7 +8,6 @@ import com.example.bank_application.mapper.ManagerMapper;
 import com.example.bank_application.repository.ManagerRepository;
 import com.example.bank_application.service.exceptions.DataAlreadyExistException;
 import com.example.bank_application.service.exceptions.DataNotFoundException;
-import com.example.bank_application.service.exceptions.ErrorMessage;
 import com.example.bank_application.util.DtoCreator;
 import com.example.bank_application.util.EntityCreator;
 import org.junit.jupiter.api.DisplayName;
@@ -38,10 +37,11 @@ class ManagerServiceImpTest {
     @InjectMocks
     ManagerServiceImpl service;
 
+    private final Manager manager = EntityCreator.getManagerEntity();
+
     @DisplayName("Positive test. Get manager by Id")
     @Test
     void getManagerByIdTest() {
-        Manager manager = EntityCreator.getManagerEntity();
         ManagerDto managerDto = DtoCreator.getManagerDto();
 
         Mockito.when(managerRepository.findManagerById(manager.getId())).thenReturn(Optional.of(manager));
@@ -64,7 +64,7 @@ class ManagerServiceImpTest {
     @Test
     void getAllManagersWithClientsTest() {
         List<Manager> managerList = new ArrayList<>();
-        managerList.add(EntityCreator.getManagerEntity());
+        managerList.add(manager);
         List<ManagerDto> managerDtoList = new ArrayList<>();
         managerDtoList.add(DtoCreator.getManagerDto());
 
@@ -86,7 +86,6 @@ class ManagerServiceImpTest {
     @DisplayName("Positive test. Create new manager")
     @Test
     void managerNewCreateTest() {
-        Manager manager = EntityCreator.getManagerEntity();
         ManagerCreateDto managerCreateDto = DtoCreator.getManagerCreateDto();
         ManagerAfterCreateDto managerAfterCreateDto = DtoCreator.getManagerAfterCreateDto();
         List<Manager> managerList = new ArrayList<>();
@@ -108,8 +107,11 @@ class ManagerServiceImpTest {
     @Test
     void managerNewCreateAlreadyExistTest() {
         ManagerCreateDto managerCreateDto = DtoCreator.getManagerCreateDto();
+        List<Manager> managerList = new ArrayList<>();
+        managerList.add(manager);
 
-        Mockito.when(managerRepository.findAll()).thenThrow(new DataAlreadyExistException(ErrorMessage.MANAGER_ALREADY_EXISTS));
+        Mockito.when(managerMapper.toCreateEntity(managerCreateDto)).thenReturn(manager);
+        Mockito.when(managerRepository.findAll()).thenReturn(managerList);
         assertThrows(DataAlreadyExistException.class, () -> service.managerNewCreate(managerCreateDto));
     }
 }

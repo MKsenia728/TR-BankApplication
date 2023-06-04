@@ -1,6 +1,5 @@
 package com.example.bank_application.entity;
 
-import com.example.bank_application.controller.AccountController;
 import com.example.bank_application.entity.enums.AccountStatus;
 import com.example.bank_application.entity.enums.AccountType;
 import com.example.bank_application.entity.enums.CurrencyType;

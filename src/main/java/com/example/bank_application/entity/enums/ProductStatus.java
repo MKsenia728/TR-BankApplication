@@ -4,7 +4,9 @@ public enum ProductStatus {
     ACTIVE("ACTIVE"),
 
     PENDING("PENDING"),
+
     REMOVED("REMOVED");
+
     private final String value;
 
     ProductStatus(String value) {

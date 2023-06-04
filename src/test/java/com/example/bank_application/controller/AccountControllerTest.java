@@ -1,6 +1,6 @@
 package com.example.bank_application.controller;
 
-import com.example.bank_application.dto.AccountAfterCreateDto;
+import com.example.bank_application.dto.AccountAfterCreateUpdateDto;
 import com.example.bank_application.dto.AccountCreateDto;
 import com.example.bank_application.dto.AccountDto;
 import com.example.bank_application.dto.AccountNameDto;
@@ -209,19 +209,19 @@ class AccountControllerTest {
     void createNewAccountTest() throws Exception {
         String taxCode = "123123123123";
         AccountCreateDto accountCreateDto = DtoCreator.getAccountCreateDto();
-        AccountAfterCreateDto accountAfterCreateDto = DtoCreator.getAccountAfterCreateDto("PENDING");
-        Mockito.when(service.createNewAccount(accountCreateDto, taxCode)).thenReturn(accountAfterCreateDto);
+        AccountAfterCreateUpdateDto accountAfterCreateUpdateDto = DtoCreator.getAccountAfterCreateDto("PENDING");
+        Mockito.when(service.createNewAccount(accountCreateDto, taxCode)).thenReturn(accountAfterCreateUpdateDto);
         mockMvc.perform(post("/accounts/new/client_tax/" + taxCode)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(accountCreateDto))
                 )
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value(accountAfterCreateDto.getName()))
-                .andExpect(jsonPath("$.type").value(accountAfterCreateDto.getType()))
-                .andExpect(jsonPath("$.status").value(accountAfterCreateDto.getStatus()))
-                .andExpect(jsonPath("$.balance").value(accountAfterCreateDto.getBalance()))
-                .andExpect(jsonPath("$.currencyCode").value(accountAfterCreateDto.getCurrencyCode()));
+                .andExpect(jsonPath("$.name").value(accountAfterCreateUpdateDto.getName()))
+                .andExpect(jsonPath("$.type").value(accountAfterCreateUpdateDto.getType()))
+                .andExpect(jsonPath("$.status").value(accountAfterCreateUpdateDto.getStatus()))
+                .andExpect(jsonPath("$.balance").value(accountAfterCreateUpdateDto.getBalance()))
+                .andExpect(jsonPath("$.currencyCode").value(accountAfterCreateUpdateDto.getCurrencyCode()));
 
         Mockito.verify(service).createNewAccount(accountCreateDto, taxCode);
     }
@@ -271,9 +271,9 @@ class AccountControllerTest {
     @Test
     void blockAccountByProductIdAndStatusTest() throws Exception {
         String productId = "1";
-        AccountAfterCreateDto accountAfterCreateDto = DtoCreator.getAccountAfterCreateDto("BLOCKED");
-        List<AccountAfterCreateDto> resultListDto = new ArrayList<>();
-        resultListDto.add(accountAfterCreateDto);
+        AccountAfterCreateUpdateDto accountAfterCreateUpdateDto = DtoCreator.getAccountAfterCreateDto("BLOCKED");
+        List<AccountAfterCreateUpdateDto> resultListDto = new ArrayList<>();
+        resultListDto.add(accountAfterCreateUpdateDto);
         Mockito.when(service.blockAccountByProductIdAndStatus(productId, status)).thenReturn(resultListDto);
 
         mockMvc.perform(put("/accounts/block_account/" + productId + "/" + status)

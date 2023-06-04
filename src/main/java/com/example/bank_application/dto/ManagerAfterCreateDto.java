@@ -1,10 +1,6 @@
 package com.example.bank_application.dto;
 
-import com.example.bank_application.entity.enums.ManagerStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Value;
 
 import java.time.LocalDateTime;

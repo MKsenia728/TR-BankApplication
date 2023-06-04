@@ -15,7 +15,9 @@ import static java.lang.annotation.ElementType.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {NameConstraint.class})
 public @interface FirstLastName {
-    String message() default "Data must be firstName or lastName";
+    String message() default "The name must start with a capital letter," +
+            " at least 2 characters, only Latin or Russian letters, " +
+            "apostrophe characters and one \"-\" character are allowed.";
 
     Class<?>[] groups() default {};
 

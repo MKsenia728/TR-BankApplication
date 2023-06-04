@@ -2,56 +2,90 @@ package com.example.bank_application.mapper;
 
 import com.example.bank_application.dto.ClientDto;
 import com.example.bank_application.dto.ClientWithBalanceDto;
+import com.example.bank_application.entity.Account;
 import com.example.bank_application.entity.Client;
-
 import com.example.bank_application.util.DtoCreator;
 import com.example.bank_application.util.EntityCreator;
-import com.example.bank_application.util.EntityCreator1;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @DisplayName("Client mapper test class")
 class ClientMapperTest {
-    private final ClientMapper clientMapper = new ClientMapperImpl();
+    private final ClientMapper clientMapper = new ClientMapperImpl(new AccountMapperImpl());
+
+    private final Client client = EntityCreator.getClientEntity();
 
     @DisplayName("Positive test. Client mapper to DTO")
     @Test
     void toDtoTest() {
-        Client client = EntityCreator.getClientEntity();
         ClientDto expectedClientDto = DtoCreator.getClientDto();
         Assertions.assertEquals(expectedClientDto, clientMapper.toDto(client));
     }
 
-//    @DisplayName("Positive test. Client mapper to DTO")
-//    @Test
-//    void toDtoWithBalanceTest() {
-//        Client client = EntityCreator1.getClientEntity();
-//        ClientWithBalanceDto expectedClientDto = DtoCreator.getClientWithBalanceDto();
-//        Assertions.assertEquals(expectedClientDto, clientMapper.toDtoWithBalance(client));
-//    }
+    @DisplayName("Negative test. Client null mapper to DTO")
+    @Test
+    void toDtoNullTest() {
+        Assertions.assertNull(clientMapper.toDto(null));
+    }
+
+    @DisplayName("Positive test. Client mapper to ClientWithBalanceAndCurrencyDTO")
+    @Test
+    void toDtoWithBalanceTest() {
+        initForClientWithBalanceDtoTests();
+
+        ClientWithBalanceDto expectedClientDto = DtoCreator.getClientWithBalanceDto();
+        Assertions.assertEquals(expectedClientDto, clientMapper.toDtoWithBalance(client));
+    }
+
+    @DisplayName("Negative test. Client null mapper to ClientWithBalanceAndCurrencyDTO")
+    @Test
+    void toDtoWithBalanceNullTest() {
+        Assertions.assertNull(clientMapper.toDtoWithBalance(null));
+    }
 
     @DisplayName("Positive test. Create client from DTO")
     @Test
     void toEntityTest() {
         ClientDto clientDto = DtoCreator.getClientDto();
-        Client expectedClient = EntityCreator.getClientEntity();
-        Assertions.assertEquals(expectedClient, clientMapper.toEntity(clientDto));
+        Assertions.assertEquals(client, clientMapper.toEntity(clientDto));
     }
 
-//    @DisplayName("Positive test. Client mapper to list DTO")
-//    @Test
-//    void toListDtoWithBalanceTest() {
-//        Client client = EntityCreator1.getClientEntity();
-//        List<Client> clientList = new ArrayList<>();
-//        clientList.add(client);
-//        ClientWithBalanceDto expectedClientDto = DtoCreator.getClientWithBalanceDto();
-//        List<ClientWithBalanceDto> expectedClientWithBalanceDtoList = new ArrayList<>();
-//        expectedClientWithBalanceDtoList.add(expectedClientDto);
-//
-//        Assertions.assertEquals(expectedClientWithBalanceDtoList, clientMapper.toListDtoWithBalance(clientList));
-//    }
+    @DisplayName("Negative test. Create client from DTO null")
+    @Test
+    void toEntityNullTest() {
+        Assertions.assertNull(clientMapper.toEntity(null));
+    }
+
+    @DisplayName("Positive test. Clients list with balance mapper to list with balance and currency DTO")
+    @Test
+    void toListDtoWithBalanceTest() {
+        initForClientWithBalanceDtoTests();
+
+        List<Client> clientList = new ArrayList<>();
+        clientList.add(client);
+        ClientWithBalanceDto expectedClientDto = DtoCreator.getClientWithBalanceDto();
+        List<ClientWithBalanceDto> expectedClientWithBalanceDtoList = new ArrayList<>();
+        expectedClientWithBalanceDtoList.add(expectedClientDto);
+
+        Assertions.assertEquals(expectedClientWithBalanceDtoList, clientMapper.toListDtoWithBalance(clientList));
+    }
+
+    @DisplayName("Negative test. Clients list null with balance mapper to list with balance and currency DTO")
+    @Test
+    void toListDtoWithBalanceNullTest() {
+        Assertions.assertNull(clientMapper.toListDtoWithBalance(null));
+    }
+
+    private void initForClientWithBalanceDtoTests() {
+        Account account = EntityCreator.getAccountEntity();
+        Set<Account> accountList = new HashSet<>();
+        accountList.add(account);
+        client.setAccounts(accountList);
+    }
 }

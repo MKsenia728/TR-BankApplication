@@ -1,9 +1,15 @@
 package com.example.bank_application.controller;
 
+import com.example.bank_application.dto.AccountAfterCreateUpdateDto;
 import com.example.bank_application.dto.ClientWithBalanceDto;
 import com.example.bank_application.service.interf.ClientService;
 import com.example.bank_application.validation.annotation.EnumCurrencyType;
 import com.example.bank_application.validation.annotation.PositiveDecimal;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +26,13 @@ public class ClientController {
 
     @GetMapping("/balance_more/{balance}/{currency}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Request for find all clients with balance more than given value",
+            description = "If accounts exists - returns all accounts with balance more than given value. " +
+                    "If accounts do not exist - returns exception")
+    @ApiResponse(responseCode = "200", description = "Successfully returned list if clients", content = {
+            @Content(mediaType = "application/json",
+                    array = @ArraySchema(schema = @Schema(implementation = ClientWithBalanceDto.class)))
+    })
     public List<ClientWithBalanceDto> getListClientsWithBalanceMoreThanInCurrency(@PositiveDecimal @PathVariable("balance") String balance, @EnumCurrencyType @PathVariable("currency") String currency) {
         return clientService.getListClientsWithBalanceMoreThan(balance, currency);
     }

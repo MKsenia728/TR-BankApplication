@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class PositiveIntegerConstraint implements ConstraintValidator<PositiveInteger, String> {
 
-    private static final String POSITIVE_INTEGER = "\\d{0,15}";
+    private static final String POSITIVE_INTEGER = "\\d{0,10}";
 
     @Override
     public void initialize(PositiveInteger constraintAnnotation) {
@@ -18,8 +18,9 @@ public class PositiveIntegerConstraint implements ConstraintValidator<PositiveIn
     @Override
     public boolean isValid(String integerId, ConstraintValidatorContext constraintValidatorContext) {
         boolean result;
+
         try {
-            result = Optional.of(integerId)
+            result = Optional.ofNullable(integerId)
                     .filter(s -> !s.isBlank())
                     .map(Integer::parseInt)
                     .map(s -> s.toString().matches(POSITIVE_INTEGER))

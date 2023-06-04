@@ -53,13 +53,17 @@ public class ManagerServiceImpl implements ManagerService {
     public ManagerAfterCreateDto managerNewCreate(ManagerCreateDto managerCreateDto) {
         log.info("Create new manager");
         Manager manager = managerMapper.toCreateEntity(managerCreateDto);
+        checkManagerNotExist(manager);
+        return  managerMapper.toAfterCreateDto(managerRepository.save(manager));
+    }
+    
+    private void checkManagerNotExist(Manager manager) {
         managerRepository.findAll().forEach(m -> {
             if (m.equals(manager)) {
                 log.error(ErrorMessage.MANAGER_ALREADY_EXISTS);
                 throw new DataAlreadyExistException(ErrorMessage.MANAGER_ALREADY_EXISTS);
             }
         });
-        return  managerMapper.toAfterCreateDto(managerRepository.save(manager));
     }
 }
 

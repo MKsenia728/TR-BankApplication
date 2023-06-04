@@ -1,6 +1,6 @@
 package com.example.bank_application.service.impl;
 
-import com.example.bank_application.dto.AccountAfterCreateDto;
+import com.example.bank_application.dto.AccountAfterCreateUpdateDto;
 import com.example.bank_application.dto.AccountCreateDto;
 import com.example.bank_application.dto.AccountDto;
 import com.example.bank_application.dto.AccountNameDto;
@@ -81,10 +81,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public AccountAfterCreateDto createNewAccount(AccountCreateDto accountCreateDto, String clientTaxCode) {
+    public AccountAfterCreateUpdateDto createNewAccount(AccountCreateDto accountCreateDto, String clientTaxCode) {
         log.info("Create new account for client with tax code {}", clientTaxCode);
         Client client = clientRepository.findClientByTaxCode(clientTaxCode);
-        AccountAfterCreateDto accountAfterCreateDto;
+        AccountAfterCreateUpdateDto accountAfterCreateUpdateDto;
         Account account;
 
         if (client == null) {
@@ -96,9 +96,9 @@ public class AccountServiceImpl implements AccountService {
         }
 
         account = fillAccount(accountCreateDto, client);
-        accountAfterCreateDto = accountMapper.toDtoAfterCreate(account);
+        accountAfterCreateUpdateDto = accountMapper.toDtoAfterCreate(account);
         accountRepository.save(account);
-        return accountAfterCreateDto;
+        return accountAfterCreateUpdateDto;
     }
 
     private Account fillAccount(AccountCreateDto dto, Client client) {
@@ -113,7 +113,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public List<AccountAfterCreateDto> blockAccountByProductIdAndStatus(String productId, String status) {
+    public List<AccountAfterCreateUpdateDto> blockAccountByProductIdAndStatus(String productId, String status) {
         log.info("Change account status to BLOCKED for account with status {} and product id {} ", status, productId);
         List<Account> accountsByStatus = accountRepository.getAllByStatus(AccountStatus.valueOf(status));
         List<Account> accountsByStatusAndProductId = new ArrayList<>();

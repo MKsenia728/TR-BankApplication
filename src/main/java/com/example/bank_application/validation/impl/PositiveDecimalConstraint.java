@@ -16,7 +16,7 @@ public class PositiveDecimalConstraint implements ConstraintValidator<PositiveDe
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        return Optional.of(value)
+        return Optional.ofNullable(value)
                 .filter(s -> !s.isBlank())
                 .map(s -> s.matches(POSITIVE_DECIMAL_PATTERN))
                 .orElse(false);

@@ -1,13 +1,11 @@
 package com.example.bank_application.validation.impl;
 
-import com.example.bank_application.entity.enums.AccountStatus;
 import com.example.bank_application.entity.enums.CurrencyType;
 import com.example.bank_application.validation.annotation.EnumCurrencyType;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 public class EnumCurrencyTypeConstraint implements ConstraintValidator<EnumCurrencyType, String> {
-
 
     @Override
     public void initialize(EnumCurrencyType constraintAnnotation) {
