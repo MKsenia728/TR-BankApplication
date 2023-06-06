@@ -22,13 +22,13 @@ public class Account  {
     @Id
     @GeneratedValue(generator = "UUID", strategy = GenerationType.UUID)
 
-    @Column(name = "id")
+    @Column(name = "id", updatable=false, nullable=false)
     private UUID id;
 
-    @Column(name = "name")
+    @Column(name = "name", updatable=false, nullable=false)
     private String name;
 
-    @Column(name = "type")
+    @Column(name = "type", updatable=false, nullable=false)
     @Enumerated(EnumType.STRING)
     private AccountType type;
 
@@ -36,30 +36,30 @@ public class Account  {
     @Enumerated(EnumType.STRING)
     private AccountStatus status;
 
-    @Column(name = "balance")
+    @Column(name = "balance", nullable=false)
     private Double balance;
 
-    @Column(name = "currency_code")
+    @Column(name = "currency_code", updatable=false, nullable=false)
     @Enumerated(EnumType.STRING)
     private CurrencyType currencyCode;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable=false, nullable=false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(optional=false, cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id", referencedColumnName="id")
     private Client client;
 
-    @OneToMany(mappedBy = "debitAccount", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "debitAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Transaction> transactionDebits;
 
-    @OneToMany(mappedBy = "creditAccount", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "creditAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Transaction> transactionCredits;
 
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(optional=false, mappedBy = "account", cascade = CascadeType.ALL)
     private Agreement agreement;
 
 

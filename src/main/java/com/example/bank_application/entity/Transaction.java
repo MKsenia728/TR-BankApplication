@@ -18,20 +18,20 @@ import java.util.UUID;
 public class Transaction {
     @Id
     @GeneratedValue(generator = "UUID", strategy = GenerationType.UUID)
-    @Column(name = "id")
+    @Column(name = "id", updatable=false, nullable=false)
     private UUID id;
 
-    @Column(name = "type")
+    @Column(name = "type", nullable=false)
     @Enumerated(EnumType.STRING)
     private TransactionType type;
 
-    @Column(name = "amount")
+    @Column(name = "amount", nullable=false)
     private Double amount;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable=false)
     private String description;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable=false, nullable=false)
     private LocalDateTime createdAt;
 
     @ManyToOne(cascade = CascadeType.ALL)

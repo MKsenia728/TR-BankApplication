@@ -43,10 +43,10 @@ public class ExceptionHandler {
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(DataNotFoundException.class)
-    @ApiResponse(responseCode = "404", description = "Data not found", content = {
-            @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorExtensionDto.class))
-    })
+//    @ApiResponse(responseCode = "404", description = "Data not found", content = {
+//            @Content(mediaType = "application/json",
+//                    schema = @Schema(implementation = ErrorExtensionDto.class))
+//    })
     public ResponseEntity<ErrorExtensionDto> handleNotFoundException(DataNotFoundException e) {
         log.error("", e);
         ErrorExtensionDto error = new ErrorExtensionDto(Integer.toString(HttpURLConnection.HTTP_NOT_FOUND), e.getMessage());
@@ -54,10 +54,10 @@ public class ExceptionHandler {
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(DataAlreadyExistException.class)
-    @ApiResponse(responseCode = "406", description = "Data already exists", content = {
-            @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorExtensionDto.class))
-    })
+//    @ApiResponse(responseCode = "406", description = "Data already exists", content = {
+//            @Content(mediaType = "application/json",
+//                    schema = @Schema(implementation = ErrorExtensionDto.class))
+//    })
     public ResponseEntity<ErrorExtensionDto> handleDataAlreadyExistException(DataAlreadyExistException e) {
         log.error("", e);
         ErrorExtensionDto error = new ErrorExtensionDto(Integer.toString(HttpURLConnection.HTTP_NOT_ACCEPTABLE), e.getMessage());
@@ -65,10 +65,10 @@ public class ExceptionHandler {
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
-    @ApiResponse(responseCode = "400", description = "It is bed request", content = {
-            @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorMessage.class))
-    })
+//    @ApiResponse(responseCode = "400", description = "It is bed request", content = {
+//            @Content(mediaType = "application/json",
+//                    schema = @Schema(implementation = ErrorMessage.class))
+//    })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         BindingResult result = ex.getBindingResult();

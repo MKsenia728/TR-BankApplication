@@ -1,11 +1,11 @@
 package com.example.bank_application.controller;
 
-import com.example.bank_application.dto.AccountAfterCreateUpdateDto;
 import com.example.bank_application.dto.ClientWithBalanceDto;
 import com.example.bank_application.service.interf.ClientService;
 import com.example.bank_application.validation.annotation.EnumCurrencyType;
 import com.example.bank_application.validation.annotation.PositiveDecimal;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,7 +33,12 @@ public class ClientController {
             @Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = ClientWithBalanceDto.class)))
     })
-    public List<ClientWithBalanceDto> getListClientsWithBalanceMoreThanInCurrency(@PositiveDecimal @PathVariable("balance") String balance, @EnumCurrencyType @PathVariable("currency") String currency) {
+    public List<ClientWithBalanceDto> getListClientsWithBalanceMoreThanInCurrency(@PositiveDecimal
+                                                                                  @Parameter(description = "Balance should be 0 or more, format 00 or 00.00")
+                                                                                  @PathVariable("balance") String balance,
+                                                                                  @EnumCurrencyType
+                                                                                  @Parameter(description = "Check allowed currency")
+                                                                                  @PathVariable("currency") String currency) {
         return clientService.getListClientsWithBalanceMoreThan(balance, currency);
     }
 }

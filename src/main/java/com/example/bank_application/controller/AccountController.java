@@ -10,10 +10,12 @@ import com.example.bank_application.validation.annotation.Iban;
 import com.example.bank_application.validation.annotation.PositiveInteger;
 import com.example.bank_application.validation.annotation.Uuid;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/accounts")
 @RequiredArgsConstructor
+@Tag(name = "Accounts", description = "Controller for work with accounts")
 public class AccountController {
 
     public final AccountService accountService;
@@ -39,7 +42,9 @@ public class AccountController {
             @Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = AccountDto.class)))
     })
-    public AccountDto getAccountById(@Uuid @PathVariable("accountId") String accountId) {
+    public AccountDto getAccountById(@Uuid
+                                     @Parameter(description = "Unique Id format UUID")
+                                     @PathVariable("accountId") String accountId) {
         return accountService.getAccountById(accountId);
     }
 
@@ -52,7 +57,9 @@ public class AccountController {
             @Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = AccountDto.class)))
     })
-    public AccountDto getAccountByName(@Iban @PathVariable("accountName") String accountName) {
+    public AccountDto getAccountByName(@Iban
+                                       @Parameter(description = "Account`s name should be IBAN")
+                                       @PathVariable("accountName") String accountName) {
         return accountService.getAccountByName(accountName);
     }
 
@@ -78,7 +85,9 @@ public class AccountController {
             @Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = AccountDto.class)))
     })
-    public List<AccountDto> getAllAccountsByStatus(@EnumAccountStatusOrNull @PathVariable("status") String status) {
+    public List<AccountDto> getAllAccountsByStatus(@EnumAccountStatusOrNull
+                                                   @Parameter(description = "Status should be PENDING / BLOCKED / ACTIVE")
+                                                   @PathVariable("status") String status) {
         return accountService.getAllAccountsByStatus(status);
     }
 
@@ -94,6 +103,7 @@ public class AccountController {
     })
     public AccountAfterCreateUpdateDto createNewAccount(
             @Valid
+            @Parameter(description = "You can see schema for input data")
             @RequestBody AccountCreateDto accountCreateDto,
             @PathVariable("clientTaxCode") String clientTaxCode) {
         return accountService.createNewAccount(accountCreateDto, clientTaxCode);
@@ -102,15 +112,19 @@ public class AccountController {
     @PutMapping("block_account/{productId}/{status}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Request for update all accounts by given status and product id",
-            description = "If accounts exists - updates and returns all accounts with new info of accounts . " +
+            description = "If accounts exists - status changes to BLOCKED and returns all accounts with new info of accounts . " +
                     "If accounts do not exist - returns exception")
     @ApiResponse(responseCode = "200", description = "Successfully updated accounts by given status and product id", content = {
             @Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = AccountAfterCreateUpdateDto.class)))
     })
     public List<AccountAfterCreateUpdateDto> blockAccountByProductIdAndStatus(
-            @PositiveInteger @PathVariable("productId") String productId,
-            @EnumAccountStatusOrNull @PathVariable("status") String status) {
+            @PositiveInteger
+            @Parameter(description = "Unique product id, format integer")
+            @PathVariable("productId") String productId,
+            @EnumAccountStatusOrNull
+            @Parameter(description = "Status should be PENDING / BLOCKED / ACTIVE")
+            @PathVariable("status") String status) {
         return accountService.blockAccountByProductIdAndStatus(productId, status);
     }
 }

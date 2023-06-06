@@ -21,20 +21,20 @@ import java.util.UUID;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id", updatable=false, nullable=false)
     private UUID id;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ClientStatus status;
 
-    @Column(name = "tax_code")
+    @Column(name = "tax_code", updatable=false, nullable=false)
     private String taxCode;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable=false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable=false)
     private String lastName;
 
     @Column(name = "email")
@@ -46,7 +46,7 @@ public class Client {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable=false, nullable=false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
@@ -55,7 +55,7 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Account> accounts;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "manager_id", referencedColumnName="id")
     private Manager manager;
 

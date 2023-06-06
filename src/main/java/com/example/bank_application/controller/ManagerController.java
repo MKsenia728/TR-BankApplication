@@ -5,6 +5,7 @@ import com.example.bank_application.entity.Manager;
 import com.example.bank_application.service.interf.ManagerService;
 import com.example.bank_application.validation.annotation.PositiveInteger;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,7 +34,9 @@ public class ManagerController {
             @Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = Manager.class)))
     })
-    public ManagerDto getManagerById(@PositiveInteger @PathVariable("managerId") String managerId) {
+    public ManagerDto getManagerById(@PositiveInteger
+                                     @Parameter(description = "Unique id, format integer")
+                                     @PathVariable("managerId") String managerId) {
         return managerService.getManagerById(managerId);
     }
 

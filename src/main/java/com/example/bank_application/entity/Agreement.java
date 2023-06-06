@@ -19,7 +19,7 @@ import java.util.Objects;
 public class Agreement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id", updatable=false, nullable=false)
     private Integer id;
 
     @Column(name = "interest_rate")
@@ -32,17 +32,17 @@ public class Agreement {
     @Column(name = "sum")
     private Double sum;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable=false, nullable=false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToOne()
+    @OneToOne(optional = false)
     @JoinColumn(name = "account_id", referencedColumnName="id")
     private Account account;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName="id")
     private Product product;
 
