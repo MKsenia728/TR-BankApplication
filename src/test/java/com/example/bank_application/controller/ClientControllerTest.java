@@ -53,7 +53,7 @@ class ClientControllerTest {
                         get("/clients/balance_more/" + balance + "/" + currency)
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].lastName").value(clientsDto.get(0).getLastName()));
+                .andExpect(jsonPath("$[0].lastName").value(clientsDto.get(0).lastName()));
         Mockito.verify(service).getListClientsWithBalanceMoreThan(balance, currency);
     }
 

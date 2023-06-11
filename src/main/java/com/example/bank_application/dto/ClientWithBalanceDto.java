@@ -1,23 +1,19 @@
 package com.example.bank_application.dto;
 
-import lombok.Value;
-
 import java.util.List;
 
-@Value
-public class ClientWithBalanceDto {
-    String status;
+public record ClientWithBalanceDto(
+        String status,
 
-    String taxCode;
+        String taxCode,
 
-    String firstName;
+        String firstName,
 
-    String lastName;
+        String lastName,
 
-    String email;
+        String email,
 
-    String phone;
+        String phone,
 
-    List<AccountBalanceDto> balanceAndCurrency;
-
+        List<AccountBalanceDto> balanceAndCurrency) {
 }

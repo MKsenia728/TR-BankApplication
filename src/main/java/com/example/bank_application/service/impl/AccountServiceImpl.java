@@ -90,7 +90,7 @@ public class AccountServiceImpl implements AccountService {
         if (client == null) {
             log.error(ErrorMessage.CLIENT_NOT_FOUND_BY_TAX_CODE);
             throw new DataNotFoundException(ErrorMessage.CLIENT_NOT_FOUND_BY_TAX_CODE);
-        } else if (accountRepository.findAccountByName(accountCreateDto.getName()).isPresent()) {
+        } else if (accountRepository.findAccountByName(accountCreateDto.name()).isPresent()) {
             log.error(ErrorMessage.ACCOUNT_ALREADY_EXISTS);
             throw new DataAlreadyExistException(ErrorMessage.ACCOUNT_ALREADY_EXISTS);
         }

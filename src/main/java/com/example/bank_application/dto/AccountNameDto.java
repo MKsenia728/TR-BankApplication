@@ -1,4 +1,6 @@
 package com.example.bank_application.dto;
 
-public record AccountNameDto(String name) {
+import com.example.bank_application.validation.annotation.Iban;
+
+public record AccountNameDto(@Iban String name) {
 }

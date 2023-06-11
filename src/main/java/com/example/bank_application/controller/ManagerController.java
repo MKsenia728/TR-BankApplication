@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/managers")
 @RequiredArgsConstructor
+@Tag(name = "Managers", description = "Controller for work with managers")
 public class ManagerController {
     public final ManagerService managerService;
 
@@ -65,5 +67,4 @@ public class ManagerController {
     public ManagerAfterCreateDto createNewManager(@Valid @RequestBody ManagerCreateDto managerCreateDto) {
         return managerService.managerNewCreate(managerCreateDto);
     }
-
 }

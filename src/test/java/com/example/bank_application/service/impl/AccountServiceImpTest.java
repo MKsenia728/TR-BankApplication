@@ -147,7 +147,7 @@ class AccountServiceImpTest {
         AccountAfterCreateUpdateDto expectAccountAfterCreateUpdateDto = DtoCreator.getAccountAfterCreateDto("PENDING");
 
         Mockito.when(clientRepository.findClientByTaxCode(taxCode)).thenReturn(client);
-        Mockito.when(accountRepository.findAccountByName(accountCreateDto.getName())).thenReturn(Optional.empty());
+        Mockito.when(accountRepository.findAccountByName(accountCreateDto.name())).thenReturn(Optional.empty());
         Mockito.when(accountMapper.toEntity(accountCreateDto)).thenReturn(account);
         Mockito.when(accountMapper.toDtoAfterCreate(account)).thenReturn(expectAccountAfterCreateUpdateDto);
         Mockito.when(accountRepository.save(account)).thenReturn(account);
@@ -155,7 +155,7 @@ class AccountServiceImpTest {
         service.createNewAccount(accountCreateDto, taxCode);
 
         Mockito.verify(clientRepository).findClientByTaxCode(taxCode);
-        Mockito.verify(accountRepository).findAccountByName(accountCreateDto.getName());
+        Mockito.verify(accountRepository).findAccountByName(accountCreateDto.name());
         Mockito.verify(accountMapper).toEntity(accountCreateDto);
         Mockito.verify(accountMapper).toDtoAfterCreate(account);
         Mockito.verify(accountRepository).save(account);
@@ -178,7 +178,7 @@ class AccountServiceImpTest {
         AccountCreateDto accountCreateDto = DtoCreator.getAccountCreateDto();
 
         Mockito.when(clientRepository.findClientByTaxCode(taxCode)).thenReturn(client);
-        Mockito.when(accountRepository.findAccountByName(accountCreateDto.getName())).thenReturn(Optional.of(account));
+        Mockito.when(accountRepository.findAccountByName(accountCreateDto.name())).thenReturn(Optional.of(account));
 
         assertThrows(DataAlreadyExistException.class, () -> service.createNewAccount(accountCreateDto, taxCode));
     }
@@ -207,7 +207,7 @@ class AccountServiceImpTest {
         Mockito.verify(accountRepository).saveAll(updatedList);
         Mockito.verify(accountMapper).toListAfterCreateDto(accountList);
 
-        assertEquals("BLOCKED", resultList.get(0).getStatus());
+        assertEquals("BLOCKED", resultList.get(0).status());
     }
 
 

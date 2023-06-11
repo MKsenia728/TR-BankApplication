@@ -27,16 +27,16 @@ class AccountMapperTest {
         AccountDto expectedAccountDto = DtoCreator.getAccountDto();
         AccountDto actualAccountDto = accountMapper.toDto(account);
 //        Assertions.assertEquals(expectedAccountDto, accountMapper.toDto(account));
-        Assertions.assertEquals(expectedAccountDto.getId(), actualAccountDto.getId());
-        Assertions.assertEquals(expectedAccountDto.getName(), actualAccountDto.getName());
-        Assertions.assertEquals(expectedAccountDto.getBalance(), actualAccountDto.getBalance());
-        Assertions.assertEquals(expectedAccountDto.getStatus(), actualAccountDto.getStatus());
-        Assertions.assertEquals(expectedAccountDto.getType(), actualAccountDto.getType());
-        Assertions.assertEquals(expectedAccountDto.getCurrencyCode(), actualAccountDto.getCurrencyCode());
-        Assertions.assertEquals(expectedAccountDto.getClientFirstName(), actualAccountDto.getClientFirstName());
-        Assertions.assertEquals(expectedAccountDto.getClientLastName(), actualAccountDto.getClientLastName());
-        Assertions.assertEquals(expectedAccountDto.getCreatedAt(), actualAccountDto.getCreatedAt());
-        Assertions.assertEquals(expectedAccountDto.getUpdatedAt(), actualAccountDto.getUpdatedAt());
+        Assertions.assertEquals(expectedAccountDto.id(), actualAccountDto.id());
+        Assertions.assertEquals(expectedAccountDto.name(), actualAccountDto.name());
+        Assertions.assertEquals(expectedAccountDto.balance(), actualAccountDto.balance());
+        Assertions.assertEquals(expectedAccountDto.status(), actualAccountDto.status());
+        Assertions.assertEquals(expectedAccountDto.type(), actualAccountDto.type());
+        Assertions.assertEquals(expectedAccountDto.currencyCode(), actualAccountDto.currencyCode());
+        Assertions.assertEquals(expectedAccountDto.clientFirstName(), actualAccountDto.clientFirstName());
+        Assertions.assertEquals(expectedAccountDto.clientLastName(), actualAccountDto.clientLastName());
+        Assertions.assertEquals(expectedAccountDto.createdAt(), actualAccountDto.createdAt());
+        Assertions.assertEquals(expectedAccountDto.updatedAt(), actualAccountDto.updatedAt());
     }
 
     @DisplayName("Negative test. Null mapper to DTO test")

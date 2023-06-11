@@ -34,11 +34,11 @@ public class Transaction {
     @Column(name = "created_at", updatable=false, nullable=false)
     private LocalDateTime createdAt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "debit_account_id", referencedColumnName="id")
     private Account debitAccount;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "credit_account_id", referencedColumnName="id")
     private Account creditAccount;
 

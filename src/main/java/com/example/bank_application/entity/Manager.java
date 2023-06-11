@@ -37,7 +37,7 @@ public class Manager {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     @JoinTable(name = "products_managers",
             joinColumns = {@JoinColumn(name = "manager_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")})

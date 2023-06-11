@@ -51,14 +51,14 @@ class AccountControllerTest {
         mockMvc.perform(get("/accounts/id/" + id)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(expectAccount.getId()))
-                .andExpect(jsonPath("$.name").value(expectAccount.getName()))
-                .andExpect(jsonPath("$.type").value(expectAccount.getType()))
-                .andExpect(jsonPath("$.status").value(expectAccount.getStatus()))
-                .andExpect(jsonPath("$.balance").value(expectAccount.getBalance()))
-                .andExpect(jsonPath("$.currencyCode").value(expectAccount.getCurrencyCode()))
-                .andExpect(jsonPath("$.clientFirstName").value(expectAccount.getClientFirstName()))
-                .andExpect(jsonPath("$.clientLastName").value(expectAccount.getClientLastName()));
+                .andExpect(jsonPath("$.id").value(expectAccount.id()))
+                .andExpect(jsonPath("$.name").value(expectAccount.name()))
+                .andExpect(jsonPath("$.type").value(expectAccount.type()))
+                .andExpect(jsonPath("$.status").value(expectAccount.status()))
+                .andExpect(jsonPath("$.balance").value(expectAccount.balance()))
+                .andExpect(jsonPath("$.currencyCode").value(expectAccount.currencyCode()))
+                .andExpect(jsonPath("$.clientFirstName").value(expectAccount.clientFirstName()))
+                .andExpect(jsonPath("$.clientLastName").value(expectAccount.clientLastName()));
     }
 
     @DisplayName("Negative test.Invalid ID. Controller for find account by ID")
@@ -95,14 +95,14 @@ class AccountControllerTest {
         mockMvc.perform(get("/accounts/name/" + name)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(expectAccount.getId()))
-                .andExpect(jsonPath("$.name").value(expectAccount.getName()))
-                .andExpect(jsonPath("$.type").value(expectAccount.getType()))
-                .andExpect(jsonPath("$.status").value(expectAccount.getStatus()))
-                .andExpect(jsonPath("$.balance").value(expectAccount.getBalance()))
-                .andExpect(jsonPath("$.currencyCode").value(expectAccount.getCurrencyCode()))
-                .andExpect(jsonPath("$.clientFirstName").value(expectAccount.getClientFirstName()))
-                .andExpect(jsonPath("$.clientLastName").value(expectAccount.getClientLastName()));
+                .andExpect(jsonPath("$.id").value(expectAccount.id()))
+                .andExpect(jsonPath("$.name").value(expectAccount.name()))
+                .andExpect(jsonPath("$.type").value(expectAccount.type()))
+                .andExpect(jsonPath("$.status").value(expectAccount.status()))
+                .andExpect(jsonPath("$.balance").value(expectAccount.balance()))
+                .andExpect(jsonPath("$.currencyCode").value(expectAccount.currencyCode()))
+                .andExpect(jsonPath("$.clientFirstName").value(expectAccount.clientFirstName()))
+                .andExpect(jsonPath("$.clientLastName").value(expectAccount.clientLastName()));
     }
 
     @DisplayName("Negative test.Invalid name. Controller for find account by name")
@@ -119,7 +119,7 @@ class AccountControllerTest {
 
     @DisplayName("Negative test. Name not exist. Controller for find account by name")
     @Test
-    public void getAccountByNameNotExistIdExceptionTest() throws Exception {
+    public void getAccountByNameNotExistNameExceptionTest() throws Exception {
         String name = EntityCreator.NAME;
         Mockito.when(service.getAccountByName(name)).thenThrow(new DataNotFoundException(ErrorMessage.ACCOUNT_NOT_FOUND_BY_NAME));
         mockMvc.perform(get("/accounts/name/" + name)
@@ -168,15 +168,15 @@ class AccountControllerTest {
                         get("/accounts/all/" + status)
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(accountDtoList.get(0).getId()))
-                .andExpect(jsonPath("$[0].name").value(accountDtoList.get(0).getName()))
-                .andExpect(jsonPath("$[0].type").value(accountDtoList.get(0).getType()))
-                .andExpect(jsonPath("$[0].status").value(accountDtoList.get(0).getStatus()))
+                .andExpect(jsonPath("$[0].id").value(accountDtoList.get(0).id()))
+                .andExpect(jsonPath("$[0].name").value(accountDtoList.get(0).name()))
+                .andExpect(jsonPath("$[0].type").value(accountDtoList.get(0).type()))
+                .andExpect(jsonPath("$[0].status").value(accountDtoList.get(0).status()))
                 .andExpect(jsonPath("$[0].status").value(status))
-                .andExpect(jsonPath("$[0].balance").value(accountDtoList.get(0).getBalance()))
-                .andExpect(jsonPath("$[0].currencyCode").value(accountDtoList.get(0).getCurrencyCode()))
-                .andExpect(jsonPath("$[0].clientFirstName").value(accountDtoList.get(0).getClientFirstName()))
-                .andExpect(jsonPath("$[0].clientLastName").value(accountDtoList.get(0).getClientLastName()));
+                .andExpect(jsonPath("$[0].balance").value(accountDtoList.get(0).balance()))
+                .andExpect(jsonPath("$[0].currencyCode").value(accountDtoList.get(0).currencyCode()))
+                .andExpect(jsonPath("$[0].clientFirstName").value(accountDtoList.get(0).clientFirstName()))
+                .andExpect(jsonPath("$[0].clientLastName").value(accountDtoList.get(0).clientLastName()));
         Mockito.verify(service).getAllAccountsByStatus(status);
     }
 
@@ -217,11 +217,11 @@ class AccountControllerTest {
                         .content(objectMapper.writeValueAsString(accountCreateDto))
                 )
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value(accountAfterCreateUpdateDto.getName()))
-                .andExpect(jsonPath("$.type").value(accountAfterCreateUpdateDto.getType()))
-                .andExpect(jsonPath("$.status").value(accountAfterCreateUpdateDto.getStatus()))
-                .andExpect(jsonPath("$.balance").value(accountAfterCreateUpdateDto.getBalance()))
-                .andExpect(jsonPath("$.currencyCode").value(accountAfterCreateUpdateDto.getCurrencyCode()));
+                .andExpect(jsonPath("$.name").value(accountAfterCreateUpdateDto.name()))
+                .andExpect(jsonPath("$.type").value(accountAfterCreateUpdateDto.type()))
+                .andExpect(jsonPath("$.status").value(accountAfterCreateUpdateDto.status()))
+                .andExpect(jsonPath("$.balance").value(accountAfterCreateUpdateDto.balance()))
+                .andExpect(jsonPath("$.currencyCode").value(accountAfterCreateUpdateDto.currencyCode()));
 
         Mockito.verify(service).createNewAccount(accountCreateDto, taxCode);
     }

@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
 
-@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
+@Target({FIELD, PARAMETER, TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {EnumAccountTypeConstraint.class})
 public @interface EnumAccountTypeOrNull {

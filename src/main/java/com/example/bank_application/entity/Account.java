@@ -49,7 +49,7 @@ public class Account  {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne(optional=false, cascade = CascadeType.ALL)
+    @ManyToOne(optional=false)
     @JoinColumn(name = "client_id", referencedColumnName="id")
     private Client client;
 

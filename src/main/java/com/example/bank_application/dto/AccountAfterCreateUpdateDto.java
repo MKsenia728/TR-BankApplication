@@ -1,26 +1,23 @@
 package com.example.bank_application.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Value;
 
 import java.time.LocalDateTime;
 
-@Value
-public class AccountAfterCreateUpdateDto {
-    String name;
+public record AccountAfterCreateUpdateDto(
+        String name,
 
-    String type;
+        String type,
 
-    String status;
+        String status,
 
-    String balance;
+        String balance,
 
-    String currencyCode;
+        String currencyCode,
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    LocalDateTime createdAt;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        LocalDateTime createdAt,
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    LocalDateTime updatedAt;
-
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        LocalDateTime updatedAt) {
 }

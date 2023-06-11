@@ -72,7 +72,7 @@ public class AccountController {
             @Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = AccountNameDto.class)))
     })
-    public List<AccountNameDto> getAllNameAccounts() {
+    public List<@Valid AccountNameDto> getAllNameAccounts() {
         return accountService.getAllAccounts();
     }
 

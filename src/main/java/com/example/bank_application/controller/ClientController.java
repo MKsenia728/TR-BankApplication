@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/clients")
 @RequiredArgsConstructor
+@Tag(name = "Clients", description = "Controller for work with clients")
 public class ClientController {
     public final ClientService clientService;
 
@@ -33,12 +35,13 @@ public class ClientController {
             @Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = ClientWithBalanceDto.class)))
     })
-    public List<ClientWithBalanceDto> getListClientsWithBalanceMoreThanInCurrency(@PositiveDecimal
-                                                                                  @Parameter(description = "Balance should be 0 or more, format 00 or 00.00")
-                                                                                  @PathVariable("balance") String balance,
-                                                                                  @EnumCurrencyType
-                                                                                  @Parameter(description = "Check allowed currency")
-                                                                                  @PathVariable("currency") String currency) {
+    public List<ClientWithBalanceDto> getListClientsWithBalanceMoreThanInCurrency(
+            @PositiveDecimal
+            @Parameter(description = "Balance should be 0 or more, format 0 or 0.00")
+            @PathVariable("balance") String balance,
+            @EnumCurrencyType
+            @Parameter(description = "Check allowed currency")
+            @PathVariable("currency") String currency) {
         return clientService.getListClientsWithBalanceMoreThan(balance, currency);
     }
 }

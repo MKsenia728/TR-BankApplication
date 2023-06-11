@@ -49,12 +49,12 @@ class ManagerControllerTest {
         mockMvc.perform(get("/managers/id/" + id)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(expectManager.getId()))
-                .andExpect(jsonPath("$.firstName").value(expectManager.getFirstName()))
-                .andExpect(jsonPath("$.lastName").value(expectManager.getLastName()))
-                .andExpect(jsonPath("$.status").value(expectManager.getStatus()))
-                .andExpect(jsonPath("$.createdAt").value(expectManager.getCreatedAt().toString().substring(0, 10)))
-                .andExpect(jsonPath("$.updatedAt").value(expectManager.getUpdatedAt().toString().substring(0, 10)));
+                .andExpect(jsonPath("$.id").value(expectManager.id()))
+                .andExpect(jsonPath("$.firstName").value(expectManager.firstName()))
+                .andExpect(jsonPath("$.lastName").value(expectManager.lastName()))
+                .andExpect(jsonPath("$.status").value(expectManager.status()))
+                .andExpect(jsonPath("$.createdAt").value(expectManager.createdAt().toString().substring(0, 10)))
+                .andExpect(jsonPath("$.updatedAt").value(expectManager.updatedAt().toString().substring(0, 10)));
 
         Mockito.verify(service).getManagerById(id);
     }
@@ -97,12 +97,12 @@ class ManagerControllerTest {
                         get("/managers/all/withClients")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(managerDtoList.get(0).getId()))
-                .andExpect(jsonPath("$[0].firstName").value(managerDtoList.get(0).getFirstName()))
-                .andExpect(jsonPath("$[0].lastName").value(managerDtoList.get(0).getLastName()))
-                .andExpect(jsonPath("$[0].status").value(managerDtoList.get(0).getStatus()))
-                .andExpect(jsonPath("$[0].createdAt").value(managerDtoList.get(0).getCreatedAt().toString().substring(0, 10)))
-                .andExpect(jsonPath("$[0].updatedAt").value(managerDtoList.get(0).getUpdatedAt().toString().substring(0, 10)));
+                .andExpect(jsonPath("$[0].id").value(managerDtoList.get(0).id()))
+                .andExpect(jsonPath("$[0].firstName").value(managerDtoList.get(0).firstName()))
+                .andExpect(jsonPath("$[0].lastName").value(managerDtoList.get(0).lastName()))
+                .andExpect(jsonPath("$[0].status").value(managerDtoList.get(0).status()))
+                .andExpect(jsonPath("$[0].createdAt").value(managerDtoList.get(0).createdAt().toString().substring(0, 10)))
+                .andExpect(jsonPath("$[0].updatedAt").value(managerDtoList.get(0).updatedAt().toString().substring(0, 10)));
         Mockito.verify(service).getAllManagersWithClients();
     }
 
@@ -130,12 +130,12 @@ class ManagerControllerTest {
                         .content(objectMapper.writeValueAsString(managerCreateDto))
                 )
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(managerAfterCreateDto.getId()))
-                .andExpect(jsonPath("$.firstName").value(managerAfterCreateDto.getFirstName()))
-                .andExpect(jsonPath("$.lastName").value(managerAfterCreateDto.getLastName()))
-                .andExpect(jsonPath("$.status").value(managerAfterCreateDto.getStatus()))
-                .andExpect(jsonPath("$.createdAt").value(managerAfterCreateDto.getCreatedAt().toString().substring(0, 10)))
-                .andExpect(jsonPath("$.updatedAt").value(managerAfterCreateDto.getUpdatedAt().toString().substring(0, 10)));
+                .andExpect(jsonPath("$.id").value(managerAfterCreateDto.id()))
+                .andExpect(jsonPath("$.firstName").value(managerAfterCreateDto.firstName()))
+                .andExpect(jsonPath("$.lastName").value(managerAfterCreateDto.lastName()))
+                .andExpect(jsonPath("$.status").value(managerAfterCreateDto.status()))
+                .andExpect(jsonPath("$.createdAt").value(managerAfterCreateDto.createdAt().toString().substring(0, 10)))
+                .andExpect(jsonPath("$.updatedAt").value(managerAfterCreateDto.updatedAt().toString().substring(0, 10)));
 
         Mockito.verify(service).managerNewCreate(managerCreateDto);
     }
