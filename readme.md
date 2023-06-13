@@ -104,7 +104,7 @@ For currency, as well as for rounding, use the BigDecimal class.
 | created_at    | timestamp     | timestamp of row creation                     |
 | updated_at    | timestamp     | timestamp of last update                      |
 
-### Table transactions (Bank's Product table)
+### Table transactions (Bank's Transaction table)
 
 | Column name       | Type          | Description                                   |
 | ----------------- | ------------- | --------------------------------------------- |
@@ -127,7 +127,7 @@ For currency, as well as for rounding, use the BigDecimal class.
 | description | varchar(255) | description of transaction                    |
 | created_at  | timestamp    | timestamp of row creation                     |
 
-### Table products-managers ( Sets of Bank's available Products)
+### Table products-managers ( Table for ManyToMany for tables Products and Managers)
 
 | Column name | Type | Description                                   |
 | ----------- | ---- | --------------------------------------------- |
